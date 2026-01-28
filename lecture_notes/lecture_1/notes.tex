@@ -40,11 +40,12 @@ Lipschitz continuous functions may not have global existence. For example $\dot{
 This exibits a finite time blow up as $t\Rightarrow \frac{1}{x_0}$, so there is no global existence of a solution, only local.
 
 \section{Gronwall's Lemma}
-Suppose $u(t)\geq 0$ and $C,K\geq 0$ are constants. Suppose 
-\[ U(t) \leq C+\int_o^tKu(s) ds \qquad \forall t\in[o,T] \]
-then $u(t)\leq Ce^{KT} \qquad \forall t\in[o,T]$.
+Suppose $u(t)\geq 0$ and $C,K\geq 0$ are constants. $\forall t\in[o,T] $, suppose 
+\[ u(t) \leq C+\int_o^tKu(s) ds \]
+then $\forall t\in[o,T]$, we can write $u(t)\leq Ce^{KT}$.
 
 \subsection{Proof}
+\subsubsection{Class notes}
 Let $U(t) \leq C+\int_o^tKu(s) ds \qquad \forall t\in[o,T]$. So we're given $u(t)\leq U(t)$.
 \begin{align*}
     \frac{d}{dt}u(t)\leq K u(t) &\Rightarrow u(t)-u(0)\leq K\int U(t)\\
@@ -54,21 +55,72 @@ Let $U(t) \leq C+\int_o^tKu(s) ds \qquad \forall t\in[o,T]$. So we're given $u(t
 \end{align*}
 Somehow we integrate to get $u(t)\leq e^{Kt}\cdot c$.
 
+\subsubsection{Corrected Proof}
+\textbf{Step 1:} Define the auxiliary function
+\[ U(t) := C + \int_o^t K u(s) ds \]
+and note that
+\begin{enumerate}
+    \item $U(0)=C$
+    \item $u(t)\leq U(t)$ by assumption
+    \item $U(t)$ is differentiable via the fundamental theorem of calculus
+\end{enumerate}
+
+\textbf{Step 2:} Differentiate $U(t)$ to get
+\[ \frac{d}{dt}U(t) = Ku(t) \]
+
+\textbf{Step 3:} Use the fact that $u(t)\leq U(t)$ to write
+\[ \frac{d}{dt}U(t)=K u(t) \leq K U(t) \]
+
+\textbf{Step 4:} Solve this differential inequlity. Assuming $U(t)>0$, we can write
+\[ \frac{U'(t)}{U(t)} \leq K \]
+Integrating from 0 to $t$, we have
+\begin{align*}
+    \int_0^t \frac{U'(t)}{U(t)} ds &\leq \int_0^t K ds \\
+    \ln U(t) - \ln U(0) &\leq Kt \\
+    \ln\left( \frac{U(t)}{C} \right) &\leq Kt \\
+    U(t) \leq Ce^{Kt}
+\end{align*}
+
+\textbf{Step 5:} Since $u(t)\leq U(t)$, we can conclude that 
+\[ u(t)\leq Ce^{Kt} \]
+
+\subsubsection{Post Class Thoughts}
+Gronwall's lemma makes a lot of sense. It's just saying if your equation is bounded by the perfect accumulation of it's history, then it is bounded by the solution to the perfect accumulation, wich is just the exponential function.
+
+Another way to say this is that if your non-negative equation is anything less than a perfect accumulation of its previous values, then it is bounded by the exponential function. In general, the exponential function is exactly the solution to when you have perfect feedback.
+
 \subsection{Dependence on initial conditions}
 Suppose $\dot{x}=f(x)$ and $x(0)=x_0$. We integrate via the fundamental theorem of calculus to get 
 
 \begin{align*}
     x(t)&=x(0)+\int_0^t f(x(s))ds\\
     y(t)&=y(0)+\int_0^t f(y(s)) ds\\
-    ||x(t)-y(t) || &\leq ||x(0)-y(0)|| + ||\int_0^t\left[ f(x(s))-f(y(s)) \right] ds \text{ Via triangle inequality}\\
-    &\leq ||x(0)-y(0)|| + \int_0^t||\left[ f(x(s))-f(y(s)) \right] ds\\
+    ||x(t)-y(t) || &\leq ||x(0)-y(0)|| + ||\int_0^t\left[ f(x(s))-f(y(s)) \right] ds || \text{ Via triangle inequality}\\
+    &\leq ||x(0)-y(0)|| + \int_0^t||\left[ f(x(s))-f(y(s)) \right] ds || \text{ See note}\\
     &\leq ||x(0)-y(0)|| + \int_0^tK||x(s)-y(s)||ds \text{ Via Lipschitz} \\
 \end{align*}
 Applying Gronwall Lemma, we get 
-\[ ||x(t)-y(x)|| \leq e^{Kt}||x(0)-y(0)|| \]
+\[ ||x(t)-y(t)|| \leq e^{Kt}||x(0)-y(0)|| \]
 Given $\epsilon >0$, choose $\delta<\frac{\epsilon}{e^{Kt}}$. Hence, solutions depend continuously on $x(0)$. 
 
 So we have abound, but it is terrible given the exponential growth of the initial condition dependence. Unfortunately, we can't do better and this is the point of chaos.
+
+\subsubsection{Note}
+The inequality
+\[ || \int_0^t x(s) || \leq \int_0^t || x(s) || \]
+is just a continuous version of the triangle inqueality for summands 
+\[ || \sum_{0}^{t} x(s) || \leq \sum_{0}^{t} ||x(s)|| \]
+
+\subsubsection{After class note}
+Here is a clean up of the last part of the proof. We want to show that the solution map $\Phi_t : x_0\mapsto x(t)$ is continuous. In other words, for any time $t$ and any $\epsilon > 0$, if we start close enough to $x_0$, we stay within $\epsilon$ of $x(t)$.
+
+Formally, given $\epsilon>0$, we need to find $\delta>0$ such that 
+\[ || x_0-y_0 || \Rightarrow ||x(t)-y(t) || < \epsilon \] 
+From Gronwall's lemma, we have
+\[ || x(t) -y(t) || \leq e^{Kt} ||x_0-y_0|| \] 
+so if we choose $\delta=\frac{\epsilon}{e^{Kt}}$, then whenever $||x_0-y_0||<\delta$, we have
+\[ ||x(t)-y(t) || \leq e^{Kt} \cdot \delta = e^{Kt} \cdot \frac{\epsilon}{e^{Kt}}=\epsilon \] 
+and this proves continuity at each fixed time $t$. This shows that as $t\rightarrow\infty$, then $\delta\rightarrow 0$. Hence, as we ask to be close to solutions farther out in time, we need to find initial conditions exponentially close to the original initial conditions.
 
 \subsection{Examples}
 
