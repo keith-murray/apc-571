@@ -1,0 +1,136 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\section{Plan for Class}
+\begin{enumerate}
+    \item Stability of an equilibrium point
+    \item Lyapunov functions
+    \item Linearization about an equilibrium
+\end{enumerate}
+
+
+\section{Example from last time}
+\begin{gather*}
+    \dot{x}=y\\
+    \dot{y}=x-x^2+\epsilon\left[\alpha y +\beta xy\right]
+\end{gather*}
+If $\epsilon=0$, system is Hamiltonian:
+\[ H(x,y)= \frac{y^2}{2} -\frac{x^2}{2}+\frac{x^3}{3} \]
+Note that $H$ is constant along trajectories. In a Hamiltonian system you follow level sets.
+
+What if $\epsilon > 0$? If $\alpha,\beta<0$, then $H$ always decreases.
+\begin{align*}
+    \frac{d}{dt} H(x(t),y(t))&=\frac{\partial H}{\partial x}\dot{x}+\frac{\partial H}{\partial y}\dot{y}\\
+    &=\epsilon y^2\left[\alpha + \beta x\right] < 0
+\end{align*}
+when $x<0$ given $\alpha,\beta <0$. Visually, this makes the point $(x,y)=(1,0)$ a sink.
+
+This example is nice because it allows us to develop and test a bunch of tools that classify if we get homoclinic orbits, limit cycles, sinks, sources, etc. In general, this is a nice system to see all the phenomenon one expects in dynamical systems.
+
+\section{Stability of an equilibrium point}
+Three classes of stability:
+\begin{enumerate}
+    \item Asymptotically stable (perturbations get asymptotically closer to the fixed point)
+    \item Lyapunov stable (orbit around the fixed point)
+    \item Unstable stable (perturbations get arbitrarily far away)
+\end{enumerate}
+
+\subsection{Equilibrium point}
+For $\dot{x}=f(x)$, the equilibrium point is simply
+\[ f(x)=0 \Longleftrightarrow x_0\text{ eq. pt}\]
+or also called a fixed point. In other words, $x_0$ is stable if "when you start close, you stay close" (also called ``Lyapunov stable''). More formally, $\forall \epsilon>0,\exists \delta >0$ such that $|| x(t)-x_0||<\epsilon$ wherever $||x(0)-x_0||<\delta$ for all $t>0$. In plain english, if you start in an epsilon ball, you stay in the epsilon ball.
+
+$x_0$ is asymptotically stable if it is stable and in addition $x(t)\rightarrow x_0$ as $t\rightarrow\infty$. Centers are an example of $x_0$ being stable but not asymptotically stable. Sinks are example of asymptotically stable.
+
+\textbf{Unstable:} $x_0$ is unstable if it is not stable.
+
+\subsubsection{Tricky example}
+\[ \dot{\theta}=\sin\frac{\theta}{2} \] 
+$\theta_0=0$ is a fixed point, and things will always decay to it, but it is unstable because it violates our $\epsilon$ ball definition of stability. However the following example
+\[ \dot{\theta}=\sin \theta \]
+has a fixed point at $\theta_0=\pi$ that is asymptotically stable.
+
+\subsubsection{Hamiltonian example}
+The origin is unstable because there exists at least one perturbation that blows up to infinity. The point $(x,y)=(1,0)$ is asymptotically stable if $\epsilon=0$.
+
+\section{Lyapunov functions}
+Lyapunov functions are a way to show an equilibrium point is stable in some region $U\subset \mathbb{R}^n$. Say we have a $C^1$ function $V(x)$ such that:
+\begin{itemize}
+    \item $V(x_0)=0$
+    \item $V(x)>0$ for all $x\neq x_0$
+    \item $\dot{V}(x)\leq 0$ for $x\neq x_0$ then $x_0$ is stable
+    \item Further, if $\dot{V}(x)<0$ for $x\neq x_0$ then $x_0$ is asymptotically stable
+\end{itemize}
+where the first two conditions imply that $V$ is "positive definite".
+
+Here $\dot{V}(x)$ means 
+\[\frac{d}{dt}V(x(t))=\sum_{i=1}^{n}\frac{\partial V}{\partial x_i}\dot{x}_i=\sum_{i=1}^{n}\frac{\partial V}{\partial x_i}f_i(x)=f(x)\cdot \nabla V(x)\]
+
+\subsection{Proof}
+Say we have such as function $V$ such that $\dot{V}<0$. Let $\eta$ be the minimum value of $V(x)$ on\footnote{Where "on the sphere" means that it is on the shell of the sphere, not inside.} the sphere of radius $\epsilon$ about $x_0$. We know that the minimum value exists from analysis because $V$ is a continuous function on a compact set, so it must have a maximum and minimum. We want to find a $\delta$ to complete our proof.
+
+Because $V$ is continuous, and $V(x_0)=0$, $\exists \delta >0$ such that $|V(x)-V(x_0)|<\eta$ where $|| x-x_0||< \delta$.
+
+So $V(x)<\eta$ for all $x\in B\delta$ (where this is an open ball radius $\delta$ about $x_0$) and $V(x)$ decreases along a trajectory $x(t)$. So $x(t)$ can never leave $B_\epsilon$. If it did, it would need to intersect the sphere of radius $\epsilon$, and on that sphere, $V(y)\geq \eta$, which is a contraction.
+
+To get asymptotically stable, since $V(x)$ strictly decreases, $V(x(t))$ must go to $0$ as $t\rightarrow\infty$.
+
+\subsection{Simple pendulum example}
+From Newton, we have
+\[ ml^2\ddot{\theta}=-mgl\sin\theta -\mu \dot{\theta} \]
+where we can rewrite it as 
+\begin{align*}
+    \dot{\theta}&=\omega\\
+    \dot{\omega}&=\frac{1}{ml^2}\left(-mgl\sin\theta-\mu\omega\right)
+\end{align*}
+We can imagine the phase space as a cylinder.
+
+Let's prove that $(0,0)$ is stable for $\mu\geq0$. We will give a Lyapunov from the energy
+\[ V(\theta,\omega)=\frac{1}{2}ml^2\omega^2+mgl(1-\cos\theta) \]
+Let's make sure that $V(0,0)=0$, and it does. Let's make sure that it is positive definite. Indeed it is since $\omega^2>0$ and $1-\cos\theta$ when $\theta,\omega\in[-\pi.\pi]$ excluding $0$.
+
+Is it decreasing? 
+\begin{align*}
+    \dot{V}(\theta, \omega)&=\frac{\partial V}{\partial \theta}\dot{\theta} +\frac{\partial V}{\partial \omega}\dot{\omega}\\
+    &=(mgl\sin\theta)\omega + \omega\left[-mgl\sin\theta-\mu\omega\right]\\
+    &=-\mu\omega^2\leq 0
+\end{align*}
+for all $\omega,\theta\neq 0$. This proves stability, and to prove asymptotic stability, we can use La Salle's invariance principle to conclude that starting at $\omega=0$ for any $\theta\neq0$ is not invariant, so is not stable.
+
+\section{Linearization about an equilibrium}
+Say that for $\dot{x}=f(x)$, we have an equilibrium point $x_0$ such that $f(x_0)=0$. Via the taylor series, we can write
+\[ \dot{x}=f(x)=f(x_0) + Df(x_0)\cdot (x-x_0)+ \text{Higher order terms}\]
+For Linearization, we ignore the higher order terms which may or may not be justified. Now we get the linearized system $\xi=x-x_0$ that is 
+\[ \dot{\xi}=Df(x_0)\cdot \xi\]
+where $Df(x_0)$ is an $n\times n$ martix.
+
+Let $A=Df(x_0)$. Many properties of this linear system are determined by eigenvalues of $A$.
+\[Av=\lambda v\]
+where $\lambda$ is an eigenvalue and $v$ is an eigenvector. To verify, we can write
+\[\xi(t)=c_1 e^{\lambda_1 t}v_1+\cdots+c_ne^{\lambda_n t}v_n\]
+\[ A\xi(t)=c_1 e^{\lambda_1 t}\lambda_1v_1+\cdots+c_ne^{\lambda_n t}\lambda_nv_n=\dot{\xi}(t)\]
+If $\lambda_1,\cdots,\lambda_n$ all have real part strictly negative, $\xi(t)\rightarrow0$ as $t\rightarrow\infty$, which is asymptotically stable. If any of $\lambda_1,\cdots,\lambda_n$ have real part $>0$, then we get someting unstable.
+
+\subsection{Linearization theorem}
+(Special case of Hartman-Grobman theorem) Let $x_0$ be an equilibrium point for $\dot{x}=f(x)$, and let $A=Df(x_0)$.
+\begin{itemize}
+    \item If all eigenvalues of $A$ have strictly negative real parts, then $x_0$ is asymptotically stable.
+    \item If any eigenvalues of $A$ has strictly positive real parts, then $x_0$ is unstable.
+    \item Otherwise, inconclusive.
+\end{itemize}
+We could get cases where the real part is zero, but the imaginary parts are nonzero.
+
+\subsubsection{Proof sketch}
+Suppose $A$ "has only eigenvalues with negative real part" (also called Horwitz). Construct a Lyapunov function. 
+
+Result from linear systems: If A is Horwitz, then $A^\top P+PA=Q$ for any positive definite symmetric $Q$, solution $P$ is positive definite symmetric.
+
+Let $V(\xi) = \xi^\top P\dot{\xi}+\xi^\top P\xi=$
+
+
+
+
+\end{document}
