@@ -1,0 +1,50 @@
+{
+  "book": {
+    "title": "Nonlinear Oscillations, Dynamical Systems and Bifurcations of Vector Fields",
+    "author": "John Guckenheimer, Philip Holmes",
+    "edition": "Corrected seventh printing,"
+  },
+  "tableOfContents": [
+    {
+      "chapter": 1,
+      "title": "Introduction: Differential Equations and Dynamical Systems",
+      "sections": [
+        { "section": "1.0", "title": "Existence and Uniqueness of Solutions" },
+        { "section": "1.1", "title": "The Linear System dot{x} = Ax" },
+        { "section": "1.2", "title": "Flows and Invariant Subspaces" },
+        { "section": "1.3", "title": "The Nonlinear System dot{x} = f(x)" },
+        { "section": "1.4", "title": "Linear and Nonlinear Maps" },
+        { "section": "1.5", "title": "Closed Orbits, Poincare Maps, and Forced Oscillations" },
+        { "section": "1.6", "title": "Asymptotic Behavior" },
+        { "section": "1.7", "title": "Equivalence Relations and Structural Stability" },
+        { "section": "1.8", "title": "Two-Dimensional Flows" },
+        { "section": "1.9", "title": "Peixoto's Theorem for Two-Dimensional Flows" }
+      ]
+    },
+    {
+      "chapter": 2,
+      "title": "An Introduction to Chaos: Four Examples",
+      "sections": [
+        { "section": "2.1", "title": "Van der Pol's Equation" },
+        { "section": "2.2", "title": "Duffing's Equation" },
+        { "section": "2.3", "title": "The Lorenz Equations" },
+        { "section": "2.4", "title": "The Dynamics of a Bouncing Ball" },
+        { "section": "2.5", "title": "Conclusions: The Moral of the Tales" }
+      ]
+    },
+    {
+      "chapter": 3,
+      "title": "Local Bifurcations",
+      "sections": [
+        { "section": "2.1", "title": "Bifurcation Problems" },
+        { "section": "2.2", "title": "Center Manifolds" },
+        { "section": "2.3", "title": "Normal Forms" },
+        { "section": "2.4", "title": "Codimension One Bifurcations of Equilibria" },
+        { "section": "2.5", "title": "Codimension One Bifurcations of Maps and Periodic Orbits" }
+      ]
+    }
+  ],
+  "lectureNotes": {
+    "directory": "./lectures"
+  }
+}
