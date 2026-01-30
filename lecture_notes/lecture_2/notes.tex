@@ -30,6 +30,36 @@ when $x<0$ given $\alpha,\beta <0$. Visually, this makes the point $(x,y)=(1,0)$
 
 This example is nice because it allows us to develop and test a bunch of tools that classify if we get homoclinic orbits, limit cycles, sinks, sources, etc. In general, this is a nice system to see all the phenomenon one expects in dynamical systems.
 
+\subsection{Post class notes}
+Just a refresher on how to define the Hamiltonian system. For a Hamiltonian system, the equations of motion are
+\begin{gather*}
+    \dot{x}=\frac{\partial H}{\partial y}\\
+    \dot{y}=-\frac{\partial H}{\partial x}
+\end{gather*}
+If we use $\epsilon=0$, then we can write
+\begin{gather*}
+    \dot{x}=y\\
+    \dot{y}=x-x^2
+\end{gather*}
+Given the previous 4 equations, we can set out to find $H(x,y)$. From the first equation, we have
+\[ \dot{x}=y=\frac{\partial H}{\partial y} \] 
+Integrating with respect to $y$, we have 
+\[H(x,y)=\frac{y^2}{2}+f(X)\]
+where $f(x)$ is an arbitrary function of $x$ alone. From the second equation, we can write 
+\[\dot{y}=x-x^2=-\frac{\partial H}{\partial x}\] 
+Now differentiate our expression for $H$ with repsect to $x$, we have 
+\[ \frac{\partial H}{\partial x}=\frac{\partial}{\partial x}\left[\frac{y^2}{2} + f(x)\right] = f'(x)\] 
+So we need 
+\begin{gather*}
+    x-x^2=-f'(x)\\
+    f'(x)=-x+x^2
+\end{gather*}
+Integrating, we have 
+\[ f(x)=-\frac{x^2}{2} + \frac{x^3}{3}+ C\] 
+where $C$ is a constant (which we can set to 0). Therefore
+\[ H(x,y)=\frac{y^2}{2}-\frac{x^2}{2}+\frac{x^3}{3}\] 
+which matches the Hamiltonian given from class.
+
 \section{Stability of an equilibrium point}
 Three classes of stability:
 \begin{enumerate}
@@ -77,6 +107,49 @@ Because $V$ is continuous, and $V(x_0)=0$, $\exists \delta >0$ such that $|V(x)-
 So $V(x)<\eta$ for all $x\in B\delta$ (where this is an open ball radius $\delta$ about $x_0$) and $V(x)$ decreases along a trajectory $x(t)$. So $x(t)$ can never leave $B_\epsilon$. If it did, it would need to intersect the sphere of radius $\epsilon$, and on that sphere, $V(y)\geq \eta$, which is a contraction.
 
 To get asymptotically stable, since $V(x)$ strictly decreases, $V(x(t))$ must go to $0$ as $t\rightarrow\infty$.
+
+\subsubsection{After class notes}
+I prompted Claude for a more explicit proof and got the following.
+
+\paragraph{Setup}
+We want to prove that if we have a Lyapunov function $V$ with the stated properties, then $x_0$ is stable (and asymptotically stable if $\dot{V}<0$).
+
+\paragraph{Step 1: Define the sphere of radius $\epsilon$}
+Consider a sphere $S_\epsilon$ of radius $\epsilon$ centered at $x_0$. We are trying to show that if we start close enough to $x_0$, we will stay inside the sphere.
+
+\paragraph{Step 2: Find $\eta$ (the minimum of $V$ on the sphere)}
+Let $\eta=$ minimum of $V(x)$ on the sphere $S_\epsilon$ (i.e. where $|\!| x-x_0|\!|=\epsilon$). Since 
+\begin{itemize}
+    \item $V$ is continuous (it's $C^1$)
+    \item The sphere $S_\epsilon$ is a compact set (closed and bounded)
+\end{itemize}
+by the Extreme Value Theorem, $V$ attains its minimum on $S_\epsilon$, so $\eta$ exists. The \textbf{key observation} is that since $V(x_0)=0$ and $V(x)>0$ for $x\neq x_0$, we have $\eta>0$ (because all points on $S_\epsilon$ are away from $x_0$).
+
+\paragraph{Step 3: Use continuity to find $\delta$}
+Since $V$ is continuous and $V(x_0)=0$, we can apply the definition of continuity. For our chosen $\eta>0$, there exists $\delta>0$ such that 
+\[ |\!|x-x_0|\!| < \delta \Rightarrow |V(x)-V(x_0)| < \eta \]
+Since $V(x_0)=0$, this becomes
+\[ |\!|x-x_0|\!|<\delta \Rightarrow V(x)<\eta \]
+So inside the ball $B_\delta$ of radius $\delta$, we have $V(x)<\eta$.
+
+\paragraph{Step 4: The key argument (why trajectories can't escape)}
+Now suppose we start at some point $x(0)$ with $|\!|x(0)-x_0|\!|<\delta$. Then $V(x(0))<\eta$ from Step 3. Since $\dot{V}(x)\leq 0$ along trajectories, $V(x(t))$ is non-increasing. Therefore, we can write 
+\[V(x(t)) \leq V(x(0))<\eta \qquad \text{for all } t>0\]
+Now suppose that $x(t)$ does leave $B_\epsilon$ at some time $t^*$. Then $x(t^*)$ must be on the sphere $S_\epsilon$ (it has to cross the boundary). But on $S_\epsilon$, we know $V(x)\geq \eta$. This gives us 
+\[ V(x(t^*))\geq \eta\]
+which is a contradiction given we previously showed $V(x(t))<\eta$. Hence, $x(t)$ cannot leave $B_\epsilon$ if it starts in $B_\delta$, completing the proof.
+
+\paragraph{Asymptotic Stability}
+
+If $\dot{V}(x) <0$ (strictly negative) for $x\neq x_0$, then 
+\begin{itemize}
+    \item $V(x(t))$ is strictly decreasing along trajectories (except at $x_0$)
+    \item $V(x(t))$ is bounded below by $0$
+    \item By the Monotone Convergence Theorem, $V(x(t))\rightarrow$ some limit $L\geq 0$
+\end{itemize}
+Since $V$ is strictly decreasing and bounded below, we must have $V(x(t))\rightarrow 0$. Since $V(x)=0$ only at $x=x_0$, and $V$ is continuous, this implies 
+\[ x(t)\rightarrow x_0 \qquad \text{as} t\rightarrow\infty\] 
+This proves asymptotic stability.
 
 \subsection{Simple pendulum example}
 From Newton, we have
