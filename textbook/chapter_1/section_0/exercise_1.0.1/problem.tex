@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathhint}
+
+\begin{document}
+
+% Set the context for this problem - this information appears in the page header
+% and helps the hint system understand what material you've covered
+\mathhintcontext{
+  book=Guckenheimer and Holmes,
+  chapter=1,
+  section=1.0,
+  problem=1.0.1,
+  lectures={lecture_1.tex, lecture_2.tex}
+}
+
+\begin{problem}
+\noindent
+Show that the fixed points of the linear systems 
+\begin{enumerate}
+  \item[(a)] $\dot{x}=y$, $\dot{y}=-x$;
+  \item[(b)] $\dot{x}=y$, $\dot{y}=-x-y$,
+\end{enumerate}
+are both stable. Which one is asympototically stable?
+
+\end{problem}
+
+\begin{notes}
+\paragraph{Part (a)}
+I can tell this is going to be an oscillation since $A= \begin{pmatrix}0 & 1 \\-1 & 0 \end{pmatrix}$ and that's a rotation matrix. Let's note that the only fixed point is at the origin $(x_0,y_0)=(0,0)$. Now how can I use the definition of stability to show that our system is stable, but not asympototically stable?
+
+\mathhint{Nudge}{2026-01-30 18:25}{You're absolutely right that this system represents rotational motion and that the origin is the only fixed point. Your intuition about oscillation is spot on! 
+
+To proceed with the stability analysis, you'll want to think about what the definition of stability tells you about the behavior of nearby trajectories over time.}
+
+\mathhint{Direction}{2026-01-30 18:33}{Consider analyzing the eigenvalues of the coefficient matrix $A$ for each system. The eigenvalues will directly tell you about the stability properties of the linear system at the origin.}
+
+The hint suggested analyzing the eigenvalues of the coefficient matrix $A$, but we have not gotten there in the textbook. I vaugley remember that we can define a conserved quantity for the system as 
+\[ V(x,y) = x^2 +y^2\] 
+and differentiation with respect to $t$ yields
+\[\dot{V}=2x\dot{x}+2y\dot{y}=2xy+2y(-x)=0\]
+implying that $V$ is constant along trajectories. In other words, we can write 
+\begin{equation}
+  x(0)^2+y(0)^2=x(t)^2+y(t)^2
+\end{equation}
+for all $t\geq 0$.
+
+\mathhint{Nudge}{2026-01-30 18:48}{You've made excellent progress! Your conserved quantity approach is exactly right and shows deep understanding of the system's behavior. The fact that $V(x,y) = x^2 + y^2$ is constant along trajectories is the key insight you need.
+
+Now think carefully about what this conservation property tells you about the distance from the origin for trajectories that start nearby.}
+
+This conservation property tells us that distances relative to the origin do not change over time. More formally, we can write
+\[ |\!|(x(0),y(0))-(0,0)|\!|=\sqrt{x(0)^2+y(0)^2}=\sqrt{x(t)^2+y(t)^2}=|\!|(x(t),y(t))-(0,0)|\!|.  \]
+Hence, if we have $|\!|(x(t),y(t))-(0,0)|\!|<\epsilon $, we can simply choose $\delta=\epsilon$. Thus, we have 
+\[ |\!|(x(0),y(0))-(0,0)|\!| <\delta=\epsilon \Rightarrow |\!|(x(t),y(t))-(0,0)|\!| = |\!|(x(0),y(0))-(0,0)|\!| <\epsilon\]
+showing that $|\!|(x(t),y(t))-(0,0)|\!| < \epsilon$.
+
+\mathhint{Nudge}{2026-01-30 18:58}{Perfect! You've completely solved part (a) using the conserved quantity approach - your stability proof is mathematically rigorous and shows the origin is stable but not asymptotically stable (since trajectories don't approach it, they just stay at constant distance).
+
+Now for part (b), try applying the same conserved quantity approach to see what happens when you compute $\dot{V}$ for the second system.}
+
+\paragraph{Part (b)}
+Trying our conserved quantity approach, we write
+\begin{align*}
+  \dot{V}&=2x\dot{x}+2y\dot{y}\\
+  &=2xy + 2y(-x-y)\\
+  &=2xy-2xy-2y^2\\
+  &=-2y^2\leq 0
+\end{align*}
+which tells us that $V$ decreases over time, suggesting that our fixed point (0,0) is asympototically stable.
+
+Using a similar pattern as part (A), given that $\dot{V}\leq 0$, we can conclude that $V$ is monotonically decreasing. Hence, we can write
+\begin{equation}
+  x(t)^2+y(t)^2\leq x(0)^2+y(0)^2
+\end{equation}
+as opposed to equation (1), and it follows that 
+\[ |\!|(x(t),y(t))-(0,0)|\!| = \sqrt{x(t)^2+y(t)^2} \leq \sqrt{x(0)^2+y(0)^2}= |\!|(x(0),y(0))-(0,0)|\!|.  \]
+Hence, for any $\epsilon$, we can just choose $\delta=\epsilon$ and write,
+\[ |\!|(x(0),y(0))-(0,0)|\!| <\delta=\epsilon \Rightarrow |\!|(x(t),y(t))-(0,0)|\!| \leq |\!|(x(0),y(0))-(0,0)|\!| <\epsilon\]
+showing that $|\!|(x(t),y(t))-(0,0)|\!| < \epsilon$. Does $\dot{V}\leq 0$ imply that $|\!|(x(t),y(t))|\!|$ is a monotonically decreasing function that is bounded below by $0$? Is this enough to conclude that $x(t)\rightarrow x_0$ as $t\rightarrow\infty$?
+
+\mathhint{Nudge}{2026-01-30 19:32}{You're making excellent progress with your Lyapunov function approach! Your stability proof for part (b) is correct, and your intuition about asymptotic stability is right.
+
+For the asymptotic stability part, you're asking exactly the right question - you need to think more carefully about what happens when $\dot{V} = -2y^2 \leq 0$, particularly about when the equality holds and what this implies about the long-term behavior of trajectories.}
+
+By itself, $\dot{V}\leq 0$ is not enough to conclude that $x(t)\rightarrow x_0$ as $t\rightarrow\infty$, since for some $x(t)\in\mathbb{R}$, we have $\dot{V}(x(t),0)=0$. However, this does not imply that $(x(t),0)$ is a fixed point, since we would have $\dot{y}=-x(t)$, leading to a nonzero $y(t)$ and a strictly negative $\dot{V}$. Given that $(0,0)$ is the only fixed point, this process would continue, implying $x(t)\to x_*$ as $t\to\infty$.
+
+\mathhint{Nudge}{2026-01-31 15:09}{You're very close to completing the asymptotic stability proof! Your reasoning about what happens when $\dot{V} = 0$ only on the $x$-axis is good, but you can make this argument even more rigorous.
+
+Since you've shown $V(t)$ is monotonically decreasing and bounded below by 0, think about what this tells you about the limit of $V(t)$ as $t \to \infty$, and then use the fact that $\dot{V} = 0$ implies very specific constraints on where trajectories can end up.}
+
+Ah I see. Given that $V(t)$ monotonically decreases and is bounded below by $0$, the monotone convergence theorem tells us that $\lim_{t\to\infty}V(x(t),y(t))=L\geq0$. Given our reasoning above, we know that anytime $\dot{V}=0$ and $x(t)\neq 0$, $\dot{V}<0$ shortly thereafter. When $\dot{V}=0$ and $x(t)=0$, then it follows that $y(t)=0$ and we've reached the fixed point. Hence, $L=0$ and $\lim_{t\to\infty}V(x(t),y(t))=0$, which implies that $(x(t),y(t))\to (0,0)$ as $t\to\infty$, and our system is asympototically stable.
+
+\mathhint{Nudge}{2026-01-31 15:27}{Your proof for asymptotic stability is excellent and mathematically sound! You've correctly identified that $V(t)$ converges to 0, which implies $(x(t),y(t)) \to (0,0)$.
+
+Your reasoning about trajectories not being able to stay on the $x$-axis (except at the origin) is exactly right and shows you understand the dynamics deeply.}
+
+\end{notes}
+
+\begin{solution}
+\paragraph{Part (a)}
+We can define a conserved quantity for the system as 
+\[ V(x,y) = x^2 +y^2\] 
+and differentiation with respect to $t$ yields
+\[\dot{V}=2x\dot{x}+2y\dot{y}=2xy+2y(-x)=0\]
+implying that $V$ is constant along trajectories. In other words, we can write 
+\begin{equation}
+  \label{eq:conserved}
+  x(0)^2+y(0)^2=x(t)^2+y(t)^2
+\end{equation}
+for all $t\geq 0$.
+
+This conservation property tells us that distances relative to the origin do not change over time. More formally, we can write
+\[ |\!|(x(0),y(0))-(0,0)|\!|=\sqrt{x(0)^2+y(0)^2}=\sqrt{x(t)^2+y(t)^2}=|\!|(x(t),y(t))-(0,0)|\!|.  \]
+Hence, if we have $|\!|(x(t),y(t))-(0,0)|\!|<\epsilon $, we can simply choose $\delta=\epsilon$. Thus, we have 
+\[ |\!|(x(0),y(0))-(0,0)|\!| <\delta=\epsilon \Rightarrow |\!|(x(t),y(t))-(0,0)|\!| = |\!|(x(0),y(0))-(0,0)|\!| <\epsilon\]
+showing that $|\!|(x(t),y(t))-(0,0)|\!| < \epsilon$.
+
+\paragraph{Part (b)}
+Trying our conserved quantity approach, we write
+\begin{align*}
+  \dot{V}&=2x\dot{x}+2y\dot{y}\\
+  &=2xy + 2y(-x-y)\\
+  &=2xy-2xy-2y^2\\
+  &=-2y^2\leq 0
+\end{align*}
+which tells us that $V$ decreases over time, suggesting that our fixed point $(0,0)$ is asympototically stable.
+
+Using a similar pattern as part (A), given that $\dot{V}\leq 0$, we can conclude that $V$ is monotonically decreasing. Hence, we can write
+\begin{equation}
+  x(t)^2+y(t)^2\leq x(0)^2+y(0)^2
+\end{equation}
+as opposed to equation (\ref{eq:conserved}), and it follows that 
+\[ |\!|(x(t),y(t))-(0,0)|\!| = \sqrt{x(t)^2+y(t)^2} \leq \sqrt{x(0)^2+y(0)^2}= |\!|(x(0),y(0))-(0,0)|\!|.  \]
+Hence, for any $\epsilon$, we can just choose $\delta=\epsilon$ and write,
+\[ |\!|(x(0),y(0))-(0,0)|\!| <\delta=\epsilon \Rightarrow |\!|(x(t),y(t))-(0,0)|\!| \leq |\!|(x(0),y(0))-(0,0)|\!| <\epsilon\]
+showing that $|\!|(x(t),y(t))-(0,0)|\!| < \epsilon$.
+
+By itself, $\dot{V}\leq 0$ is not enough to conclude that $x(t)\rightarrow x_0$ as $t\rightarrow\infty$, since for some $x(t)\in\mathbb{R}$, we have $\dot{V}(x(t),0)=0$. However, this does not imply that $(x(t),0)$ is a fixed point, since we would have $\dot{y}=-x(t)$, leading to a nonzero $y(t)$ and a strictly negative $\dot{V}$. 
+
+Given that $V(t)$ monotonically decreases and is bounded below by $0$, the monotone convergence theorem tells us that $\lim_{t\to\infty}V(x(t),y(t))=L\geq0$. Given our reasoning above, we know that anytime $\dot{V}=0$ and $x(t)\neq 0$, $\dot{V}<0$ shortly thereafter. When $\dot{V}=0$ and $x(t)=0$, then it follows that $y(t)=0$ and we've reached the fixed point. Hence, $L=0$ and $\lim_{t\to\infty}V(x(t),y(t))=0$, which implies that $(x(t),y(t))\to (0,0)$ as $t\to\infty$, and our system is asympototically stable.
+
+\end{solution}
+
+% === Math Hint Log ===
+\mathsolutioncheck{Correct}{2026-01-31 15:34}{The solution correctly identifies both systems as stable using Lyapunov function analysis, and properly distinguishes that system (a) is stable but not asymptotically stable (neutrally stable) while system (b) is asymptotically stable. The reasoning about $\dot{V} = 0$ only at the origin for system (b) is sound.}
+
+
+\end{document}
