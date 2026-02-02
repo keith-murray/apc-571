@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathhint}
+
+\begin{document}
+
+% Set the context for this problem - this information appears in the page header
+% and helps the hint system understand what material you've covered
+\mathhintcontext{
+  book=Guckenheimer and Holmes,
+  chapter=1,
+  section=1.0-1.1,
+  problem=1,
+  lectures={lecture_1.tex, lecture_2.tex}
+}
+
+\begin{problem}
+(10 points) Each of the following differential equations has a single equilibrium point, at $x=0$. For each equation, find the linearization about $x=0$, and explain what you can conclude about the stability of the equilibrium for the nonlinear system. Also determine the stability type for the nonlinear system (e.g., unstable, Lyapunov stable, asymptotically stable).
+\begin{itemize}
+  \item[(a)] $\dot{x}=-x$
+  \item[(b)] $\dot{x}=-x^2$
+  \item[(c)] $\dot{x}=-x^3$ 
+\end{itemize}
+
+\end{problem}
+
+\begin{notes}
+\paragraph{Part (a)}
+For the system $\dot{x}=-x$, linearization about $x=0$ gives us 
+\[ Df(x)=-1 \implies Df(0)=-1 \]
+indicating that the fixed point is asymptotically stable via the Hartman-Grobman theorem.
+
+\paragraph{Part (b)}
+For the system $\dot{x}=-x^2$, linearization about $x=0$ gives us 
+\[ Df(x)=-2x\implies Df(0)=0 \]
+which yields an inconclusive result about the stability of our system. To determine the stability of the system, note that $f(x)$ is strictly negative. Hence, for negative initial conditions $x(0)<0$, we have
+\[ x(t) < x(0) \]
+meaning that for any $\epsilon >0$, for all $\delta>0$ such that $|x(0)-0|<\delta$, it is the case that eventually $|x(t^*)|>\epsilon$ for some $t^*$. Hence the system is unstable.
+
+\paragraph{Part (c)}
+For the system $\dot{x}=-x^3$, linearization about $x=0$ gives us 
+\[ Df(x)=-3x^2\implies Df(0)=0 \] 
+which yields an inconclusive result about the stability of our system. To determine the stability of our system, we can look at two conditions: $x(0)<0$ and $x(0)>0$. For $x(0)<0$, we have $\dot{x}>0$ and it follows that 
+\[ x(t) > x(0). \]
+This trajectory is then strictly increasing and bounded above by the fixed point $\bar{x}=0$, thus as $t\to\infty$, we have $x(t)\to 0$ for $x(0)<0$. For $x(0)>0$, we have $\dot{x}<0$ and it follows that 
+\[ x(t) < x(0).\] 
+This trajectory is then strictly decreasing and bounded below by the fixed point $\bar{x}=0$, thus as $t\to\infty$, we have $x(t)\to 0$ for $x(0)>0$. In both cases, we have $x(t)\to 0$ as $t\to\infty$ and can conclude that the fixed point is asymptotically stable. 
+
+
+
+\end{notes}
+
+\begin{solution}
+% Write your solution here
+% Present your final, clean solution.
+
+\end{solution}
+
+\end{document}

@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathhint}
+
+\begin{document}
+
+% Set the context for this problem - this information appears in the page header
+% and helps the hint system understand what material you've covered
+\mathhintcontext{
+  book=Guckenheimer and Holmes,
+  chapter=1,
+  section=1.0-1.1,
+  problem=4,
+  lectures={lecture_1.tex, lecture_2.tex}
+}
+
+\begin{problem}
+\noindent
+(30 points) The following equations describe the motion of a ball in a spinning circular hoop, where $\alpha$ is the (nondimensional) speed of the spinning hoop, $\beta$ is the (nondimensional) damping, $x$ is the angle of the ball in the hoop, and $y$ is the ball's angular velocity:
+\begin{align*}
+  \dot{x}&=y\\
+  \dot{y}&=(\alpha \cos x-1)\sin x -\beta y,
+\end{align*}
+\begin{enumerate}
+  \item[(a)] Find the equilibrium points, as a function of the parameters $\alpha$, $\beta$ (consider $x\in[-\pi, \pi]$). Make a sketch of these equilibrium points as a function of $\alpha$. (Such a plot is the beginning of a bifurcation diagram).
+  \item[(b)] Show that, for $\beta=0$, the system is Hamiltonian: that is, there is a function $H(x,y)$ such that\begin{align*}
+    \dot{x}&=\frac{\partial H}{\partial y}\\
+    \dot{y}&=-\frac{\partial H}{\partial x}.
+  \end{align*}
+  \item[(c)] Fix $\alpha=2$, and consider the stability of each of the equilibrium points you found in part (a). Be sure to consider the cases $\beta<0$, $\beta=0$, and $\beta>0$.
+\end{enumerate}
+
+\end{problem}
+
+\begin{notes}
+\paragraph{Part (a)}
+Let's start by setting everything equal to 0
+\begin{align*}
+  0&=y\\
+  0&=(\alpha \cos x-1)\sin x -\beta y.
+\end{align*}
+Hence, 
+\begin{align*}
+  0&=(\alpha \cos x-1)\sin x\\
+  0&= \alpha (\cos x)(\sin x)-\sin x\\
+  0&= \frac{\alpha}{2}\left[\sin(x+x)+\sin(x-x)\right]-\sin x\\
+  0&= \frac{\alpha}{2}\sin(2x)-\sin x\\
+\end{align*}
+More to think about here...
+
+\paragraph{Part (b)}
+Let's start by writing 
+\begin{align*}
+  \frac{\partial H}{\partial y} &= y\\
+  \int \partial H &= \int y \partial y 
+\end{align*}
+where integrating both sides with respect to $y$ yields
+\[ H(x,y)= \frac{y^2}{2} + f(x). \]
+To identify $f(x)$, we can write 
+\begin{align*}
+  \frac{\partial H}{\partial x} &= (\alpha \cos x-1)\sin x\\
+  \int \partial H &= -\int(\alpha \cos x-1)\sin x \partial x\\
+  H(x,y) &= -\int \frac{\alpha}{2}\sin(2x)-\sin x \partial x\\
+  H(x,y) &= \frac{\alpha}{4}\cos(2x)-\cos(x) + f(y)
+\end{align*}
+Where our Hamiltonian is
+\[ H(x,y)= \frac{\alpha}{4}\cos(2x)-\cos(x)+\frac{y^2}{2}.\]
+
+
+\end{notes}
+
+\begin{solution}
+% Write your solution here
+% Present your final, clean solution.
+
+\end{solution}
+
+\end{document}
