@@ -64,12 +64,53 @@ x(t) = \begin{cases}
 \end{cases}
 \]
 yields and infinite number of solutions.
+\mathhint{Nudge}{2026-02-02 12:23}{Your approach and solutions for both parts are excellent and mathematically sound! You've correctly identified the key issue with the uniqueness theorem and constructed the infinite family of solutions perfectly. 
+
+One small note: you might want to double-check your statement about continuously differentiable functions being synonymous with Lipschitz continuity - while $C^1$ functions are locally Lipschitz, the converse isn't always true, but your main point about why uniqueness fails here is absolutely correct.}
 
 \end{notes}
 
 \begin{solution}
-% Write your solution here
-% Present your final, clean solution.
+\paragraph{Part (a)}
+Let's separate variables and solve the ODE:
+\begin{gather*}
+  \int x^{-1/3}dx=\int dt\\ 
+  \frac{3}{2}x^{2/3}=t+C\\
+  x(t)=\left( \frac{2}{3}\left(t+C\right) \right)^{3/2}
+\end{gather*}
+For the condition $x(0)=0$, it follows that $C=0$ and we have
+\[ x(t)=\left( \frac{2}{3}t \right)^{3/2}.\]
+The uniqueness theorem doesn't apply because the derivative of $x^{1/3}$ at $x=0$ is undefined since
+\[f'(x)=\frac{1}{3x^{2/3}}. \]
+(Local) uniqueness of solutions only apply for (locally) Lipschitz continuous functions, and (locally) continuously differentiable functions imply (local) Lipschitz continuity.
+
+\paragraph{Part (b)}
+We can make an infinite family of solutions be defining the following piecewise equation
+\[
+x(t) = \begin{cases}
+    0, & t<t_0 \\
+    \left(\frac{2}{3}(t-t_0)\right)^{3/2}, & t \geq t_0
+\end{cases}
+\]
+where we have $x(t_0)=0$ and 
+\begin{align*}
+  \frac{d}{dt}\left[\left(\frac{2}{3}(t-t_0)\right)^{3/2}\right]&=\frac{3}{2}\left(\frac{2}{3}(t-t_0)\right)^{1/2}\cdot \frac{d}{dt}\left[ \frac{2}{3}(t-t_0) \right]\\
+  &=\frac{3}{2}\left(\frac{2}{3}(t-t_0)\right)^{1/2}\cdot \frac{2}{3}\\
+  &=\left(\left(\frac{2}{3}(t-t_0)\right)^{3/2}\right)^{1/3}\\
+  &=x^{1/3}
+\end{align*}
+and hence, we still have $\dot{x}=x^{1/3}$.
+
+Given that $t_0$ is arbitrary, our solution 
+\[
+x(t) = \begin{cases}
+    0, & t<t_0 \\
+    \left(\frac{2}{3}(t-t_0)\right)^{3/2}, & t \geq t_0
+\end{cases}
+\]
+yields and infinite number of solutions.
+
+\mathsolutioncheck{Correct}{2026-02-02 12:26}{The solution correctly finds the non-trivial solution using separation of variables, properly identifies why uniqueness fails ($f'(x)$ is unbounded at $x=0$), and constructs a valid infinite family of piecewise solutions with arbitrary switching times $t_0$.}
 
 \end{solution}
 
