@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage{amsmath, amssymb}
-\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[margin=1in]{geometry}
+\usetikzlibrary{arrows.meta}
 
 \begin{document}
 
@@ -39,7 +41,7 @@ which is
     \dot{y}&= \mu y \\
 \end{align*}
 
-Our solution to the flow field will look like
+Our trajectories (or phase portrait) of the system will look like
 \begin{gather*}
     \frac{dy}{dx}=\frac{\mu y}{\lambda x}\\
     \implies \frac{dy}{y}=\frac{\mu}{\lambda}\frac{dx}{x}\\
@@ -57,9 +59,24 @@ Now let's draw out the flow field for various conditions (to do after class)
     \item $0<\lambda < \mu$ - unstable node
     \item $\mu<\lambda < 0$ - stable node 
     \item $\lambda < 0 <\mu$  - saddle 
-    \item $\lambda=\mu <0$ - sink (straight lines)
-    \item $0<\lambda=\mu$ - source (straight lines)
+    \item $\lambda=\mu <0$ - sink (star node)
+    \item $0<\lambda=\mu$ - source (star node)
 \end{itemize}
+
+\subsubsection{Unstable Node: $0 < \lambda < \mu$}
+\includegraphics[width=0.5\textwidth]{figures/unstable_node.png}
+
+\subsubsection{Stable Node: $\mu<\lambda < 0$}
+\includegraphics[width=0.5\textwidth]{figures/stable_node.png}
+
+\subsubsection{Saddle: $\lambda < 0 <\mu$}
+\includegraphics[width=0.5\textwidth]{figures/saddle.png}
+
+\subsubsection{Stable Star Node: $\lambda=\mu <0$}
+\includegraphics[width=0.5\textwidth]{figures/stable_star.png}
+
+\subsubsection{Unstable Star Node: $0<\lambda=\mu$}
+\includegraphics[width=0.5\textwidth]{figures/unstable_star.png}
 
 \subsection{Complex eigenvalues?}
 Let's say our $A$ matrix looks like 
@@ -67,7 +84,7 @@ Let's say our $A$ matrix looks like
 where the eigenvalues are $\sigma \pm i\omega$.
 \begin{gather*}
     \dot{x}=\sigma x + \omega y \qquad x=r\cos\theta \qquad \dot{x}=\dot{r}\cos\theta - r\sin\theta \cdot \dot{\theta} \\
-    \dot{y}=-\omega x + \sigma y \qquad x=r\sin\theta \qquad \dot{x}=\dot{r}\sin\theta + r\cos\theta \cdot \dot{\theta} \\
+    \dot{y}=-\omega x + \sigma y \qquad y=r\sin\theta \qquad \dot{y}=\dot{r}\sin\theta + r\cos\theta \cdot \dot{\theta} \\
 \end{gather*}
 Via some calculations that I should do later, we have 
 \begin{align*}
@@ -81,6 +98,42 @@ Now we can make some more plots!
     \item $\sigma >0$ - unstable spiral 
     \item $\sigma=0$ - centers!
 \end{itemize}
+
+\subsubsection{The calculations}
+To get $\dot{r}$ let's first multiply $\dot{x}$ by $\cos\theta$ and $\dot{y}$ by $\sin\theta$, and add them to write 
+\begin{gather*}
+    \left[\dot{r}\cos\theta - r\sin\theta \cdot \dot{\theta}\right](\cos\theta) + \left[ \dot{r}\sin\theta + r\cos\theta \cdot \dot{\theta} \right](\sin\theta) = \dot{x}(\cos\theta)+\dot{y}(\sin\theta)\\
+    \dot{r}\cos^2\theta+\dot{r}\sin^2\theta=\left(\sigma x + \omega y \right)(\cos\theta)+\left(-\omega x + \sigma y\right)(\sin\theta)\\
+    \dot{r}(\cos^2\theta+\sin^2\theta)=\left(\sigma r\cos\theta + \omega r\sin\theta \right)(\cos\theta)+\left(-\omega r\cos\theta + \sigma r\sin\theta\right)(\sin\theta)\\
+    \dot{r}=\sigma r\cos^2\theta + \sigma r\sin^2\theta\\
+    \dot{r}=\sigma r(\cos^2\theta+\sin^2\theta)\\
+    \dot{r}=\sigma r
+\end{gather*}
+
+To get $\dot{\theta}$, we'll multiply $\dot{x}$ by $-\sin\theta$ and $\dot{y}$ by $\cos\theta$, then add them:
+
+\begin{gather*}
+\left(\dot{r}\cos\theta - r\sin\theta \cdot \dot{\theta}\right)(-\sin\theta) + \left( \dot{r}\sin\theta + r\cos\theta \cdot \dot{\theta} \right)(\cos\theta) = \dot{x}(-\sin\theta)+\dot{y}(\cos\theta)\\
+-\dot{r}\cos\theta\sin\theta + r\sin^2\theta \cdot \dot{\theta} + \dot{r}\sin\theta\cos\theta + r\cos^2\theta \cdot \dot{\theta} = \dot{x}(-\sin\theta)+\dot{y}(\cos\theta)\\
+r\sin^2\theta \cdot \dot{\theta} + r\cos^2\theta \cdot \dot{\theta} = \dot{x}(-\sin\theta)+\dot{y}(\cos\theta)\\
+r(\sin^2\theta + \cos^2\theta)\dot{\theta} = \dot{x}(-\sin\theta)+\dot{y}(\cos\theta)\\
+r\dot{\theta} = \dot{x}(-\sin\theta)+\dot{y}(\cos\theta)
+\end{gather*}
+Now substitute $\dot{x}$ and $\dot{y}$:
+
+\begin{gather*}
+r\dot{\theta} = (\sigma x + \omega y)(-\sin\theta) + (-\omega x + \sigma y)(\cos\theta)\\
+r\dot{\theta} = -\sigma x\sin\theta - \omega y\sin\theta - \omega x\cos\theta + \sigma y\cos\theta
+\end{gather*}
+Substitute:
+
+\begin{gather*}
+r\dot{\theta} = -\sigma r\cos\theta\sin\theta - \omega r\sin^2\theta - \omega r\cos^2\theta + \sigma r\sin\theta\cos\theta\\
+r\dot{\theta} = -\sigma r\cos\theta\sin\theta + \sigma r\sin\theta\cos\theta - \omega r\sin^2\theta - \omega r\cos^2\theta\\
+r\dot{\theta} = 0 - \omega r(\sin^2\theta + \cos^2\theta)\\
+r\dot{\theta} = -\omega r\\
+\dot{\theta} = -\omega
+\end{gather*}
 
 \subsection{What if $A$ is non-diagonalizable?}
 Let's say that $A$ looks like
@@ -127,6 +180,15 @@ Now consider the three sets
     \item $[-1,1]$ is invariant
 \end{itemize}
 
+\subsubsection{Post class clarification}
+The definition of a positively invariant set and a trapping region look similar, but they are indeed different. Take the following region 
+\[ D=\left\{1\leq r \leq 2\right\}\]
+for the following system
+\[\dot{r}=r(2-r)(r-1),\quad \dot{\theta}=1 \]
+The region $D$ is positively invarient since trajectories stay in $D$, but it is not a trapping region because trajectories appraoch the boundary circles $r=1$ and $r=2$ (the equilibria). However, the slightly larger region 
+\[ D'=\left\{0.5\leq r \leq 2.5\right\}\]
+is a trapping region because trajectories starting in $D'$ flow to into the interior and toward $D$.
+
 \subsection{Attracting set}
 A closed, invariant set $A$ is called an attracting set if $\exists$ a neighboorhood $U$ of $A$ such that $\phi_t(x)\in U \quad \forall t>0$ and $\phi_t(x)\to A\quad x\in U$.  
 
@@ -166,11 +228,20 @@ Let's say that we have a nonlinear system $\dot{x}=f(x)$ and there is an equilib
 Then, there are 3 invariant supspaces for the linear system 
 \begin{itemize}
     \item stable subspace, $E^s$ and $\dim E^s=n_s$ and $E^s=\operatorname{span} \left\{v_1,\ldots,v_{n_s}\right\}$ where $v_1,\ldots,v_{n_s}$ are eigenvectors
+    \begin{itemize}
+        \item More explicitly, stable subspace $E^s$: spanned by (generalized) eigenvectors corresponding to eigenvalues with negative real part ($\text{Re}(\lambda) < 0$)
+    \end{itemize}
     \item center subspace, $E^c$ and $\dim E^c=n_c$ and $E^c=\operatorname{span} \left\{\quad \right\}$
+    \begin{itemize}
+        \item More explicitly, center subspace $E^c$: spanned by (generalized) eigenvectors corresponding to eigenvalues with zero real part ($\text{Re}(\lambda) = 0$)
+    \end{itemize}
     \item unstable subspace, $E^u$ and $\dim E^u=n_u$ and $E^u=\operatorname{span} \left\{\quad \right\}$
+    \begin{itemize}
+        \item More explicitly, unstable subspace $E^u$: spanned by (generalized) eigenvectors corresponding to eigenvalues with positive real part ($\text{Re}(\lambda) > 0$)
+    \end{itemize}
 \end{itemize}
 
-\subsubsection{Can have growth in $E^c$}
+\subsubsection{Can we have growth in $E^c$?}
 Suppose we have 
 \begin{align*}
     \dot{x}&=y \\
