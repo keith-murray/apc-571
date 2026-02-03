@@ -1,0 +1,222 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\section{Plan for Class}
+\begin{enumerate}
+    \item Linear systems in the plane
+    \item Invariant sets, attracting sets
+    \item Stable and unstable eigenspaces
+    \item Hartman-Grobman theorem 1.3.1
+    \item Stable manifold theorem 1.3.2
+\end{enumerate}
+
+
+\section{Linear systems}
+First let's defind the flow map: $\phi_t$ maps $x(0)$ to $x(t)$.
+
+For linear systems, we are interested in 
+\begin{gather*}
+    \dot{x}=Ax\\
+    x(t)=e^{At}
+\end{gather*}
+where the matrix exponential is defined as 
+\[ e^{At} = I + At +\frac{t^2}{2!}A^2+\frac{t^3}{3!}A^3 \] 
+For the flow map, we can write
+\begin{gather*}
+    \psi_t=e^{At}\\
+    \psi_t(x_0)=e^{At}x_0
+\end{gather*}
+
+\subsection{Special cases}
+Let's say we have a matrix $A$ that is 
+\[ A= \begin{bmatrix} \lambda & 0 \\ 0 & \mu \end{bmatrix}\]
+which is 
+\begin{align*}
+    \dot{x}&= \lambda x\\
+    \dot{y}&= \mu y \\
+\end{align*}
+
+Our solution to the flow field will look like
+\begin{gather*}
+    \frac{dy}{dx}=\frac{\mu y}{\lambda x}\\
+    \implies \frac{dy}{y}=\frac{\mu}{\lambda}\frac{dx}{x}\\
+    \implies \log y=\frac{\mu}{\lambda}\log x +C\\
+    \implies y =x^{\mu/\lambda}\cdot c'
+\end{gather*}
+and our solution to the dynamics look like 
+\begin{align*}
+    x(t)&=e^{\lambda t}x_0\\
+    y(t)&=e^{\mu t}y_0
+\end{align*}
+
+Now let's draw out the flow field for various conditions (to do after class)
+\begin{itemize}
+    \item $0<\lambda < \mu$ - unstable node
+    \item $\mu<\lambda < 0$ - stable node 
+    \item $\lambda < 0 <\mu$  - saddle 
+    \item $\lambda=\mu <0$ - sink (straight lines)
+    \item $0<\lambda=\mu$ - source (straight lines)
+\end{itemize}
+
+\subsection{Complex eigenvalues?}
+Let's say our $A$ matrix looks like 
+\[ A= \begin{bmatrix} \sigma & \omega \\ -\omega & \sigma \end{bmatrix}\]
+where the eigenvalues are $\sigma \pm i\omega$.
+\begin{gather*}
+    \dot{x}=\sigma x + \omega y \qquad x=r\cos\theta \qquad \dot{x}=\dot{r}\cos\theta - r\sin\theta \cdot \dot{\theta} \\
+    \dot{y}=-\omega x + \sigma y \qquad x=r\sin\theta \qquad \dot{x}=\dot{r}\sin\theta + r\cos\theta \cdot \dot{\theta} \\
+\end{gather*}
+Via some calculations that I should do later, we have 
+\begin{align*}
+    \dot{r}&=\sigma r\\
+    \dot{\theta}&= -\omega
+\end{align*}
+
+Now we can make some more plots!
+\begin{itemize}
+    \item $\sigma <0$ - stable spiral
+    \item $\sigma >0$ - unstable spiral 
+    \item $\sigma=0$ - centers!
+\end{itemize}
+
+\subsection{What if $A$ is non-diagonalizable?}
+Let's say that $A$ looks like
+\[ A= \begin{bmatrix} \lambda & 1 \\ 0 & \lambda \end{bmatrix}\]
+Our solution would look like 
+\begin{gather*}
+    y(t)=e^{\lambda t}\cdot y_0\\
+    x(t)=e^{\lambda t}\cdot x_0 + y_0te^{\lambda t}
+\end{gather*}
+Now draw the flow field for $\lambda <0$.
+
+\subsubsection{General cases}
+If $A$ is not diagonal, find eigenvalues $v_1,v_2$ such that 
+\[ Av_1=\lambda v_1 \qquad Av_2=\lambda v_2 \]
+Now draw the resulting flow field.
+
+\subsection{The ``big map'' for linear systems}
+Let's say that $A$ looks like
+\[ A= \begin{bmatrix} \lambda & 0 \\ 0 & \mu \end{bmatrix}\]
+where we can find the eigenvalues via 
+\[\operatorname{det}(sI-A)=s^2-(\lambda+\mu )s+\lambda \mu = 0\]
+where the trace is $\lambda+\mu$ and the determinant of $A$ is $\lambda \mu$.
+
+From the trace and determinant, we can draw the ``big map'' for linear systems in the plane that we should supply after class.
+
+\section{Invariant sets, attracting sets}
+Positively invariant set: Say that we have a set of initial conditions $x\in A$. We can think of a flow map that directs the intial conditions to some new point $\phi_t(x)$. We can think of the new set of $A$ under the flow map as $\phi_t(A)$.
+
+If $\phi_t(A)\subset A$ for all $t>0$, then $A$ is positively invariant. ($\phi_t$ must exist for all $t>0$)
+
+If $\phi_t(A)\subset A$ for all $t<0$, then $A$ is negatively invariant.
+
+If $\phi_t(A)\subset A$ for all $t$, then $A$ is invariant.
+
+\subsection{Trapping region}
+Definition: A trapping region is a closed, connected set $D$ such that $\phi_t(D)\subset \operatorname{interior}(D)$ for all $t>0$.
+
+\subsubsection{Example}
+\[ \dot{x}=1-x^2\] 
+Now consider the three sets 
+\begin{itemize}
+    \item $(\infty,-1]$ is negatively invariant but not positively invariant due to finite-time blow-up 
+    \item $[1,\infty)$ is positively invariant
+    \item $[-1,1]$ is invariant
+\end{itemize}
+
+\subsection{Attracting set}
+A closed, invariant set $A$ is called an attracting set if $\exists$ a neighboorhood $U$ of $A$ such that $\phi_t(x)\in U \quad \forall t>0$ and $\phi_t(x)\to A\quad x\in U$.  
+
+Definition: The domain/basin of attraction of $A$ is $\bigcup \phi_t(U)$ for all $t\leq 0$.
+
+\subsubsection{Example 1}
+Let's consider the system 
+\begin{align*}
+    \dot{x}&= y\\
+    \dot{y}&=-x-y
+\end{align*}
+where our matrix $A$ is 
+\[ A= \begin{bmatrix} 0 & 1 \\ -1 & -1 \end{bmatrix}\]
+and the trace is $-1$ and the determinant is $1$; this is a sink. Our attracting set $A$ is $A=(0,0)$ and the basin of attraction is $\mathbb{R}^2$.
+
+\subsubsection{Example 2}
+Let's consider the system 
+\begin{align*}
+    \dot{x}&= y\\
+    \dot{y}&=-x+\epsilon (1-x^2)y
+\end{align*}
+where the limit cycle $\Gamma$ is the attracting set and the basin of $\Gamma$ is $\mathbb{R}^2\backslash (0,0)$
+
+\subsubsection{Example 3}
+Let's consider the system 
+\begin{align*}
+    \dot{x}&= x-x^3\\
+    \dot{y}&=-y
+\end{align*}
+Is the set 
+\[ A = \left\{ (x,0) : x\in[-1,1] \right\}\]
+an attracting set? Yes, despite the origin being an unstable fixed point. Note: we will have a different definition for an attractor, where $A$ is not an attractor.
+
+\subsection{Stable and unstable eigenspaces}
+Let's say that we have a nonlinear system $\dot{x}=f(x)$ and there is an equilibrium point at $x_0$ (i.e. $f(x_0)=0$). Linearization about $x_0$ is 
+\[ \dot{\xi}=Df(x_0)\cdot \xi \]
+Then, there are 3 invariant supspaces for the linear system 
+\begin{itemize}
+    \item stable subspace, $E^s$ and $\dim E^s=n_s$ and $E^s=\operatorname{span} \left\{v_1,\ldots,v_{n_s}\right\}$ where $v_1,\ldots,v_{n_s}$ are eigenvectors
+    \item center subspace, $E^c$ and $\dim E^c=n_c$ and $E^c=\operatorname{span} \left\{\quad \right\}$
+    \item unstable subspace, $E^u$ and $\dim E^u=n_u$ and $E^u=\operatorname{span} \left\{\quad \right\}$
+\end{itemize}
+
+\subsubsection{Can have growth in $E^c$}
+Suppose we have 
+\begin{align*}
+    \dot{x}&=y \\
+    \dot{y}&=0
+\end{align*}
+where 
+\begin{align*}
+    y&=C\\
+    x&= x_0+Ct
+\end{align*}
+where $E^c=\mathbb{R}^2$ but linear growth!
+
+\subsection{Hyperbolic fixed point}
+Let $p$ be a fixed point of $\dot{x}=f(x)$ such that $f(p)=0$.
+
+Definition: $p$ is a hyperbolic fixed point if $Df(x_0)$ has no eigenvalues on imaginary axis (i.e., $n_c=0$).
+
+\section{Hartman-Grobman theorem}
+If $p$ is a hyperbolic fixed point, then there exists a homeomorphism $h$ defined on a neighboorhood $U$ of $p$, taking orbits of the flow $\phi_t$ of $\dot{x}=f(x)$ to those of the flow $e^{t\cdot Df(x_0)}$ of $\dot{\xi}=Df(p)\xi$.
+
+$h$ perserves the sense of orbits and can be chosen to perserve the time parameterization
+
+Note that a homeomorphism is a continuous map with continuous inverse, but is maybe not differentiable!
+
+\begin{enumerate}
+    \item Why is hyperbolic necessary? Suppose $\dot{x}=-x$ and $\dot{y}=y^2$. This becomes $\dot{\xi}=-\xi$ and $\dot{\eta}=0$, and there are no mappings $h$ between the two.
+    \item Why not a diffeomorphism? I forget the argument, but I think we will come back to it later in the class.
+\end{enumerate}
+
+\section{Stable manifold theorem}
+Let $p$ be a fixed point, and $U$ be a neighboorhood of $p$.
+
+We can define a local stable manifold of $p$ as 
+\[ W^s_{\text{loc}}(p)=\left\{x\in U | \phi_t(x)\to p \text{ as } t\to\infty \text{ and } \phi_t(x)\in U \text{ for all } t\geq 0\right\}\]
+
+We can define the unstable manifold as 
+\[ W^u_{\text{loc}}(p)=\left\{x\in U | \phi_t(x)\to p \text{ as } t\to - \infty \text{ and } \phi_t(x)\in U \text{ for all } t\leq 0\right\}\]
+
+\subsection{Now the theorem}
+Stable manifold theorem for a fixed point: For a $p$ hyperbolic fixed point of $\dot{x}=f(x)$, $\exists$ local stable and unstable manifold $W^s_{\text{loc}}(p),W^u_{\text{loc}}(p)$ such that
+\begin{itemize}
+    \item same dimensions as $E^s,E^u$
+    \item tangent to $E^s,E^u$
+\end{itemize}
+and $W^s_{\text{loc}}(p)\text{ and }W^u_{\text{loc}}(p)$ as smooth as $f$ is.
+
+
+
+\end{document}
