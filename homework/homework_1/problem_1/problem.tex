@@ -26,34 +26,105 @@
 
 \begin{notes}
 \paragraph{Part (a)}
-For the system $\dot{x}=-x$, linearization about $x=0$ gives us 
-\[ Df(x)=-1 \implies Df(0)=-1 \]
-indicating that the fixed point is asymptotically stable via the Hartman-Grobman theorem.
+For the system $\dot{x}=-x$, linearization about $x_0=0$ gives us 
+\[ Df(x)=-1 \implies Df(x_0)=-1 \]
+resulting in the linearization $\dot{\xi}=-\xi$. Since $Df(x_0)<0$, we can conclude that the system is stable.
+
+Furthermore, the system is asymptotically stable and we can show this with a Lyapunov approach with function $V(x)=x^2$. Clearly, it follows that $V(x_0)=0$ and $V(x)>0$ for $x\neq x_0$. Taking the time derivative of $V(x)$, we have 
+\begin{align*}
+  \dot{V}(x)&=2x\dot{x}\\
+  &=2x(-x)\\
+  &=-2x^2
+\end{align*}
+where $-2x^2 <0$ for $x\neq x_0$. Hence, our system is asymptotically stable.
 
 \paragraph{Part (b)}
 For the system $\dot{x}=-x^2$, linearization about $x=0$ gives us 
 \[ Df(x)=-2x\implies Df(0)=0 \]
-which yields an inconclusive result about the stability of our system. To determine the stability of the system, note that $f(x)$ is strictly negative. Hence, for negative initial conditions $x(0)<0$, we have
+resulting in the linearization $\dot{\xi}=0$. Since $Df(x_0)=0$, we cannot conclude anything about the stability of the equilibrium from linearization.
+
+To determine the stability of the system, note that $f(x)$ is strictly negative. Hence, for negative initial conditions $x(0)<0$, we have
 \[ x(t) < x(0) \]
-meaning that for any $\epsilon >0$, for all $\delta>0$ such that $|x(0)-0|<\delta$, it is the case that eventually $|x(t^*)|>\epsilon$ for some $t^*$. Hence the system is unstable.
+meaning that $x(t)$ is strictly decreasing with no lower bound.
+
+that for any $\epsilon >0$, for all $\delta>0$ such that $|x(0)-0|<\delta$, it is the case that eventually $|x(t^*)|>\epsilon$ for some $t^*$. Hence the system is unstable.
+
+To determine the stability of the system, we can an analytical expression and argue that for at least one initial condition, the system is unstable. Via separation of variables, we can write 
+\begin{gather*}
+  -\frac{dx}{x^2}=dt \\
+  \int -\frac{dx}{x^2}=\int dt\\
+  \frac{1}{x}=t+C\\
+  x(t) = \frac{1}{t+C}
+\end{gather*}
+for the initial condition $x(0)=-1$, we have $C=-1$ resulting in the analytic expression 
+\[ x(t) = \frac{1}{t-1} \]
+where
+\[ \lim_{t\to 1}\frac{1}{t-1}=-\infty. \]
+Hence, the system is unstable.
 
 \paragraph{Part (c)}
 For the system $\dot{x}=-x^3$, linearization about $x=0$ gives us 
 \[ Df(x)=-3x^2\implies Df(0)=0 \] 
-which yields an inconclusive result about the stability of our system. To determine the stability of our system, we can look at two conditions: $x(0)<0$ and $x(0)>0$. For $x(0)<0$, we have $\dot{x}>0$ and it follows that 
-\[ x(t) > x(0). \]
-This trajectory is then strictly increasing and bounded above by the fixed point $\bar{x}=0$, thus as $t\to\infty$, we have $x(t)\to 0$ for $x(0)<0$. For $x(0)>0$, we have $\dot{x}<0$ and it follows that 
-\[ x(t) < x(0).\] 
-This trajectory is then strictly decreasing and bounded below by the fixed point $\bar{x}=0$, thus as $t\to\infty$, we have $x(t)\to 0$ for $x(0)>0$. In both cases, we have $x(t)\to 0$ as $t\to\infty$ and can conclude that the fixed point is asymptotically stable. 
+resulting in the linearization $\dot{\xi}=0$. Since $Df(x_0)=0$, we cannot conclude anything about the stability of the equilibrium from linearization.
+
+To determine the stability of the system, we can use a Lyapunov approach with function $V(x)=x^2$. Clearly, it follows that $V(x_0)=0$ and $V(x)>0$ for $x\neq x_0$. Taking the time derivative of $V(x)$, we have 
+\begin{align*}
+  \dot{V}(x)&=2x\dot{x}\\
+  &=2x(-x^3)\\
+  &=-2x^4
+\end{align*}
+where $-2x^4 <0$ for $x\neq x_0$. Hence, our system is asymptotically stable.
 
 
+\mathhint{Nudge}{2026-02-04 10:15}{Your analysis looks very solid overall! You've correctly identified the linearizations and appropriately recognized when linearization fails to determine stability.
 
+For part (b), you have the right conclusion that the system is unstable, but I'd suggest double-checking your analytical solution - there might be a small issue with the initial condition you chose and how it relates to the general behavior near the equilibrium.}
 \end{notes}
 
 \begin{solution}
-% Write your solution here
-% Present your final, clean solution.
+\paragraph{Part (a)}
+For the system $\dot{x}=-x$, linearization about $x_0=0$ gives us 
+\[ Df(x)=-1 \implies Df(x_0)=-1 \]
+resulting in the linearization $\dot{\xi}=-\xi$. Since $Df(x_0)<0$, we can conclude that the system is asymptotically stable.
 
+\paragraph{Part (b)}
+For the system $\dot{x}=-x^2$, linearization about $x=0$ gives us 
+\[ Df(x)=-2x\implies Df(0)=0 \]
+resulting in the linearization $\dot{\xi}=0$. Since $Df(x_0)=0$, we cannot conclude anything about the stability of the equilibrium from linearization.
+
+To determine the stability of the system, note that $f(x)$ is strictly negative. Hence, for negative initial conditions $x(0)<0$, we have
+\[ x(t) < x(0) \]
+meaning that $x(t)$ is strictly decreasing with no lower bound.
+
+that for any $\epsilon >0$, for all $\delta>0$ such that $|x(0)-0|<\delta$, it is the case that eventually $|x(t^*)|>\epsilon$ for some $t^*$. Hence the system is unstable.
+
+To determine the stability of the system, we can an analytical expression and argue that for at least one initial condition, the system is unstable. Via separation of variables, we can write 
+\begin{gather*}
+  -\frac{dx}{x^2}=dt \\
+  \int -\frac{dx}{x^2}=\int dt\\
+  \frac{1}{x}=t+C\\
+  x(t) = \frac{1}{t+C}
+\end{gather*}
+for the initial condition $x(0)=-1$, we have $C=-1$ resulting in the analytic expression 
+\[ x(t) = \frac{1}{t-1} \]
+where
+\[ \lim_{t\to 1}\frac{1}{t-1}=-\infty. \]
+Hence, the system is unstable.
+
+\paragraph{Part (c)}
+For the system $\dot{x}=-x^3$, linearization about $x=0$ gives us 
+\[ Df(x)=-3x^2\implies Df(0)=0 \] 
+resulting in the linearization $\dot{\xi}=0$. Since $Df(x_0)=0$, we cannot conclude anything about the stability of the equilibrium from linearization.
+
+To determine the stability of the system, we can use a Lyapunov approach with function $V(x)=x^2$. Clearly, it follows that $V(x_0)=0$ and $V(x)>0$ for $x\neq x_0$. Taking the time derivative of $V(x)$, we have 
+\begin{align*}
+  \dot{V}(x)&=2x\dot{x}\\
+  &=2x(-x^3)\\
+  &=-2x^4
+\end{align*}
+where $-2x^4 <0$ for $x\neq x_0$. Hence, our system is asymptotically stable.
+
+\mathsolutioncheck{Partial}{2026-02-04 10:16}{Part (a) and (c) are correct. However, part (b) has a fundamental error: the student correctly finds that $\dot{x} = -x^2$ has solutions that blow up in finite time for negative initial conditions, but incorrectly concludes the system is unstable. Since $\dot{x} = -x^2 \leq 0$ with equality only at $x=0$, trajectories starting near zero cannot move away from zero, making the equilibrium Lyapunov stable (though not asymptotically stable).}
 \end{solution}
 
 \end{document}

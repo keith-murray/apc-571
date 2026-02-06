@@ -32,15 +32,255 @@
 \end{problem}
 
 \begin{notes}
-% Write your working notes here
-% This is where you can sketch ideas, try approaches, and work through the problem.
+\paragraph{Part (a)}
+Let's start by setting our system equal to zero
+\begin{align}
+  0&=-y+ax(x^2+y^2)\\
+  0&=x+ay(x^2+y^2)
+\end{align}
+Now multiply equation (1) by $x$ and equation (2) by $y$ to get 
+\begin{align*}
+  0&=-xy+ax^2(x^2+y^2)\\
+  0&=xy+ay^2(x^2+y^2)
+\end{align*}
+and adding them gives us 
+\begin{align*}
+  0&=-xy+ax^2(x^2+y^2)+xy+ay^2(x^2+y^2)\\
+  &=ax^2(x^2+y^2)+ay^2(x^2+y^2)\\
+  &=a(x^2+y^2)(x^2+y^2)\\
+  &=a(x^2+y^2)^2
+\end{align*}
+where if $a\neq 0$, then our only fixed point is the origin $(0,0)$. If $a=0$, then our earlier equations are $\dot{x}=-y$ and $\dot{y}=x$ and the origin is still our only fixed point.
+
+\mathhint{Nudge}{2026-02-03 21:48}{Your approach for part (a) is on the right track! You correctly identified that the origin $(0,0)$ is always an equilibrium point, and your algebraic manipulation is sound. However, you might want to double-check whether you've found *all* possible equilibrium points by looking more carefully at what happens when $x^2 + y^2 = 0$ versus when $x^2 + y^2 \neq 0$.}
+
+\paragraph{Part (b)}
+Our linearization becomes $\dot{\xi}=Df(x_0)\xi$ where $Df(x_0)$ is the jacobian
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+Evaluating each expression, we have 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=a(x^2+y^2)+ax(2x)=ay^2+3ax^3\\
+  \frac{\partial f_1}{\partial y}=-1+2axy\\
+  \frac{\partial f_2}{\partial x}=1+2axy\\
+  \frac{\partial f_2}{\partial y}=a(x^2+y^2)+ay(2y)=ax^2+3ay^3
+\end{gather*}
+Evaluating each of the expressions at $(0,0)$, we have 
+\[Df(x_0)=\begin{bmatrix}
+0 & -1 \\
+1 & 0
+\end{bmatrix} \]
+and our linearization is 
+\[\dot{\xi}=\begin{bmatrix}
+0 & -1 \\
+1 & 0
+\end{bmatrix}\xi\]
+To determine stability, we can compute the eigenvalues via $\det{(A-\lambda I)}=0$.
+\[0=\det{(A-\lambda I)}=\lambda^2+1\]
+implying that $\lambda=\pm i$ and that we cannot conclude anything about the stability of the equilibrium point.
+
+\paragraph{Part (c)}
+Let's start with deriving $\dot{r}$ via the relationship $r^2=x^2+y^2$. We can write 
+\begin{gather*}
+  \frac{d}{dt}\left[r^2=x^2+y^2\right]\\
+  2r\dot{r}=2x\dot{x}+2y\dot{y}
+\end{gather*}
+and substitute in the values for $\dot{x},\dot{y}$ to get 
+\begin{gather*}
+  2r\dot{r}=2x\left(-y+ax(x^2+y^2)\right)+2y\left(x+ay(x^2+y^2)\right)\\
+  2r\dot{r}=-2xy+2ax^2(x^2+y^2)+2xy+2ay^2(x^2+y^2)\\
+  2r\dot{r}=2ax^2(x^2+y^2)+2ay^2(x^2+y^2)\\
+  2r\dot{r}=2a(x^2+y^2)(x^2+y^2)\\
+\end{gather*}
+and substituting in $r^2=x^2+y^2$, we can write 
+\begin{gather*}
+  2r\dot{r}=2ar^4\\
+  \dot{r}=ar^3
+\end{gather*}
+
+To derive $\dot{\theta}$, let's differentiate the relationship $\tan\theta=y/x$ to get 
+\[ 
+  \sec^2\theta \cdot\dot{\theta}=\frac{x\dot{y}-y\dot{x}}{x^2}\\
+\]
+and plugging in $x^2=r^2\cos^2\theta $, we can write 
+\begin{gather*}
+  \sec^2\theta \cdot\dot{\theta}=\frac{x\dot{y}-y\dot{x}}{r^2\cos^2\theta}\\
+  \sec^2\theta \cdot\dot{\theta}=\frac{x\dot{y}-y\dot{x}}{r^2}\sec^2\theta\\
+  \dot{\theta}=\frac{x\dot{y}-y\dot{x}}{r^2}
+\end{gather*}
+Substituting for $\dot{x},\dot{y}$, we have 
+\begin{gather*}
+  \dot{\theta}=\frac{x\left(x+ay(x^2+y^2)\right)-y\left(-y+ax(x^2+y^2)\right)}{r^2}\\
+  \dot{\theta}=\frac{x^2+axy(x^2+y^2)+y^2-axy(x^2+y^2)}{r^2}\\
+  \dot{\theta}=\frac{x^2+y^2}{r^2}\\
+  \dot{\theta}=\frac{r^2}{r^2}\\
+  \dot{\theta}=1
+\end{gather*}
+
+Hence, system (1) in polar coordinates is 
+\begin{align*}
+  \dot{r}&=ar^3\\
+  \dot{\theta}&=1
+\end{align*}
+To determine the stability type of the equilibrium at the origin, let's consider separately the cases $\alpha<0$, $\alpha=0$, and $\alpha>0$.
+
+For $\alpha<0$, we have $\dot{r}<0$, implying that 
+\[||(x(t),y(t))-(0,0)||= \sqrt{x(t)^2+y(t)^2}=\sqrt{r(t)}<\sqrt{r(0)}= \sqrt{x(0)^2+y(0)^2}=||(x(0),y(0))-(0,0)||\]
+Hence, given some $\epsilon>0$, we can set $\delta=\epsilon$ and it follows that for $||(x(0),y(0))-(0,0)||<\delta$ we have 
+\[||(x(t),y(t))-(0,0)||< ||(x(0),y(0))-(0,0)||<\delta=\epsilon\]
+and 
+\[ ||(x(t),y(t))-(0,0)|| < \epsilon.\] 
+Furthermore, our reasoning above implies that our trajectories are strictly decreasing and bounded below by the origin. Hence, via the monotone convergence theorem, we can state the as $t\to\infty$ we have $(x(t),y(t))\to (0,0)$ and the origin is asymptotically stable.
+
+For $\alpha=0$, we have $\dot{r}=0$ implying that $r(0)=r(t)$. Hence, we can write 
+\[||(x(t),y(t))-(0,0)||= \sqrt{x(t)^2+y(t)^2}=\sqrt{r(t)}=\sqrt{r(0)}= \sqrt{x(0)^2+y(0)^2}=||(x(0),y(0))-(0,0)||\]
+Given some $\epsilon>0$, we can set $\delta=\epsilon$ and it follows that for $||(x(0),y(0))-(0,0)||<\delta$ we have 
+\[||(x(t),y(t))-(0,0)||=||(x(0),y(0))-(0,0)||<\delta=\epsilon\]
+and
+\[ ||(x(t),y(t))-(0,0)|| < \epsilon.\] 
+Thus, our system is Lyapunov stable.
+
+For $\alpha>0$, we can solve for $r$ to show that there are initial conditions that result in finite time blow up, showing the origin is unstable. By separating variables, we can write 
+\begin{gather*}
+  \frac{dr}{ar^3}=dt\\
+  \int \frac{dr}{ar^3}=\int dt\\
+  -\frac{1}{2ar^2}=t+C\\
+  -\frac{1}{2ar^2}=t+C\\
+  r(t)=\frac{1}{\sqrt{-2at+D}}
+\end{gather*}
+For the initial condition $r(0)=1$, we have $D=1$ and the resulting equation 
+\[ r(t)=\frac{1}{\sqrt{-2at+1}} \]
+experiences finite time blow up as $t\to 1$ given that $a>0$. Hence the origin is unstable.
 
 \end{notes}
 
 \begin{solution}
-% Write your solution here
-% Present your final, clean solution.
+\paragraph{Part (a)}
+Let's start by setting our system equal to zero
+\begin{align}
+  0&=-y+ax(x^2+y^2)\\
+  0&=x+ay(x^2+y^2)
+\end{align}
+Now multiply equation (1) by $x$ and equation (2) by $y$ to get 
+\begin{align*}
+  0&=-xy+ax^2(x^2+y^2)\\
+  0&=xy+ay^2(x^2+y^2)
+\end{align*}
+and adding them gives us 
+\begin{align*}
+  0&=-xy+ax^2(x^2+y^2)+xy+ay^2(x^2+y^2)\\
+  &=ax^2(x^2+y^2)+ay^2(x^2+y^2)\\
+  &=a(x^2+y^2)(x^2+y^2)\\
+  &=a(x^2+y^2)^2
+\end{align*}
+where if $a\neq 0$, then our only fixed point is the origin $(0,0)$. If $a=0$, then our earlier equations are $\dot{x}=-y$ and $\dot{y}=x$ and the origin is still our only fixed point.
 
+
+\paragraph{Part (b)}
+Our linearization becomes $\dot{\xi}=Df(x_0)\xi$ where $Df(x_0)$ is the jacobian
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+Evaluating each expression, we have 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=a(x^2+y^2)+ax(2x)=ay^2+3ax^3\\
+  \frac{\partial f_1}{\partial y}=-1+2axy\\
+  \frac{\partial f_2}{\partial x}=1+2axy\\
+  \frac{\partial f_2}{\partial y}=a(x^2+y^2)+ay(2y)=ax^2+3ay^3
+\end{gather*}
+Evaluating each of the expressions at $(0,0)$, we have 
+\[Df(x_0)=\begin{bmatrix}
+0 & -1 \\
+1 & 0
+\end{bmatrix} \]
+and our linearization is 
+\[\dot{\xi}=\begin{bmatrix}
+0 & -1 \\
+1 & 0
+\end{bmatrix}\xi\]
+To determine stability, we can compute the eigenvalues via $\det{(A-\lambda I)}=0$.
+\[0=\det{(A-\lambda I)}=\lambda^2+1\]
+implying that $\lambda=\pm i$ and that we cannot conclude anything about the stability of the equilibrium point.
+
+\paragraph{Part (c)}
+Let's start with deriving $\dot{r}$ via the relationship $r^2=x^2+y^2$. We can write 
+\begin{gather*}
+  \frac{d}{dt}\left[r^2=x^2+y^2\right]\\
+  2r\dot{r}=2x\dot{x}+2y\dot{y}
+\end{gather*}
+and substitute in the values for $\dot{x},\dot{y}$ to get 
+\begin{gather*}
+  2r\dot{r}=2x\left(-y+ax(x^2+y^2)\right)+2y\left(x+ay(x^2+y^2)\right)\\
+  2r\dot{r}=-2xy+2ax^2(x^2+y^2)+2xy+2ay^2(x^2+y^2)\\
+  2r\dot{r}=2ax^2(x^2+y^2)+2ay^2(x^2+y^2)\\
+  2r\dot{r}=2a(x^2+y^2)(x^2+y^2)\\
+\end{gather*}
+and substituting in $r^2=x^2+y^2$, we can write 
+\begin{gather*}
+  2r\dot{r}=2ar^4\\
+  \dot{r}=ar^3
+\end{gather*}
+
+To derive $\dot{\theta}$, let's differentiate the relationship $\tan\theta=y/x$ to get 
+\[ 
+  \sec^2\theta \cdot\dot{\theta}=\frac{x\dot{y}-y\dot{x}}{x^2}\\
+\]
+and plugging in $x^2=r^2\cos^2\theta $, we can write 
+\begin{gather*}
+  \sec^2\theta \cdot\dot{\theta}=\frac{x\dot{y}-y\dot{x}}{r^2\cos^2\theta}\\
+  \sec^2\theta \cdot\dot{\theta}=\frac{x\dot{y}-y\dot{x}}{r^2}\sec^2\theta\\
+  \dot{\theta}=\frac{x\dot{y}-y\dot{x}}{r^2}
+\end{gather*}
+Substituting for $\dot{x},\dot{y}$, we have 
+\begin{gather*}
+  \dot{\theta}=\frac{x\left(x+ay(x^2+y^2)\right)-y\left(-y+ax(x^2+y^2)\right)}{r^2}\\
+  \dot{\theta}=\frac{x^2+axy(x^2+y^2)+y^2-axy(x^2+y^2)}{r^2}\\
+  \dot{\theta}=\frac{x^2+y^2}{r^2}\\
+  \dot{\theta}=\frac{r^2}{r^2}\\
+  \dot{\theta}=1
+\end{gather*}
+
+Hence, system (1) in polar coordinates is 
+\begin{align*}
+  \dot{r}&=ar^3\\
+  \dot{\theta}&=1
+\end{align*}
+To determine the stability type of the equilibrium at the origin, let's consider separately the cases $\alpha<0$, $\alpha=0$, and $\alpha>0$.
+
+For $\alpha<0$, we have $\dot{r}<0$, implying that 
+\[||(x(t),y(t))-(0,0)||= \sqrt{x(t)^2+y(t)^2}=r(t)<r(0)= \sqrt{x(0)^2+y(0)^2}=||(x(0),y(0))-(0,0)||\]
+Hence, given some $\epsilon>0$, we can set $\delta=\epsilon$ and it follows that for $||(x(0),y(0))-(0,0)||<\delta$ we have 
+\[||(x(t),y(t))-(0,0)||< ||(x(0),y(0))-(0,0)||<\delta=\epsilon\]
+and 
+\[ ||(x(t),y(t))-(0,0)|| < \epsilon.\] 
+Furthermore, our reasoning above implies that our trajectories are strictly decreasing and bounded below by the origin. Hence, via the monotone convergence theorem, we can state the as $t\to\infty$ we have $(x(t),y(t))\to (0,0)$ and the origin is asymptotically stable.
+
+For $\alpha=0$, we have $\dot{r}=0$ implying that $r(0)=r(t)$. Hence, we can write 
+\[||(x(t),y(t))-(0,0)||= \sqrt{x(t)^2+y(t)^2}=r(t)=r(0)= \sqrt{x(0)^2+y(0)^2}=||(x(0),y(0))-(0,0)||\]
+Given some $\epsilon>0$, we can set $\delta=\epsilon$ and it follows that for $||(x(0),y(0))-(0,0)||<\delta$ we have 
+\[||(x(t),y(t))-(0,0)||=||(x(0),y(0))-(0,0)||<\delta=\epsilon\]
+and
+\[ ||(x(t),y(t))-(0,0)|| < \epsilon.\] 
+Thus, our system is Lyapunov stable.
+
+For $\alpha>0$, we can solve for $r$ to show that there are initial conditions that result in finite time blow up, showing the origin is unstable. By separating variables, we can write 
+\begin{gather*}
+  \frac{dr}{ar^3}=dt\\
+  \int \frac{dr}{ar^3}=\int dt\\
+  -\frac{1}{2ar^2}=t+C\\
+  -\frac{1}{2ar^2}=t+C\\
+  r(t)=\frac{1}{\sqrt{-2at+D}}
+\end{gather*}
+For the initial condition $r(0)=1$, we have $D=1$ and the resulting equation 
+\[ r(t)=\frac{1}{\sqrt{-2at+1}} \]
+experiences finite time blow up as $t\to 1$ given that $a>0$. Hence the origin is unstable.
+
+
+
+\mathsolutioncheck{Correct}{2026-02-04 13:29}{The solution is mathematically correct throughout all parts. The equilibrium analysis, linearization, polar coordinate transformation, and stability analysis for all three cases ($a<0$, $a=0$, $a>0$) are all properly executed with valid reasoning and correct conclusions.}
 \end{solution}
 
 \end{document}
