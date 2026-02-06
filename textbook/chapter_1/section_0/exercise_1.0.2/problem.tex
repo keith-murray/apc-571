@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathhint}
+
+\begin{document}
+
+% Set the context for this problem - this information appears in the page header
+% and helps the hint system understand what material you've covered
+\mathhintcontext{
+  book=Guckenheimer and Holmes,
+  chapter=1,
+  section=1.0,
+  problem=1.0.2,
+  lectures={lecture_1.tex, lecture_2.tex}
+}
+
+\begin{problem}
+Find the fixed points for the equation $\dot{x}=-x+x^2$ and discuss their stability. Show that this equation has solutions which exist for all time as well as solutions which become unbounded in finite time. (Solving this equation is straightforward, but this interpretation of the behavior of solutions may be new to you.)
+
+\end{problem}
+
+\begin{notes}
+Easiest thing to try is separation of variables
+\begin{gather*}
+  \frac{dx}{-x+x^2}=dt\\
+  \int \frac{dx}{-x+x^2}=\int dt\\
+\end{gather*}
+What trick do I need to solve the integral?
+
+Ah yes that's right, partial fraction decomposition. Now we can write 
+\begin{gather*}
+  \int \frac{dx}{(x-1)x}=\int dt\\
+  \int \frac{1}{x-1}-\frac{1}{x}dx=\int dt\\
+  \int \frac{dx}{x-1}-\int\frac{dx}{x}=\int dt\\
+  \ln(x-1)-\ln(x)=t+C\\
+  \ln\left(\frac{x-1}{x}\right)=t+C \\
+  \frac{x-1}{x}=De^t\\
+  1-\frac{1}{x}=De^t\\
+  \frac{1}{x}=1-De^t\\
+  x(t)=\frac{1}{1-De^t}
+\end{gather*}
+Did I do this right?
+
+Great! Now the answer becomes obvious. For negative values of $D$ (here denoted as $D'>0$), we have 
+\[ x(t)=\frac{1}{1+D'e^t} \]
+where 
+\[ \lim_{t\to\infty}\frac{1}{1+D'e^t}=\infty \]
+which is a solution that exists for all time. However, for positive values of $D$, we have an issue when $De^t=1$. More formally, we can write 
+\[ \lim_{t\to\ln\left(\frac{1}{D}\right)}\frac{1}{1-De^t}=\infty \]
+where $D<1$ makes the setup more physically plausible. Therefore, this solution blows up in finite time.
+
+I think this should be everything, right?
+
+Ah yes, let's solve for the fixed points. We can write 
+\begin{align*}
+  0&=-x+x^2\\
+  &=x(x-1)
+\end{align*}
+showing that the fixed points are $\bar{x}=0$ and $\bar{x}=1$. To find the stability, we can linearlize via 
+\[ Df(x)=-1+2x \]
+where $Df(0)=-1$, indicating that it is stable, and $Df(1)=1$, indicating that it is unstable.
+
+Intuitively, when the initial condition is in the basin of attraction for $\bar{x}=0$, we have a solution that exists for all time. When the initial condition is $>1$, then our unstable equilibria at $\bar{x}=1$ causes our solution to blow up in finite time.
+
+Ah yes, that's what you were saying earlier. I should have written 
+\[ \lim_{t\to\infty}\frac{1}{1+D'e^t}=0 \]
+right?
+
+\end{notes}
+
+\begin{solution}
+Let's solve for the fixed points. We can write 
+\begin{align*}
+  0&=-x+x^2\\
+  &=x(x-1)
+\end{align*}
+showing that the fixed points are $\bar{x}=0$ and $\bar{x}=1$. To find the stability, we can linearlize via 
+\[ Df(x)=-1+2x \]
+where $Df(0)=-1$, indicating that it is stable, and $Df(1)=1$, indicating that it is unstable.
+
+To show that the equation has solutions that exist for all time, we can solve for the equation by writing 
+\begin{gather*}
+  \frac{dx}{-x+x^2}=dt\\
+  \int \frac{dx}{-x+x^2}=\int dt\\
+  \int \frac{dx}{(x-1)x}=\int dt\\
+  \int \frac{1}{x-1}-\frac{1}{x}dx=\int dt\\
+  \int \frac{dx}{x-1}-\int\frac{dx}{x}=\int dt\\
+  \ln(x-1)-\ln(x)=t+C\\
+  \ln\left(\frac{x-1}{x}\right)=t+C \\
+  \frac{x-1}{x}=De^t\\
+  1-\frac{1}{x}=De^t\\
+  \frac{1}{x}=1-De^t\\
+  x(t)=\frac{1}{1-De^t}
+\end{gather*}
+Now the solutions become obvious. For negative values of $D$ (here denoted as $D'>0$), we have 
+\[ x(t)=\frac{1}{1+D'e^t} \]
+where 
+\[ \lim_{t\to\infty}\frac{1}{1+D'e^t}=0 \]
+which is a solution that exists for all time. However, for positive values of $D$, we have an issue when $De^t=1$. More formally, we can write 
+\[ \lim_{t\to\ln\left(\frac{1}{D}\right)}\frac{1}{1-De^t}=\infty \]
+where $D<1$ makes the setup more physically plausible. Therefore, this solution blows up in finite time.
+
+Intuitively, when the initial condition is in the basin of attraction for $\bar{x}=0$, we have a solution that exists for all time. When the initial condition is $>1$, then our unstable equilibria at $\bar{x}=1$ causes our solution to blow up in finite time.
+
+\end{solution}
+
+% === Math Hint Log ===
+\mathhint{Nudge}{2026-02-06 12:04}{You're on exactly the right track — think about how you can split $\frac{1}{-x+x^2}$ into simpler fractions.}
+\mathhint{Direction}{2026-02-06 12:05}{Look into **partial fraction decomposition** — specifically, decompose $\frac{1}{x(x-1)}$ into the form $\frac{A}{x} + \frac{B}{x-1}$ and then integrate each term separately.}
+\mathhint{Nudge}{2026-02-06 12:12}{Your algebra looks correct — nice work getting to $x(t) = \frac{1}{1-De^t}$. Now think about what different values of $D$ (determined by initial conditions) imply for the long-term behavior of that solution, and how that connects to the question about finite-time blow-up versus solutions existing for all time.}
+\mathhint{Nudge}{2026-02-06 12:22}{You're very close, but double-check your limit for the $D' > 0$ case — what actually happens to $\frac{1}{1+D'e^t}$ as $t \to \infty$? Also, don't forget to address the fixed points and their stability, which the problem explicitly asks for.}
+\mathhint{Nudge}{2026-02-06 12:29}{You're almost there — just revisit your limit for the $D' > 0$ case one more time, because $\frac{1}{1+D'e^t}$ approaches a specific finite value as $t \to \infty$, not infinity.}
+\mathhint{Nudge}{2026-02-06 12:30}{Yes, exactly right — that limit goes to $0$, which is perfectly consistent with $\bar{x}=0$ being a stable fixed point. Your solution looks complete and well-organized!}
+\mathsolutioncheck{Correct}{2026-02-06 12:33}{The fixed points $\bar{x}=0$ and $\bar{x}=1$ are correctly identified, and the linearization analysis correctly determines that $\bar{x}=0$ is stable and $\bar{x}=1$ is unstable. The explicit solution $x(t) = \frac{1}{1-De^t}$ is correct, and the analysis of when solutions exist for all time ($D \leq 0$, corresponding to initial conditions in $[0,1)$) versus when they blow up in finite time ($D > 0$, corresponding to initial conditions greater than 1) is valid. The intuitive summary connecting the behavior to the basin of attraction of the stable fixed point is also correct.}
+
+
+\end{document}
