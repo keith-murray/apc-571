@@ -40,9 +40,9 @@ where $a_0=0$ and $a_1=0$ via the stable manifold theorem (we know the eigenspac
 We know that it's invariant via stable manifold theorem, so we can write 
 \begin{gather*}
     \dot{y}=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT}\\
-    \implies -y+x=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT}\\
-    \implies -h(x)+x=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT}\\
-    \implies -\left(a_2x^2+a_3x^3\right)+x=2a_2x\dot{x}+3a_3x^2\dot{x}+O(x^4)
+    \implies -y+x^2=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT}\\
+    \implies -h(x)+x^2=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT}\\
+    \implies -\left(a_2x^2+a_3x^3\right)+x^2=2a_2x\dot{x}+3a_3x^2\dot{x}+O(x^4)
 \end{gather*}
 For $x^2$, our coefficient is 
 \[a_2+1=2a^2\implies a_2=\frac{1}{3}\]
@@ -55,6 +55,38 @@ and in this case, this is exact. To show this, we can write
 and 
 \[ \frac{d}{dt}\left(\frac{x^2}{3}\right)=\frac{2}{3}x\dot{x}=\frac{2}{3}x^2 \]
 and they agree.
+
+\subsection{After class notes}
+The example above will serve as a guide for how to do problem 3 in this weeks homework. Below, I take pains to show each step.
+
+From linearization, we know 
+\[ Df(0,0)= \begin{bmatrix} 1 & 0 \\ 0 & -1  \end{bmatrix}\]
+and hence 
+\[E^u=\operatorname{span}\left(\begin{bmatrix} 1 \\ 0 \end{bmatrix}\right) \]
+which is equivalent to the equation $y=0+0x$ (the reason we are so explicit here will become clear).
+
+We can imagine that our unstable, invariant manifold $W^u_{\text{loc}}$ can be represented as a line $y=h(x)$. Via the taylor series, we have 
+\[ y=h(x)=a_0+a_1x+a_2x^2+a_3x^3+\cdots \]
+where $a_0=0$ and $a_1=0$ via the stable manifold theorem. More explicitly, the stable manifold theorem tells us that $W^u_{\text{loc}}$ shares the same first derivative that we found via the linearization. Now we can write 
+\[ h(x)= a_2x^2+a_3x^3+\text{ HOT}\]
+This is where the fun begins! Our goal is to manipulate this expression $h(x)$ to reveal what $a_2$ and $a_3$ are. To make matters easier (in fact, achievable at all), we can use our time derivatives from the system to help us. To begin, lets take the derivative with respect to time to get 
+\[ \dot{y}=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT} \]
+where we can plug in our expression $\dot{y}=-y+x^2$ to write 
+\[ -y+x^2=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT} \]
+While this is weird, we have a previous expression for $y$ that we can make use of $y=h(x)$. Hence we have 
+\[ -h(x)+x^2=2a_2x\dot{x}+3a_3x^2\dot{x}+\text{ HOT} \]
+and then 
+\[ -\left(a_2x^2+a_3x^3\right)+x^2=2a_2x\dot{x}+3a_3x^2\dot{x}+O(x^4) \]
+Now we are going to make use of our expression for $\dot{x}=x$ to get 
+\[ -\left(a_2x^2+a_3x^3\right)+x^2=2a_2x^2+3a_3x^3+O(x^4) \]
+The pattern is clear. Let's group coefficients and solve
+\[ (1-a_2)x^2-a_3x^3=2a_2x^2+3a_3x^3+O(x^4) \]
+For $x^2$, our coefficient is 
+\[a_2+1=2a^2\implies a_2=\frac{1}{3}\]
+and for $x^3$, our coefficient is 
+\[-a_3=3 a_3\implies a_3=0\]
+Hence, we can write 
+\[ y=h(x)=\frac{x^2}{3}\]
 
 \section{Diffeomorphisms/maps}
 Let's remind ourselves what maps. A flow is $\dot{x}=f(x)$ and a map is $x_{t+1}=F(x_t)$. For flows, we have a version of a map
@@ -153,6 +185,8 @@ Also take a peak at Hartman-Grobman theorem for maps (theorem 1.4.1).
 \section{Transversal intersections}
 We can extend $W^{u,s}_{\text{loc}}(p)$ to global stable and unstable manifolds $W^{u,s}(p)$ by starting with a small piece of $W^{u,s}_{\text{loc}}(p)$ and iterating ther points forward and backward. But $W^{s}$ cannot intersect itself, and $W^{u}$ cannot intersect itself, but can $W^{s}$ intersect $W^{u}$? Yes! This happens with homoclinic orbits.
 
-
+I don't know how we got here, but the definition of a transversal intersection is 
+\[ T_pM_1\bigcup T_pM_2=\mathbb{R}^n \]
+Which means that two manifolds ``transversally intersect'' if they intersect in a non parallel fashion. Like, two perpendicular lines intersect transversally, but two parallel lines don't.
 
 \end{document}
