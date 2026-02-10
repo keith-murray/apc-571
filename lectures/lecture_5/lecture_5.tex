@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section{Plan for Class}
+\begin{enumerate}
+    \item Example: hyberbolic toral automorphism
+    \item Poincare maps
+    \item Time-periodic linear systems: Floquet theory
+\end{enumerate}
+
+\section{ODEs and maps}
+
+For Flows/ODE, $W^s$ and $W^u$ can't intersect transversally! The stable and unstable manifolds can fall perfectly on top of each other, but the intersection is not transversal. (There is a figure here that we should reproduce later.)
+
+For maps, $W^s$ and $W^u$ can't intersect themselves (i.e. $W^s$ can't intersect itself), but $W^s$ and $W^u$ can intersect transversally!
+
+Homoclinic orbits on maps occur stable and unstable manifolds out of one equilibrium that intersect along many points. Heteroclinic orbits on maps occur when the stable manifold of one equilibrium and the unstable manifold of another equilibrium intersect along one point.
+
+\section{Hyberbolic toral automorphism}
+
+Let's examine the following system 
+\[
+\begin{bmatrix}
+    x\\y
+\end{bmatrix}\longmapsto\begin{bmatrix}
+    2 & 1 \\ 1 & 1
+\end{bmatrix}\begin{bmatrix}
+    x\\y
+\end{bmatrix} \pmod 1
+\]
+where $A=\begin{bmatrix}2 & 1 \\ 1 & 1\end{bmatrix}$ and $\operatorname{det} A=2-1=1$, implying that $A$ is area preserving!
+
+Now let's examine some points in our system 
+\begin{gather*}
+    \left(\frac{1}{2},0\right)\mapsto \left(1,\frac{1}{2}\right)\\
+    \left(0,\frac{1}{2}\right)\mapsto \left(\frac{1}{2},\frac{1}{2}\right)\\
+    \left(\frac{1}{2},1\right)\mapsto \left(2,\frac{3}{2}\right)\\
+\end{gather*}
+Rowley got a little confused, but the idea is that the map is onto and area preserving on the torus. Hence, the map is an automorphism.
+
+Now let's compute eigenvalues:
+\begin{gather*}
+    \det \begin{bmatrix}
+        \lambda-2 & -1 \\ -1 & \lambda - 1
+    \end{bmatrix}=0\implies (\lambda-2)(\lambda-1)-1=0\\
+    \lambda^2-3\lambda +1=0\\
+    \lambda^{+,-}=\frac{3\pm\sqrt{5}}{2}
+\end{gather*}
+It follows that $\lambda^+>1$, hence unstable, and $\lambda^-<1$, hence stable.
+
+The slopes of the manifolds are irrational, and via the $\mod$ property, they tile the space. Furthermore, the stable and unstable manifold cross at countably infinite number of points, hence they form a homoclinic orbit.
+
+We can make the map simpiler by writing it as 
+\[
+\left(\frac{m}{N},\frac{n}{N}\right)\mapsto\left(\frac{2m+n}{N},\frac{m+n}{N}\right)\pmod 1
+\]
+we see that we get 
+\begin{align*}
+    \left(0,\frac{1}{2}\right)&\mapsto \left(\frac{1}{2},\frac{1}{2}\right)\\
+    \left(\frac{1}{2},\frac{1}{2}\right)&\mapsto\left(\frac{1}{2},0\right)\\
+    \left(\frac{1}{2},0\right)&\mapsto\left(0,\frac{1}{2}\right)
+\end{align*}
+In fact, there are countably inifinitely many periodic orbits of any frequency. Yet, any irrational number will not have a periodic orbit.
+
+\section{Poincare maps}
+We have two main ways to use the Poincare map:
+\begin{enumerate}
+    \item near a periodic orbit 
+    \item periodic forcing of a time-invariant system
+\end{enumerate}
+
+\subsection{Near a periodic orbit}
+Imagine taking a picture $P$ of a system everytime completes an orbit. We have $P: \Sigma\to\Sigma$. A periodic orbit is a fixed point of $P$, and we can linearize $P$ about the fixed point to analyze for stability.
+
+\subsubsection{Example}
+Let's say we have the following system 
+\begin{align*}
+    \dot{r}&=r-r^3\\
+    \dot{\theta}&=1
+\end{align*}
+For $r=1$, we have $\dot{r}=1-1^3=0$ and we have a periodic orbit. We can factorize $\dot{r}$ into $\dot{r}=r(1-r^2)$ where it's obvious that $r_0=0$ is an unstable fixed point and $r_0=1$ is a stable fixed point.
+
+To make a Poincare map, let's look at $\Sigma=[0,\infty)$. Our ``time of flight'' (time to complete an orbit)is $2\pi$ since $\dot{\theta}=1$. Look at equation 1.5.4 in the book to get the closed form solution for $P(r)$, but we can linearize around $r_0=1$ to show that it is a stable fixed point.
+
+\subsection{Periodic forcing of a time-invariant system}
+If we have a system $\dot{x}=f(x,t)$ where $f$ is period via $f(x,t+T)=f(x,t)$ for all $x,t$. We can reparameterize via 
+\begin{align*}
+    \dot{x}&=f(x,\theta)\\
+    \dot{\theta} &= 1
+\end{align*}
+where it is now a time-independent system (autonomous).
+
+If $\dot{x}=f(x,t)$ has a periodic orbit $\gamma(t)$ (period $T$), then the Poincare map $P$ will have a fixed point at $\gamma(0)$.
+
+Let $x(t)=\gamma(t)+\xi(t)$ where $||\xi||<<1$. We can taylor expand to write 
+\[\dot{x}=\dot{\gamma}+\dot{\xi}=f(x,t)=f(\gamma+\xi,t)=f(\gamma,t)+D_xf(\gamma,t)\cdot \xi + O(||\xi||^2) \]
+where we can drop out $\dot{\gamma}$, $f(\gamma,t)$, and $O(||\xi||^2)$ to write 
+\[ \dot{\xi}= D_xf(\gamma,t)\cdot \xi \]
+where $A(t)=D_xf(\gamma,t)$ and $A(t+T)=A(t)$.
+
+In the vicinity of periodic orbit, we get a time-periodic linear system 
+\[\dot{\xi}=A(t)\xi\]
+where this is Floquet theory, whatever that is.
+
+There are some important properties of this system. If $A$ is constant (independent of $t$), then the solution is 
+\[\xi(t)=e^{A(t)}\xi(0)\]
+If $A(t)$ is time dependent, is it that 
+\[\xi(t)=e^{\int_{0}^{t}A(t)dt}\xi(0)???\]
+NO!
+
+Question: suppose $A(t)$ has eigenvalues in open LHP for all $t$. Is $\xi=0$ a stable fixed point? NO! For a counte-example, look at Markus and Yamada (1960). We'll write it later.
+
+\section{Floquet theory}
+How do you understand stability of $\dot{\xi}=A(t)\xi$? We have a theorem!
+
+\textit{Floquet theorem}: The solution of $\dot{\xi}=A(t)\xi$ is 
+\[\xi(t)=\Phi(t)\xi(0)\]
+where $\Phi(t)$ is the fundamental solution matrix. If $A$ is independent of $t$, then $\Phi(t)=e^{At}$.
+
+Floquet theorem tells us that $\Phi(t)$ has the form $\Phi(t)=Z(t)e^{tR}$ where $Z$ is periodic, $Z(t+T)=Z(t)$, and $R$ is constant. The only thing that can blow up or decay is $e^{tR}$.
+\begin{itemize}
+    \item eigenvalues of $e^{TR}$ are Floquet multipliers
+    \item eigenvalues of $R$ are Floquet exponents (not unique)
+\end{itemize}
+where we have $e^{tR}$ is unique, but $R$ not unique. If any Floquet multiple is $>1$, then we have an unstable system. If all Floquet multiples are $<1$, then we have a stable system.
+
+Liouville's formula
+\[\det \Phi(T)=\exp\left(\int_{0}^{T}\operatorname{trace}A(s)ds\right) \]
+where $\det \Phi(T)$ is the product of Floquet multiples.
+
+
+\end{document}
