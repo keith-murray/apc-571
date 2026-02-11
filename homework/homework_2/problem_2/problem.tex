@@ -128,7 +128,7 @@ where the eigenvectors corresponding to $\lambda_{2,3}=-2$ span this plane. Choo
 
 Compiling our work into the stable, unstable, and center subspaces $E^s$, $E^u$, $E^c$, we can write 
 \begin{align*}
-  E^s&=\operatorname{span}\left\{\begin{bmatrix}
+  E^u&=\operatorname{span}\left\{\begin{bmatrix}
     1 \\ 1 \\ 2
   \end{bmatrix}\right\}\\
   E^s&=\operatorname{span}\left\{\begin{bmatrix}
@@ -139,6 +139,33 @@ Compiling our work into the stable, unstable, and center subspaces $E^s$, $E^u$,
   E^c&=\operatorname{span}\left\{0\right\}
 \end{align*}
 
+\paragraph{Part (b)}
+
+Okay so we can use SymPy to do the eigenvalues and eigenvectors. Praise be. We have 
+\[
+\left[ \left( \text{eigenvalue  } 1, \  \text{eigenvector  } \left[\begin{matrix}1\\0\end{matrix}\right]\right), \  \left( \text{eigenvalue  } \lambda, \  \text{eigenvector  } \left[\begin{matrix}- \frac{1}{\lambda - 1}\\1\end{matrix}\right]\right)\right]
+\]
+Compiling our ``work" into the stable, unstable, and center subspaces $E^s$, $E^u$, $E^c$, we can write 
+\begin{align*}
+  E^u&=\operatorname{span}\left\{\begin{bmatrix}
+  - \frac{1}{\lambda - 1}\\1
+  \end{bmatrix}\right\}\\
+  E^s&=\operatorname{span}\left\{0\right\}\\
+  E^c&=\operatorname{span}\left\{\begin{bmatrix}1\\0\end{bmatrix}\right\}
+\end{align*}
+
+\mathhint{Nudge}{2026-02-10 22:41}{You're in great shape on part (a). For part (b), remember that the stability criteria for maps differ from flows — think carefully about what determines whether an eigenvalue corresponds to $E^s$, $E^u$, or $E^c$ for a *discrete* map, and how the sign/magnitude of $\lambda$ affects which subspace each eigenvector belongs to.}
+
+Ah yes that's right. I assigned the eigenvector to the unstable subspace instead of stable because $|\lambda|<1$
+\begin{align*}
+  E^s&=\operatorname{span}\left\{\begin{bmatrix}
+  - \frac{1}{\lambda - 1}\\1
+  \end{bmatrix}\right\}\\
+  E^u&=\operatorname{span}\left\{0\right\}\\
+  E^c&=\operatorname{span}\left\{\begin{bmatrix}1\\0\end{bmatrix}\right\}
+\end{align*}
+
+
 \end{notes}
 
 \begin{solution}
@@ -146,5 +173,6 @@ Compiling our work into the stable, unstable, and center subspaces $E^s$, $E^u$,
 % Present your final, clean solution.
 
 \end{solution}
+
 
 \end{document}

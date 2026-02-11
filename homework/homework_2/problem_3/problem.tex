@@ -30,8 +30,45 @@
 \end{problem}
 
 \begin{notes}
-% Write your working notes here
-% This is where you can sketch ideas, try approaches, and work through the problem.
+\paragraph{Part (A)}
+To begin, let's find the fixed points by writing 
+\begin{align*}
+  0&=\dot{x}=x(1-x^2)\implies x=0,x=\pm1\\
+  0&=\dot{y}=-\lambda (y-x^2) \implies y=x^2
+\end{align*}
+Hence our fixed points are $(0,0),(-1,1),(1,1)$. To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=1-3x^2\\
+  \frac{\partial f_1}{\partial y}=0\\
+  \frac{\partial f_2}{\partial x}=2\lambda x\\
+  \frac{\partial f_2}{\partial y}=-\lambda
+\end{gather*}
+Now we can compute our linearized matrices 
+\begin{gather*}
+  Df(0,0)=\begin{bmatrix}
+    1 & 0\\
+    0 & -\lambda
+  \end{bmatrix}\\
+  Df(-1,1)=\begin{bmatrix}
+    -2 & 0\\
+    -2\lambda & -\lambda
+  \end{bmatrix}\\
+  Df(1,1)=\begin{bmatrix}
+    -2 & 0\\
+    2\lambda & -\lambda
+  \end{bmatrix}\\
+\end{gather*}
+
+Let's first approximate the stable and unstable manifolds associated with the $(0,0)$ fixed point. Our general workflow will be to calculate the eigenvalues and vectors, construct $h(x)$ or $g(y)$, then differentiate, group coefficients together, and solve for the coefficients.
+
+\mathhint{Nudge}{2026-02-11 08:41}{You're off to a great start — the fixed points, Jacobian, and linearizations all look correct. Keep going with your plan for the origin: identify the stable and unstable eigenspaces and then look for the invariant manifolds as graphs over those subspaces.}
+
+
 
 \end{notes}
 
