@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{amsmath, amssymb}
+\usepackage{tikz-cd}
 \usepackage{mathhint}
 
 \begin{document}
@@ -68,7 +69,235 @@ Let's first approximate the stable and unstable manifolds associated with the $(
 
 \mathhint{Nudge}{2026-02-11 08:41}{You're off to a great start — the fixed points, Jacobian, and linearizations all look correct. Keep going with your plan for the origin: identify the stable and unstable eigenspaces and then look for the invariant manifolds as graphs over those subspaces.}
 
+For our fixed point $(0,0)$, we have 
+\[
+\left[ \left(\text{eigenvalue  }  1, \ \text{eigenvector  }   \left[\begin{matrix}1\\0\end{matrix}\right]\right), \  \left(\text{eigenvalue  }  - \lambda, \  \text{eigenvector  }  \left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+Starting with our unstable manifold with the eigenvalue of $1$ and eigenvector of $\left[\begin{matrix}1\\0\end{matrix}\right]$, we can write 
+\[ y=h(x)=a_0 +a_1x+a_2x^2+a_3x^3+a_4x^4 \]
+From our eigenvector we can deduce that $a_0=a_1=0$. Taking the time derivative, we have 
+\begin{gather*}
+  \dot{y}=h'(x)=\left(2a_2x+3a_3x^2+4a_4x^3\right)\dot{x}\\
+  -\lambda(y-x^2)=\left(2a_2x+3a_3x^2+4a_4x^3\right)x(1-x^2)\\
+  -\lambda(a_2x^2+a_3x^3+a_4x^4-x^2)=\left(2a_2x+3a_3x^2+4a_4x^3\right)x(1-x^2)\\
+\end{gather*}
+Is this right? This feels like a heinous expression.
 
+\mathhint{Nudge}{2026-02-11 09:07}{You're on exactly the right track — that expression is correct and not as bad as it looks. Just expand both sides, collect terms by powers of $x$, and match coefficients order by order; you'll find each $a_k$ is determined cleanly one at a time.}
+
+Fair enough. I'm gonnna save some time though and just parse with SymPy. Hence, we get 
+\[
+ \left(- a_{2} \lambda - 2 a_{2} + \lambda\right)x^{2} + \left(- a_{3} \lambda - 3 a_{3}\right) x^{3} + \left(2 a_{2} - a_{4} \lambda - 4 a_{4}\right)  x^{4} + 3 a_{3} x^{5} + 4 a_{4} x^{6} =0
+\]
+where we can ignore terms $3 a_{3} x^{5} + 4 a_{4} x^{6}$ since we are interested in 4th order approximations. Is this right?
+
+
+\mathhint{Nudge}{2026-02-11 11:29}{You're almost there — just set the coefficient of each power of $x$ to zero and solve sequentially for $a_2$, $a_3$, $a_4$. It should come out very cleanly!}
+
+Do we get
+\begin{align*}
+  a_2&=\frac{\lambda}{\lambda+2}\\
+  a_3&=0 \qquad\text{since $\lambda>0$}\\
+  a_4&=\frac{2a_2}{\lambda+4}
+\end{align*}
+
+\mathhint{Nudge}{2026-02-11 11:38}{You're on the right track — those coefficients are correct! Now simplify $a_4$ by substituting your expression for $a_2$, then move on to the stable manifold at the origin and the other fixed points.}
+
+Simplifying $a_4$, we get 
+\begin{gather*}
+  a_4=\frac{\lambda}{\lambda+2}\cdot\frac{2}{\lambda+4}\\
+  a_4 = \frac{2\lambda}{(\lambda+2)(\lambda+4)}
+\end{gather*}
+and hence our approximated unstable manifold is 
+\[ h(x)= \frac{\lambda}{\lambda+2}x^2 + \frac{2\lambda}{(\lambda+2)(\lambda+4)}x^4 \]
+
+Moving on to the stable manifold with the eigenvalue of $-\lambda$ and eigenvector of $\left[\begin{matrix}0\\1\end{matrix}\right]$, note that for any point where $x=0$, we have the following system 
+\begin{align*}
+  \dot{x}&=0\\
+  \dot{y}&=-\lambda y
+\end{align*}
+implying that trajctories that start with $x=0$ have $\lim_{t\to\infty}y(t)\to 0$, inline with the interpretation of a stable manifold. Hence, the stable manifold is simply an extension of the eigenvector and can be described by the line 
+\[ x=0 \] 
+This reasoning feels right, but is it in the spirit of the problem?
+
+\mathhint{Nudge}{2026-02-11 13:28}{Your reasoning is perfectly correct and well-justified — the $y$-axis is indeed the exact stable manifold, so there's no need for a polynomial approximation. That's absolutely in the spirit of the problem. Now tackle the manifolds at $(\pm 1, 1)$.}
+
+Let's move on to the manifolds for $(-1,1)$. The eigenvalues and eigenvectors are 
+\[
+\left[ \left(\text{eigenvalue  } -2, \ \text{eigenvector  }  \left[\begin{matrix}\frac{2 - \lambda}{2 \lambda}\\1\end{matrix}\right]\right), \  \left(\text{eigenvalue  } - \lambda, \ \text{eigenvector  } \left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+
+For the manifold corresponding to the eigenvalue $-2$, we can write 
+\[ y=h(x)=a_0 +a_1x+a_2x^2+a_3x^3+a_4x^4 \]
+where I think $a_1=\frac{2\lambda}{2-\lambda}$, but that doesn't feel right.
+
+\mathhint{Nudge}{2026-02-11 15:24}{You're on the right track thinking about the eigenvector slope, but remember you need to work in shifted coordinates centered at $(-1, 1)$ — let $u = x + 1$ and $v = y - 1$, then express the system in $(u, v)$ and apply the same manifold computation technique there.}
+
+I guess it's a taylor series approximation, so really it is 
+\[ y=h(x)=1 +a_1(x+1)+a_2(x+1)^2+a_3(x+1)^3+a_4(x+1)^4 \]
+Now let's take the derivative to get 
+\[ \dot{y}=h'(x)=\left(a_1+2a_2(x+1)+3a_3(x+1)^2+4a_4(x+1)^3\right)\dot{x} \]
+and substituting in for $\dot{x},\dot{y}$, we get 
+\[ -\lambda(y-x^2) = \left(a_1+2a_2(x+1)+3a_3(x+1)^2+4a_4(x+1)^3\right)x(1-x^2) \]
+Substituting in $h(x)$ for $y$, we have 
+\begin{align*}
+  -\lambda(1 +a_1(x+1)+a_2(x+1)^2&+a_3(x+1)^3+a_4(x+1)^4-x^2)\\
+  &= \left(a_1+2a_2(x+1)+3a_3(x+1)^2+4a_4(x+1)^3\right)x(1-x^2)
+\end{align*}
+
+\mathhint{Nudge}{2026-02-11 18:55}{You're heading in the right direction, but working in the original $x$ variable will get messy fast. It'll be much cleaner if you actually substitute $u = x+1$ (so $x = u-1$) and rewrite everything in terms of $u$ before expanding — that way you're matching powers of $u$ near the origin, just like you did for the first fixed point.}
+
+To make matters easier, we will substitute in $u=x+1$ (also $x=u-1$) to get 
+\begin{align*}
+  -\lambda(1 +a_1(u)+a_2(u)^2&+a_3(u)^3+a_4(u)^4-(u-1)^2)\\
+  &= \left(a_1+2a_2(u)+3a_3(u)^2+4a_4(u)^3\right)(u-1)(1-(u-1)^2)
+\end{align*}
+Welp, now let's turn to SymPy. 
+\begin{align*}
+  4 a_{4} u^{6} &+ u^{5} \left(3 a_{3} - 12 a_{4}\right) + u^{4} \left(2 a_{2} - 9 a_{3} - a_{4} \lambda + 8 a_{4}\right) \\
+  &+ u^{3} \left(a_{1} - 6 a_{2} - a_{3} \lambda + 6 a_{3}\right) + u^{2} \left(- 3 a_{1} - a_{2} \lambda + 4 a_{2} + \lambda\right) \\
+  &+ u \left(- a_{1} \lambda + 2 a_{1} - 2 \lambda\right)=0
+\end{align*}
+Gross. Now it's time to drop the higher order terms, and solve for the coefficients 
+\begin{align*}
+  a_1&=\frac{2\lambda}{2-\lambda}\\
+  a_2&=\frac{3a_1-\lambda}{4-\lambda}\\
+  a_3&=\frac{6a_2-a_1}{6-\lambda}\\
+  a_4&=\frac{9a_3-2a_2}{8-\lambda}
+\end{align*}
+I will push these through later, but this looks right?
+
+\mathhint{Nudge}{2026-02-11 19:15}{You're doing great — those recurrence relations look correct. Now just substitute forward to get explicit expressions in terms of $\lambda$, and then move on to the other eigenvalue's manifold at $(-1,1)$ and the fixed point $(1,1)$.}
+
+For the manifold corresponding to the eigenvalue $-\lambda$, we can use a similar argument as before to reason that the stable manifold is $x=-1$. Namely, if $x=-1$, then our system becomes 
+\begin{align*}
+  \dot{x}&=-1\cdot(1-(-1)^2)=0\\
+  \dot{y}&=-\lambda(y-(-1)^2)=-\lambda y-\lambda
+\end{align*}
+which will just flow to $(-1,1)$.
+
+\mathhint{Nudge}{2026-02-11 19:40}{You're on the right track with that argument, but double-check your algebra — substituting $x = -1$ gives $\dot{y} = -\lambda(y - 1)$, not $-\lambda y - \lambda$.}
+
+You are right! Namely, if $x=-1$, then our system becomes 
+\begin{align*}
+  \dot{x}&=-1\cdot(1-(-1)^2)=0\\
+  \dot{y}&=-\lambda(y-(-1)^2)=-\lambda y+\lambda
+\end{align*}
+which will just flow to $(-1,1)$ since $\lambda>0$.
+
+\mathhint{Nudge}{2026-02-11 19:41}{You've corrected the algebra issue — $\dot{y} = -\lambda(y-1)$ indeed flows to $y=1$, confirming $x=-1$ is the stable manifold at $(-1,1)$. Now use symmetry to handle $(1,1)$ efficiently, and then move on to part (b).}
+
+Ah yes, intuitively we would just mirror our previous manifolds at $(-1,1)$ to get the manifolds at $(1,1)$. To use symmetry, don't we have to argue that our system is symmetric? Wait, no. I guess I just have to argue that the particular manifold would be symmetric.
+
+Let's first compute our eigenvalues and eigenvectors at $(1,1)$
+\[
+\left[ \left( \text{eigenvalue  }-2, \  \text{eigenvector  }\left[\begin{matrix}\frac{\lambda - 2}{2 \lambda}\\1\end{matrix}\right]\right), \  \left(\text{eigenvalue  } - \lambda, \ \text{eigenvector  }\left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+Notice that the eigenvector $\left[\begin{matrix}\frac{\lambda - 2}{2 \lambda}\\1\end{matrix}\right]$ corresponding to the eigenvalue $-2$ is symmetric about the y-axis to the eigenvector corresponding to the eigenvalue $-2$ for the fixed point $(-1,1)$. Hence, given that our fixed point is also symmetric about the y-axis, it follows that the manifolds are also symmetric about the y-axis. Therefore, our manifold corresponding to eigenvalue $-2$ is 
+\[ y=h(-x)=1 +a_1(-x+1)+a_2(-x+1)^2+a_3(-x+1)^3+a_4(-x+1)^4 \]
+with coefficients
+\begin{align*}
+  a_1&=\frac{2\lambda}{2-\lambda}\\
+  a_2&=\frac{3a_1-\lambda}{4-\lambda}\\
+  a_3&=\frac{6a_2-a_1}{6-\lambda}\\
+  a_4&=\frac{9a_3-2a_2}{8-\lambda}
+\end{align*}
+and our manifold corresponing to eigenvalue $-\lambda$ is $x=+1$.
+
+\mathhint{Nudge}{2026-02-11 20:04}{You're making great progress — now use the symmetry of the system (note how $\dot{x}$ is an odd function of $x$ and $\dot{y}$ depends on $x^2$) to quickly write down the manifolds at $(1,1)$ without redoing the full computation, and then move on to part (b).}
+
+Ah yes, in general, a system is y-axis symmetric if for $\dot{x}=f(x,y)$ and $\dot{y}=g(x,y)$, then $f(-x,y)=-f(x,y)$ and $g(-x,y)=g(x,y)$. For our system, we can write 
+\[f(-x,y)=-x(1-(-x)^2)=-x(1-x^2)=-f(x,y)\]
+and 
+\[g(-x,y)=-\lambda(y-(-x)^2)=-\lambda(y-x^2)=g(x,y)\]
+Hence our system is symmetric about the y-axis, therefore our manifold approximations must be as well. Therefore, our manifold corresponding to eigenvalue $-2$ is 
+\[ y=h(-x)=1 +a_1(-x+1)+a_2(-x+1)^2+a_3(-x+1)^3+a_4(-x+1)^4 \]
+with coefficients
+\begin{align*}
+  a_1&=\frac{2\lambda}{2-\lambda}\\
+  a_2&=\frac{3a_1-\lambda}{4-\lambda}\\
+  a_3&=\frac{6a_2-a_1}{6-\lambda}\\
+  a_4&=\frac{9a_3-2a_2}{8-\lambda}
+\end{align*}
+and our manifold corresponing to eigenvalue $-\lambda$ is $x=+1$.
+
+
+\mathhint{Nudge}{2026-02-11 20:32}{You've completed part (a) nicely — now it's time to move on to part (b) with the map, where the invariant manifold condition will look a bit different since you're working with a discrete map rather than a flow.}
+
+\paragraph{Part (B)}
+
+To begin, let's find the fixed points by writing 
+\begin{align*}
+  x&=\lambda x\\
+\end{align*}
+where since $|\lambda|<1$, it follows that the only fixed $x$ coord is $x=0$. For $y$, we can write 
+\[ y=\mu y \]
+where since $|\mu|>1$, it follows that the only fixed $y$ coord is $y=0$. Hence the only fixed point is $(0,0)$.
+
+\mathhint{Nudge}{2026-02-11 20:54}{You're on the right track — now identify the stable and unstable directions at the origin and set up the invariant manifold condition using the map (i.e., $h(\lambda x) = \mu\, h(x) - x^3$ or similar) instead of the flow condition you used in part (a).}
+To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=\lambda\\
+  \frac{\partial f_1}{\partial y}=0\\
+  \frac{\partial f_2}{\partial x}=-3x^2\\
+  \frac{\partial f_2}{\partial y}=\mu
+\end{gather*}
+Now we can compute our linearized matrix 
+\[
+Df(0,0)=\begin{bmatrix}
+  \lambda & 0\\
+  0 & \mu
+\end{bmatrix}\\
+\]
+where are eigenvalues and eigenvectors are 
+\[
+\left[ \left( \text{eigenvalue  }\lambda, \  \text{eigenvector  }\left[\begin{matrix}1\\0\end{matrix}\right]\right), \  \left(\text{eigenvalue  } \mu, \ \text{eigenvector  }\left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+
+\mathhint{Nudge}{2026-02-11 21:14}{You're on the right track with the eigenvalues and eigenvectors. Now think about which direction is stable and which is unstable (given the assumptions on $|\lambda|$ and $|\mu|$), and set up the invariant manifold as a graph $y = h(x)$ over the appropriate eigenspace.}
+
+Given $|\lambda|<1$, we can construct our stable manifold by writing 
+\[ y=h(x)=a_0 +a_1x+a_2x^2+a_3x^3+a_4x^4 \]
+where $a_0=0$ since we are at the origin and $a_1=0$ since the corresponding eigenvector is $\left[\begin{matrix}1\\0\end{matrix}\right]$. Hence we have 
+\[ y=h(x)=a_2x^2+a_3x^3+a_4x^4 \]
+My guess is that we have something like 
+\begin{gather*}
+  y=h(x)=a_2x^2+a_3x^3+a_4x^4\\
+  y-x^3=a_2x^2+a_3x^3+a_4x^4\\
+  h(x)-x^3=a_2x^2+a_3x^3+a_4x^4\\
+\end{gather*}
+but this feels circular.
+
+\mathhint{Nudge}{2026-02-11 21:22}{You're close — think about what invariance means for a *map*: if a point $(x, h(x))$ is on the manifold, then its *image* under the map must also be on the manifold, giving you $h(\lambda x) = \mu\, h(x) - x^3$.}
+
+Oh this makes sense! It's kind of like a commute diagram. More specifically 
+\[
+\begin{tikzcd}
+x_t \arrow{r}{h} \arrow{d}{f} & y_t \arrow{d}{g} \\
+x_{t+1} \arrow{r}{h} & y_{t+1}
+\end{tikzcd}
+\]
+where $x\mapsto f(x,y)$ and $y\mapsto g(x,y)$. Hence,
+\[ h(f(x,y))=g(h(x),x) \]
+and plugging in our expressions, we have 
+\begin{gather*}
+  h(\lambda x) = \mu\, h(x) - x^3\\
+  a_2\lambda^2x^2+a_3\lambda^3x^3+a_4\lambda^4=\mu\left(a_2x^2+a_3x^3+a_4x^4\right)-x^3
+\end{gather*}
+where grouping terms together gives us 
+\begin{align*}
+  a_2&=0\\
+  a_3&=\frac{1}{\mu-\lambda^3}\\
+  a_4&=0
+\end{align*}
+because $a\lambda^n=a\mu$ implies $a=0$.
+
+\mathhint{Nudge}{2026-02-11 23:18}{You've got the stable manifold for the map — nice work! Now set up the unstable manifold as a graph $x = g(y)$ over the unstable eigenspace and apply the same invariance logic.}
 
 \end{notes}
 
