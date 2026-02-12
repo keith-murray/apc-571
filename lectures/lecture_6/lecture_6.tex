@@ -1,0 +1,194 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section{Plan for Class}
+\begin{enumerate}
+    \item Definitions in \S 1.6
+    \item Planar systems
+\end{enumerate}
+
+\section{Definitions in \S 1.6}
+
+\subsection{Non-wandering point}
+\textit{Definition:} $p$ is a non-wondering point for a flow $\varphi_t$ / map $F$ if $\forall$ neighborhoods $p\in U$, all $T>0$
+\begin{itemize}
+    \item $\varphi_t(U)\bigcap U$ is non-empty for some $t>T$.
+    \item $F^t(U)\bigcap U$ is non-empty for some $t>T$.
+\end{itemize}
+
+This is just a formalization of recurrence. For example, fixed points and periodic orbits satisfy this definition. But then, why have this definition if we already have `fixed points' and `periodic orbits'. There are more exotic examples! Poincare recurrence\footnote{Did we define this?} is an example of a non-wondering point.
+
+\subsubsection{Example}
+Let's say we have the following system on a torus
+\begin{align*}
+    \dot{\theta}&=1\\
+    \dot{\varphi}&=\sqrt{2}
+\end{align*}
+In this system, since $\dot{\varphi}$ is irrational, then every point is non-wondering. Well actually $\dot{\varphi}$ could be rational and every point is still non-wondering, but just not densely.
+
+\subsection{Limit point}
+\textit{Definition:} $p$ is an $\Big|^\omega_\alpha$ limit point of $x$ if $\exists$ points 
+\begin{itemize}
+    \item $\omega$ limit point is $\varphi_{t_j}\to p$ as $t_j\to \infty$
+    \item $\alpha$ limit point is $\varphi_{t_j}\to p$ as $t_j\to - \infty$
+\end{itemize}
+where $t_j$ is a subsequence of times. 
+
+Set of all $\Big|^\omega_\alpha$ limit points of $x$ is the $\Big|^\omega_\alpha$ limit set of $x$.
+
+\subsection{Dense orbit}
+\textit{Definition:} An orbit $\varphi_{t}(q)$ is dense in a set $S\subset \mathbb{R}^n$ if $\forall p\in S$ and $\forall \epsilon >0$ there exists $t$ such that $\big|\big| \varphi_{t}(q)-p \big|\big| < \epsilon$. 
+
+In other words $\varphi_{t}(q)$ comes arbitrarily close to every point in $S$. Look at the $\dot{\varphi}=\sqrt{2}$ for an example of dense orbits and $\dot{\varphi}=2$ for non dense orbits.
+
+\subsection{Attractor}
+\textit{Provisional Definition:} An attractor is an attracting set with a dense orbit.
+
+In a previous lecture, we had an attracting set but no an attractor becuase there was no dense orbit.
+
+
+\section{Back to ODEs/flows (not maps)}
+If we are in 1 dimensions, we can't have oscillations or periodic orbits. Fixed points are the only non-wandering points. BORING! Of course, the exception is the circle where we can have periodic orbits.
+
+In 2 dimensions, more things are possible. We can have
+\begin{itemize}
+    \item periodic orbits 
+    \item homoclinic connections
+    \item heteroclinic connections 
+\end{itemize}
+Although, heteroclinic connections are possible in 1 dimensions, but those are stable under perturbations. Heteroclinic connections are ``fragile'' in 2 dimensions.
+
+\subsection{Poincare-Bendixion theorem}
+\textit{Theorem:} A nonempty compact $\omega$ or $\alpha$ limit set of a planar flow, which contains no fixed points, is a closed orbit.
+
+In other words, suppose $f$ is $C^1$ and has a trajectory $\Gamma$ with $\varphi_t(\Gamma)$ contained in a compact set. Then if $\omega(\Gamma)$ contains no fixed point, $\omega(\Gamma)$ is a periodic orbit.
+
+\subsubsection{Examples}
+Suppose there are a finite number of fixed points in a compact set $S$. Then $\omega(\Gamma)$ is one of the following:
+\begin{enumerate}
+    \item[(a)] an equilibrium point 
+    \item[(b)] periodic orbit 
+    \item[(c)] collection of fixed points and orbits connecting them 
+\end{enumerate}
+
+\subsubsection{Another example}
+Prove that 
+\begin{align*}
+    \dot{x}&=x-y-x^3\\
+    \dot{y}&=x+y-y^3\\
+\end{align*}
+has a periodic orbit in the region $1<r<\sqrt{2}$ where $r^2=x^2+y^2$.
+
+There is only one fixed point at $(x,y)=(0,0)$. If we show that $\dot{r}>0$ at $r=1$ and that $\dot{r}<0$ at $r=\sqrt{2}$, AND that there are no fixed points in $1<r<\sqrt{2}$, then Poincare-Bendixion theorem implies that there is a periodic orbit.
+
+Nice.
+
+\subsection{Bendixion's criterion}
+This criterion will let us rule out periodic orbits. Let's say 
+\begin{align*}
+    \dot{x}&=f(x,y)\\
+    \dot{y}&=g(x,y)
+\end{align*}
+\textit{Theorem:} Suppose $D\subset \mathbb{R}^2$ is simply connected (no holes). Then the system above can have periodic solution only if $\nabla\cdot(f,g)=\partial_x f + \partial_y g$ changes sign or is identically zero in $D$.
+
+\subsubsection{Proof}
+Suppose $\Gamma$ is a periodic orbit in $D$. Let $S$ denote the interior of $\Gamma$. Consider Green's theorem 
+\begin{align*}
+    \iint_S \nabla\cdot (f,g)d\sigma &=\int_\Gamma \left(f\, dy - g\, dx\right)\\
+    &=\int_\Gamma \left(f\, \frac{dy}{dt} - g\, \frac{dx}{dt}\right)\,dt\\
+    &=\int_\Gamma \left(fg-gf\right)\,dt=0
+\end{align*}
+Hence the integrand $\iint_S \nabla\cdot (f,g)d\sigma$ must change sign in $S$ or be equivalent to 0 in $S$.
+
+\paragraph{Note}
+Simply connected is important! For example 
+\begin{align*}
+    f&=x-y-x^3\\
+    g&=x+y-y^3
+\end{align*}
+We have 
+\begin{align*}
+    f_x&=1-3x^2\\
+    g_y&=1-3y^2
+\end{align*}
+then 
+\[ f_x+g_y=2-3(x^2+y^2)=2-3r^2<0 \]
+in our annulus!
+
+\subsection{Index Theory}
+If you are following along, this is page 51-53.
+
+Suppose 
+\[ \dot{x}=f(x)\qquad x\in\mathbb{R}^2 \]
+Index of a close curve $C$ equals the number of turns vector field $f$ makes as $C$ is traversed conunter-clockwise.
+
+This is made clear by the expression 
+\[
+k(C)=\frac{1}{2\pi}\int_C d\, \arctan\left(\frac{dy}{dx}\right)=\frac{1}{2\pi}\int_C \frac{f\,dy-g\,dx}{f^2+g^2}
+\]
+
+\subsubsection{Examples}
+\begin{itemize}
+    \item A sink has an index of $+1$
+    \item A source has an index of $+1$
+    \item An outward spiral has an index of $+1$
+    \item An inward spiral has an index of $+1$
+\end{itemize}
+In general, a periodic orbit has an index of $+1$. Well, what doesn't have an index of $+1$?
+
+A saddle has an index of $-1$. Maybe I should provide the drawing.
+
+A region containing no fixed points has an index of $0$.
+
+The idea is that the index of $C$ is the sum of the indices all the fixed points inside $C$.
+
+\subsubsection{Corollary}
+Inside any closed orbit (periodic orbit as(is?) limit cycle), there exists at least one fixed point (in fact $\sum$ind(fd)=1), so if there's only one, it must be a source or sink.\footnote{This is terribly worded.}
+
+\paragraph{Note:}
+Degenerate fixed points may have indices not equal to $\pm 1$. For example, we have the system 
+\begin{align*}
+    \dot{x}&=x^2-y^2\\
+    \dot{y}&=2xy
+\end{align*}
+we can define $z=x+iy$ where 
+\begin{align*}
+    \dot{z}=z^2&=(x+iy)(x+iy)\\
+    &=(x^2+y^2)+2ixy 
+\end{align*}
+huh that's weird, but works! The index of the system is $+2$. In general, if $\dot{z}=z^k$, then the system has index $k$.
+
+\subsection{Hamiltonian systems}
+Let's look at Hamiltonian systems not restricted to $\mathbb{R}^2$. In general, a Hamiltonian is $H:\mathbb{R}^2\longrightarrow \mathbb{R}$, which is typically ``energy'', and satisfies 
+\begin{align*}
+    \dot{x}&=\frac{\partial H}{\partial y}\\
+    \dot{y}&=-\frac{\partial H}{\partial x}
+\end{align*}
+We can extend this to multiple dimensions as 
+\begin{align*}
+    \dot{x}_i&=\frac{\partial H}{\partial y_i}\\
+    \dot{y}_i&=-\frac{\partial H}{\partial x_i}
+\end{align*}
+where $i=1,\ldots,n$ and $x$ is interpreted as position and $y$ is interpreted as momentum.
+
+We've already shown in class how $H$ is conserved along trajectories because $\frac{dH}{dt}=0$. Hence solution curves lie on level sets of $H$.
+
+\subsubsection{Example: simple pendulum}
+Note that $p=$momentum and can be written as $p=ml^2\dot(\theta)$. Hence we have 
+\begin{align*}
+    H(\theta,p)&=\text{ total energy}\\
+    &=\frac{1}{2}ml^2\dot{\theta}^2+mgl(1-\cos\theta)\\
+    &=\frac{p^2}{2ml^2}+mgl(1-\cos\theta)
+\end{align*}
+Hence we have 
+\begin{align*}
+    \dot{\theta}&=\frac{\partial H}{\partial p}=\frac{p^2}{ml^2}\\
+    \dot{p}&=-\frac{\partial H}{\partial \theta}=-mgl\sin\theta
+\end{align*}
+
+
+
+
+\end{document}
