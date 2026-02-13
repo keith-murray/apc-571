@@ -139,6 +139,12 @@ Compiling our work into the stable, unstable, and center subspaces $E^s$, $E^u$,
   E^c&=\operatorname{span}\left\{0\right\}
 \end{align*}
 
+Here is the requisite figure:
+
+\includegraphics[width=0.5\textwidth]{sketch/3_system.png}
+
+Note the the black plane is $E^s$, the blue line is $E^u$, the red lines start just outside $E^s$ and tend towards $E^u$, and the green lines start inside $E^s$ and go to the origin.
+
 \paragraph{Part (b)}
 
 Okay so we can use SymPy to do the eigenvalues and eigenvectors. Praise be. We have 
@@ -169,8 +175,149 @@ Ah yes that's right. I assigned the eigenvector to the unstable subspace instead
 \end{notes}
 
 \begin{solution}
-% Write your solution here
-% Present your final, clean solution.
+\paragraph{Part (a)}
+Let's start with finding the eigenvalues. It's a slog, but we can write 
+\[A-\lambda I= \begin{bmatrix}
+    1 & -3 & 3 \\ 3 & -5 & 3 \\ 6 & -6 & 4
+  \end{bmatrix} - \lambda I = \begin{bmatrix}
+    1-\lambda & -3 & 3 \\ 3 & -5-\lambda & 3 \\ 6 & -6 & 4-\lambda
+  \end{bmatrix}  \]
+where the eigenvalues are computed as $\operatorname{det}\left(A-\lambda I\right)=0$. Thankfully, we can use the formula for $3\times 3$ matrix determinants of
+\[ a_1(b_2c_3-b_3c_2)-a_2(b_1c_3-b_3c_1)+a_3(b_1c_2-b_2c_1) \]
+Plugging everything in we get 
+\begin{gather*}
+  (1-\lambda)\left((-5-\lambda)(4-\lambda)-3(-6)\right)-(-3)\left(3(4-\lambda)-3\cdot 6\right)+(3)\left(3(-6)-(-5-\lambda)\cdot 6\right)\\
+  \left((1-\lambda)(-5-\lambda)(4-\lambda)+18(1-\lambda)\right) +\left(9(4-\lambda)-54\right)+\left(-54-18(-5-\lambda)\right)\\
+  \left((-5+4\lambda+\lambda^2)(4-\lambda)+18-18\lambda\right) +\left(36-9\lambda-54\right)+\left(-54+90+18\lambda\right)\\
+  (-20+21\lambda-\lambda^3)+18-18\lambda +36-9\lambda-54-54+90+18\lambda\\
+  \left(-20+18+36-54-54+90\right) + \left(21-18-9+18\right)\lambda +\lambda^3\\
+  16+12\lambda+\lambda^3
+\end{gather*}
+Setting it equal to zero and doing some factorization, we get 
+\begin{gather*}
+  16+12\lambda+\lambda^3=0\\
+  (4-\lambda)(4+4x+x^2)=0\\
+  (4-\lambda)(2+\lambda)(2+\lambda)=0
+\end{gather*}
+where it follows that the eigenvalues are $\lambda_1=4$, $\lambda_2=-2$, and $\lambda_3=-2$.
+
+To find eigenvalues, we can solve for the equation 
+\[\begin{bmatrix}
+    1-\lambda & -3 & 3 \\ 3 & -5-\lambda & 3 \\ 6 & -6 & 4-\lambda
+  \end{bmatrix} \begin{bmatrix}
+    x_1 \\ x_2 \\ x_3
+  \end{bmatrix} = \begin{bmatrix}
+    0 \\ 0 \\ 0
+  \end{bmatrix} \]
+for each eigenvalue. Starting with $\lambda_1=4$, we have 
+\begin{gather*}
+  \begin{bmatrix}
+    1-4 & -3 & 3 \\ 3 & -5-4 & 3 \\ 6 & -6 & 4-4
+  \end{bmatrix} \begin{bmatrix}
+    x_1 \\ x_2 \\ x_3
+  \end{bmatrix} = \begin{bmatrix}
+    0 \\ 0 \\ 0
+  \end{bmatrix}\\
+  \begin{bmatrix}
+    -3 & -3 & 3 \\ 3 & -9 & 3 \\ 6 & -6 & 0
+  \end{bmatrix} \begin{bmatrix}
+    x_1 \\ x_2 \\ x_3
+  \end{bmatrix} = \begin{bmatrix}
+    0 \\ 0 \\ 0
+  \end{bmatrix}\\
+\end{gather*}
+where the last row implies that $x_1=x_2$. Plugging that into the expression $-3x_1-3x_2+3x_3=0$, we have 
+\begin{gather*}
+  -3x_1-3x_1+3x_3=0\\
+  -6x_1+3x_3=0\\
+  x_3=2x_1
+\end{gather*}
+Choosing $x_1=1$, we have an eigenvector corresponding to the eigenvalue $\lambda_1=4$ of 
+\[ v_1= \begin{bmatrix}
+    1 \\ 1 \\ 2
+  \end{bmatrix}
+\]
+
+Moving on to the eigenvalue $\lambda_{2,3}=-2$, we can write 
+\begin{gather*}
+  \begin{bmatrix}
+    1+2 & -3 & 3 \\ 3 & -5+2 & 3 \\ 6 & -6 & 4+2
+  \end{bmatrix} \begin{bmatrix}
+    x_1 \\ x_2 \\ x_3
+  \end{bmatrix} = \begin{bmatrix}
+    0 \\ 0 \\ 0
+  \end{bmatrix}\\
+  \begin{bmatrix}
+    3 & -3 & 3 \\ 3 & -3 & 3 \\ 6 & -6 & 6
+  \end{bmatrix} \begin{bmatrix}
+    x_1 \\ x_2 \\ x_3
+  \end{bmatrix} = \begin{bmatrix}
+    0 \\ 0 \\ 0
+  \end{bmatrix}\\
+\end{gather*}
+and since all rows are the same, we are justified in writing
+\[x_3=-x_1+x_2\]
+where the eigenvectors corresponding to $\lambda_{2,3}=-2$ span this plane. Choosing two arbitrarily, we have 
+\[ v_2= \begin{bmatrix}
+    0 \\ 1 \\ 1
+  \end{bmatrix},\qquad v_3= \begin{bmatrix}
+    -1 \\ 0 \\ 1
+  \end{bmatrix}
+\]
+
+Compiling our work into the stable, unstable, and center subspaces $E^s$, $E^u$, $E^c$, we can write 
+\begin{align*}
+  E^u&=\operatorname{span}\left\{\begin{bmatrix}
+    1 \\ 1 \\ 2
+  \end{bmatrix}\right\}\\
+  E^s&=\operatorname{span}\left\{\begin{bmatrix}
+    0 \\ 1 \\ 1
+  \end{bmatrix}, \begin{bmatrix}
+    -1 \\ 0 \\ 1
+  \end{bmatrix}\right\}\\
+  E^c&=\operatorname{span}\left\{0\right\}
+\end{align*}
+
+Here is the requisite figure:
+
+\includegraphics[width=0.5\textwidth]{sketch/3_system.png}
+
+Note the the black plane is $E^s$, the blue line is $E^u$, the red lines start just outside $E^s$ and tend towards $E^u$, and the green lines start inside $E^s$ and go to the origin.
+
+\paragraph{Part (b)}
+
+Okay so we can use SymPy to do the eigenvalues and eigenvectors. We have 
+\[
+\left[ \left( \text{eigenvalue  } 1, \  \text{eigenvector  } \left[\begin{matrix}1\\0\end{matrix}\right]\right), \  \left( \text{eigenvalue  } \lambda, \  \text{eigenvector  } \left[\begin{matrix}- \frac{1}{\lambda - 1}\\1\end{matrix}\right]\right)\right]
+\]
+
+Compiling our ``work" into the stable, unstable, and center subspaces $E^s$, $E^u$, $E^c$, we can write 
+\begin{align*}
+  E^s&=\operatorname{span}\left\{\begin{bmatrix}
+  - \frac{1}{\lambda - 1}\\1
+  \end{bmatrix}\right\}\\
+  E^u&=\operatorname{span}\left\{0\right\}\\
+  E^c&=\operatorname{span}\left\{\begin{bmatrix}1\\0\end{bmatrix}\right\}
+\end{align*}
+
+For $\lambda>0$ we have the following sketch of the subspaces and some representative trajectories 
+
+\includegraphics[width=0.5\textwidth]{sketch/problem_2_b_g.png}
+
+For $\lambda=0$ we have the following sketch of the subspaces and some representative trajectories 
+
+\includegraphics[width=0.5\textwidth]{sketch/problem_2_b_e.png}
+
+For $\lambda<0$ we have the following sketch of the subspaces and some representative trajectories 
+
+\includegraphics[width=0.5\textwidth]{sketch/problem_2_b_l.png}
+
+The qualitative differences in the dyanmics for different values of $\lambda$ are as follows:
+\begin{enumerate}
+  \item[$\lambda>0$] --- Trajectories asymptotically decay to the center subspace with a slope equal to the stable subspace.
+  \item[$\lambda=0$] --- Trajectories directly fall onto the center subspace with a slop equal to the stable subspace (slope $1$).
+  \item[$\lambda<0$] --- Trajectories asymptotically decay to the center subspace with a slope equal to the stable subspace and oscillating across the x-axis, as we'd expect with negative $\lambda$ values.
+\end{enumerate}
 
 \end{solution}
 

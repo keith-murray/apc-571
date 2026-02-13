@@ -183,11 +183,196 @@ where we have an unstable fixed point due to the positive eigenvalue. Note that 
 
 
 \mathhint{Nudge}{2026-02-10 21:41}{Your work on all three parts looks solid. For part (c), double-check that you've correctly identified the algebraic and geometric multiplicity of the eigenvalue at $(1,-1)$ — the matrix is not diagonalizable there, so make sure your sketch reflects the behavior of a defective node rather than a star node.}
+\mathhint{Nudge}{2026-02-12 19:27}{Your solution looks essentially complete and correct — nice work across all three parts. The only thing worth double-checking is whether you've included hand-drawn sketches near $(1,-1)$ for part (c) that clearly show the defective node structure (trajectories tangent to the single eigenvector direction).}
+Hmm, any idea how I should go about drawing the defective node? I am stuck here.
+
+\mathhint{Nudge}{2026-02-12 19:29}{Think about how the generalized eigenvector gives you a second, independent solution — as $t \to \infty$, all trajectories become tangent to the (true) eigenvector direction $\begin{pmatrix}0\\1\end{pmatrix}$.}
 \end{notes}
 
 \begin{solution}
-% Write your solution here
-% Present your final, clean solution.
+\paragraph{Part (A)}
+Here is the rewrite of our system 
+\begin{align*}
+  \dot{x}&=y\\
+  \dot{y}&=x-x^3-\epsilon y
+\end{align*}
+To find the fixed points, we can set our system equal to zero getting 
+\begin{align*}
+  0&=\dot{x}=y\\
+  0&=\dot{y}=x-x^3-\epsilon y=x-x^3=x(1-x^2)
+\end{align*}
+where it becomes clear that our fixed points are $(0,0),(-1,0),(1,0)$. To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=0\\
+  \frac{\partial f_1}{\partial y}=1\\
+  \frac{\partial f_2}{\partial x}=1-3x^2\\
+  \frac{\partial f_2}{\partial y}=-\epsilon
+\end{gather*}
+Now we can compute our linearized matrices 
+\begin{gather*}
+  Df(0,0)=\begin{bmatrix}
+    0 & 1\\
+    1 & -\epsilon
+  \end{bmatrix}\\
+  Df(-1,0)=\begin{bmatrix}
+    0 & 1\\
+    -2 & -\epsilon
+  \end{bmatrix}\\
+  Df(1,0)=\begin{bmatrix}
+    0 & 1\\
+    -2 & -\epsilon
+  \end{bmatrix}\\
+\end{gather*}
+
+Via SymPy (which we are allowed to use), we have the following eigenvalues and vectors for fixed point $(0,0)$
+\[\left[ \left(\lambda^-_0= - \frac{\epsilon}{2} - \frac{\sqrt{\epsilon^{2} + 4}}{2},  \  v^-_0=\left[\begin{matrix}\frac{\epsilon}{2} - \frac{\sqrt{\epsilon^{2} + 4}}{2}\\1\end{matrix}\right]\right), \  \left(\lambda^+_0= - \frac{\epsilon}{2} + \frac{\sqrt{\epsilon^{2} + 4}}{2},  \  v^+_0=\left[ \begin{matrix}\frac{\epsilon}{2} + \frac{\sqrt{\epsilon^{2} + 4}}{2}\\1\end{matrix}\right]\right)\right]
+\]
+and for the $(-1,0),(1,0)$ we have 
+\[
+\left[ \left( \lambda^-_{\pm1}=- \frac{\epsilon}{2} - \frac{\sqrt{\epsilon^{2} - 8}}{2}, \ v^-_{\pm1} = \left[\begin{matrix}- \frac{\epsilon}{4} + \frac{\sqrt{\epsilon^{2} - 8}}{4}\\1\end{matrix}\right]\right), \  \left(\lambda^+_{\pm1}= - \frac{\epsilon}{2} + \frac{\sqrt{\epsilon^{2} - 8}}{2}, v^+_{\pm1}= \left[\begin{matrix}- \frac{\epsilon}{4} - \frac{\sqrt{\epsilon^{2} - 8}}{4}\\1\end{matrix}\right]\right)\right]
+\].
+
+For the eigenvectors and eigenvalues for $(0,0)$, we can see that there is always a real positive and real negative eigenvalues for all $\epsilon$. Hence, the origin will always be a saddle. Note that $Df(0,0)$ is symmetric, implying the eigenvectors are orthogonal to each other.
+
+For the eigenvectors and eigenvalues for $(-1,0),(1,0)$, our situation is more delicate. For $\epsilon>0$, it follows that $\lambda^-_{\pm1}<0$ and $\lambda^+_{\pm1}<0$, implying asymptotic stability. For $\epsilon=0$, we have $\lambda^-_{\pm1}=-\frac{\sqrt{-8}}{2}$ and $\lambda^+_{\pm1}=\frac{\sqrt{-8}}{2}$, meaning that linearization is inconclusive (although we can guess that it is a center). For $\epsilon<0$, it follows that $\lambda^-_{\pm1}>0$ and $\lambda^+_{\pm1}>0$, implying unstable fixed points. Also note that unlike our $(0,0)$ saddle, the eigenvectors are not orthogonal, with the dot product being 
+\[ \left[\begin{matrix}- \frac{\epsilon}{4} + \frac{\sqrt{\epsilon^{2} - 8}}{4}\\1\end{matrix}\right]^\top\left[\begin{matrix}- \frac{\epsilon}{4} - \frac{\sqrt{\epsilon^{2} - 8}}{4}\\1\end{matrix}\right]=\frac{3}{2} \]
+
+Here are the hand drawn trajectories for the local flow near the fixed points. Note that we paid attention to when the eigenvalues are complex for $(\pm 1,1)$ when $\epsilon^2-8<0$. Also note that the dominant eigenvalue for the saddle fixed point at the origin changes as $\epsilon$ changes.
+
+\includegraphics[width=0.4\textwidth]{sketch/off_ep_g_0_a.png}
+\includegraphics[width=0.4\textwidth]{sketch/off_ep_g_0_s.png}
+
+\includegraphics[width=0.4\textwidth]{sketch/off_ep_l_0_s.png}
+\includegraphics[width=0.4\textwidth]{sketch/off_ep_l_0_a.png}
+
+\includegraphics[width=0.4\textwidth]{sketch/on_ep_g_0.png}
+\includegraphics[width=0.4\textwidth]{sketch/on_ep_e_0.png}
+
+\includegraphics[width=0.4\textwidth]{sketch/on_ep_l_0.png}
+
+Now here are the trajectories from the computer:
+
+\includegraphics[width=\textwidth]{figures/problem_1_a.png}
+
+\paragraph{Part (B)}
+
+Here is the rewrite of our system
+\begin{align*}
+  \dot{x}&=y\\
+  \dot{y}&=-\sin x -\epsilon y^3
+\end{align*}
+To find the fixed points, we can set our system equal to zero getting 
+\begin{align*}
+  0&=\dot{x}=y\\
+  0&=\dot{y}=-\sin x -\epsilon y^3=-\sin x-0=-\sin x
+\end{align*}
+where it becomes clear that our fixed points are $(\pm n\pi,0)$ for $n\in\mathbb{N}$. To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=0\\
+  \frac{\partial f_1}{\partial y}=1\\
+  \frac{\partial f_2}{\partial x}=-\cos x\\
+  \frac{\partial f_2}{\partial y}=-3\epsilon y^2
+\end{gather*}
+Now we can compute our linearized matrices 
+\begin{gather*}
+  Df(0,0)=\begin{bmatrix}
+    0 & 1\\
+    -1 & 0
+  \end{bmatrix}\\
+  Df(+\pi,0)=\begin{bmatrix}
+    0 & 1\\
+    1 & 0
+  \end{bmatrix}
+\end{gather*}
+
+Notice that I only calculated the Jacobian matrices for $0,+\pi$ since more multiples of $\pi$ will be one of these two matrices. 
+
+Calculating the eigenvalues and eigenvectors, for equilibria $(0,0)$ and corresponding $2\pi$ multiples, we have 
+\[\left[ \left( \lambda=- i, \  v= \left[\begin{matrix}i\\1\end{matrix}\right]\right), \  \left( \lambda=i, \  v=\left[\begin{matrix}- i\\1\end{matrix}\right]\right)\right]
+\]
+implying that linearization tells us nothing since we have 0 real part to our eigenvalues.
+
+Calculating the eigenvalues and eigenvectors, for equilibria $(+\pi,0)$ and corresponding $2\pi$ multiples, we have 
+\[\left[ \left( \lambda=-1, \  v=\left[\begin{matrix}-1\\1\end{matrix}\right]\right), \  \left( \lambda=1, \  v= \left[\begin{matrix}1\\1\end{matrix}\right]\right)\right]\] 
+where we have an unstable fixed point due to the positive eigenvalue. Specifically, it is a saddle. Note that $\epsilon$ is not a factor here.
+
+Here is the drawing for the saddle point at $(+\pi,0)$ and corresponding $2\pi$ multiples
+
+\includegraphics[width=0.4\textwidth]{sketch/part_b.png}
+
+Now here are the trajectories from the computer:
+
+\includegraphics[width=0.9\textwidth]{figures/problem_1_b.png}
+
+\paragraph{Part (C)}
+
+To find the fixed points, we can set our system equal to zero getting 
+\begin{align*}
+  0&=\dot{x}=-x+x^2=x(x-1)\\
+  0&=\dot{y}=x+y
+\end{align*}
+where it becomes clear that our fixed points are $(0,0)$ and $(1,-1)$. To linearize, we can compute the Jacobian
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=-1+2x\\
+  \frac{\partial f_1}{\partial y}=0\\
+  \frac{\partial f_2}{\partial x}=1\\
+  \frac{\partial f_2}{\partial y}=1
+\end{gather*}
+
+Now we can compute our linearized matrices 
+\begin{gather*}
+  Df(0,0)=\begin{bmatrix}
+    -1 & 0\\
+    1 & 1
+  \end{bmatrix}\\
+  Df(1,-1)=\begin{bmatrix}
+    1 & 0\\
+    1 & 1
+  \end{bmatrix}
+\end{gather*}
+
+Calculating the eigenvalues and eigenvectors, for equilibria $(0,0)$, we have 
+\[
+\left[ \left( \lambda=-1, \  v= \left[\begin{matrix}-2\\1\end{matrix}\right]\right), \  \left( \lambda=1, \  v= \left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+where we have an unstable fixed point due to the positive eigenvalue. Specifically, it is a saddle.
+
+Calculating the eigenvalues and eigenvectors, for equilibria $(1,-1)$, we have 
+\[
+\left[ \left( \lambda=1, \  v= \left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\] 
+where we have an unstable fixed point due to the positive eigenvalue. Note that this is an improper, or degenerate, node.
+
+Here is the sketch for the saddle node:
+
+\includegraphics[width=0.4\textwidth]{sketch/part_c_saddle.png}
+
+Here is the sketch for the improper node at $(1,-1)$. Note that we can use the equations in class that solved for the linearized trajectories around the improper node for a clue as to how to draw it 
+\begin{align*}
+  x(t)&=e^{\lambda t}\cdot x_0=e^{t}\\
+  y(t)&=x_0te^{\lambda t}+e^{\lambda t}\cdot y_0=e^{t}=te^{ t}-e^{ t}=(t-1)e^t
+\end{align*}
+
+\includegraphics[width=0.4\textwidth]{sketch/part_c_improper.png}
+
+Here is the computer rendering of the system:
+
+\includegraphics[width=0.5\textwidth]{figures/problem_1_c.png}
 
 \end{solution}
 

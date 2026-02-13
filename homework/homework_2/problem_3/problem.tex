@@ -283,7 +283,7 @@ x_{t+1} \arrow{r}{h} & y_{t+1}
 \end{tikzcd}
 \]
 where $x\mapsto f(x,y)$ and $y\mapsto g(x,y)$. Hence,
-\[ h(f(x,y))=g(h(x),x) \]
+\[ h(f(x,y))=g(x,h(x)) \]
 and plugging in our expressions, we have 
 \begin{gather*}
   h(\lambda x) = \mu\, h(x) - x^3\\
@@ -299,11 +299,205 @@ because $a\lambda^n=a\mu$ implies $a=0$.
 
 \mathhint{Nudge}{2026-02-11 23:18}{You've got the stable manifold for the map — nice work! Now set up the unstable manifold as a graph $x = g(y)$ over the unstable eigenspace and apply the same invariance logic.}
 
+Turning our attention to approximating the unstable manifold $x=h^u(y)$, then we can write 
+\[x=a_2y^2+a_3y^3+a_4y^4\]
+where $a_0=0$ since we are at the origin and $a_1=0$ since the corresponding eigenvector is $\left[\begin{matrix}0\\1\end{matrix}\right]$. Hence we need to satisfy the following equation
+\[ \lambda h^u(y)=h^u(\mu y - h^u(y)^3) \]
+which seems incredibly involved.
+
+Could we not just argue that the unstable manifold is $x=0$ since our map when $x=0$ becomes 
+\begin{align*}
+    x&\mapsto 0,\\
+    y&\mapsto \mu y - 0 = \mu y.
+\end{align*}
+and we merely just stay along the y-axis? This is the same argument that we used in part (a).
+
+\mathhint{Nudge}{2026-02-12 07:49}{You're exactly right — the $y$-axis ($x=0$) is invariant under the map and points on it grow as $|\mu|>1$, so it is indeed the exact unstable manifold. Nice use of the same reasoning from part (a)!}
+
+
 \end{notes}
 
 \begin{solution}
-% Write your solution here
-% Present your final, clean solution.
+\paragraph{Part (A)}
+To begin, let's find the fixed points by writing 
+\begin{align*}
+  0&=\dot{x}=x(1-x^2)\implies x=0,x=\pm1\\
+  0&=\dot{y}=-\lambda (y-x^2) \implies y=x^2
+\end{align*}
+Hence our fixed points are $(0,0),(-1,1),(1,1)$. To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=1-3x^2\\
+  \frac{\partial f_1}{\partial y}=0\\
+  \frac{\partial f_2}{\partial x}=2\lambda x\\
+  \frac{\partial f_2}{\partial y}=-\lambda
+\end{gather*}
+Now we can compute our linearized matrices 
+\begin{gather*}
+  Df(0,0)=\begin{bmatrix}
+    1 & 0\\
+    0 & -\lambda
+  \end{bmatrix}\\
+  Df(-1,1)=\begin{bmatrix}
+    -2 & 0\\
+    -2\lambda & -\lambda
+  \end{bmatrix}\\
+  Df(1,1)=\begin{bmatrix}
+    -2 & 0\\
+    2\lambda & -\lambda
+  \end{bmatrix}\\
+\end{gather*}
+
+Let's first approximate the stable and unstable manifolds associated with the $(0,0)$ fixed point. Our general workflow will be to calculate the eigenvalues and vectors, construct $h(x)$ or $g(y)$, then differentiate, group coefficients together, and solve for the coefficients.
+
+For our fixed point $(0,0)$, we have 
+\[
+\left[ \left(\text{eigenvalue  }  1, \ \text{eigenvector  }   \left[\begin{matrix}1\\0\end{matrix}\right]\right), \  \left(\text{eigenvalue  }  - \lambda, \  \text{eigenvector  }  \left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+
+Starting with our unstable manifold with the eigenvalue of $1$ and eigenvector of $\left[\begin{matrix}1\\0\end{matrix}\right]$, we can write 
+\[ y=h(x)=a_0 +a_1x+a_2x^2+a_3x^3+a_4x^4 \]
+From our eigenvector we can deduce that $a_0=a_1=0$. Taking the time derivative, we have 
+\begin{gather*}
+  \dot{y}=h'(x)=\left(2a_2x+3a_3x^2+4a_4x^3\right)\dot{x}\\
+  -\lambda(y-x^2)=\left(2a_2x+3a_3x^2+4a_4x^3\right)x(1-x^2)\\
+  -\lambda(a_2x^2+a_3x^3+a_4x^4-x^2)=\left(2a_2x+3a_3x^2+4a_4x^3\right)x(1-x^2)\\
+\end{gather*}
+
+I'm gonnna save some time and just parse with SymPy. Hence, we get 
+\[
+ \left(- a_{2} \lambda - 2 a_{2} + \lambda\right)x^{2} + \left(- a_{3} \lambda - 3 a_{3}\right) x^{3} + \left(2 a_{2} - a_{4} \lambda - 4 a_{4}\right)  x^{4} + 3 a_{3} x^{5} + 4 a_{4} x^{6} =0
+\]
+where we can ignore terms $3 a_{3} x^{5} + 4 a_{4} x^{6}$ since we are interested in 4th order approximations. Now we get
+\begin{align*}
+  a_2&=\frac{\lambda}{\lambda+2}\\
+  a_3&=0 \qquad\text{since $\lambda>0$}\\
+  a_4&=\frac{2a_2}{\lambda+4}
+\end{align*}
+Simplifying $a_4$, we get 
+\begin{gather*}
+  a_4=\frac{\lambda}{\lambda+2}\cdot\frac{2}{\lambda+4}\\
+  a_4 = \frac{2\lambda}{(\lambda+2)(\lambda+4)}
+\end{gather*}
+and hence our approximated unstable manifold is 
+\[ h(x)= \frac{\lambda}{\lambda+2}x^2 + \frac{2\lambda}{(\lambda+2)(\lambda+4)}x^4 \]
+
+
+Moving on to the stable manifold with the eigenvalue of $-\lambda$ and eigenvector of $\left[\begin{matrix}0\\1\end{matrix}\right]$, note that for any point where $x=0$, we have the following system 
+\begin{align*}
+  \dot{x}&=0\\
+  \dot{y}&=-\lambda y
+\end{align*}
+implying that trajctories that start with $x=0$ have $\lim_{t\to\infty}y(t)\to 0$, inline with the interpretation of a stable manifold. Hence, the stable manifold is simply an extension of the eigenvector and can be described by the line 
+\[ x=0 \] 
+
+Let's move on to the manifolds for $(-1,1)$. The eigenvalues and eigenvectors are 
+\[
+\left[ \left(\text{eigenvalue  } -2, \ \text{eigenvector  }  \left[\begin{matrix}\frac{2 - \lambda}{2 \lambda}\\1\end{matrix}\right]\right), \  \left(\text{eigenvalue  } - \lambda, \ \text{eigenvector  } \left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+This is nice because both of our eigenvalues are negative and their eigenvectors are linearly independent. Hence our $E^s$ for $(-1,1)$ is all of $\mathbb{R}^2$, and the stable manifold theorem implies that our manifold approximation will be tangent to $\mathbb{R}^2$ near $(-1,1)$. Given that our system is in $\mathbb{R}^2$, an approximation of the stable manifold would be any neighborhood $U\subset \mathbb{R}^2$ as long as $U$ does not intersect $x=0$, the stable manifold of $(0,0)$. Hence, the region
+\[U=\left\{ (x,y)\in\mathbb{R}^2: y\in\mathbb{R},\ x\in(-\infty,0) \right\}\]
+is the stable manifold of the fixed point $(-1,1)$. There is no unstable manifold.
+
+Moving on to the manifolds for $(1,1)$, the eigenvalues and eigenvectors are 
+\[
+\left[ \left( \text{eigenvalue  }-2, \  \text{eigenvector  }\left[\begin{matrix}\frac{\lambda - 2}{2 \lambda}\\1\end{matrix}\right]\right), \  \left(\text{eigenvalue  } - \lambda, \ \text{eigenvector  }\left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+This is also nice because it mirrors are situation for the fixed point $(-1,1)$. Hence, our same argument applies, and the manifold is the region 
+\[U=\left\{ (x,y)\in\mathbb{R}^2: y\in\mathbb{R},\ x\in(0,\infty) \right\}\]
+where the valid region of our $x$ coordinates are fliped to accomodate our fixed point $(1,1)$.
+
+Here is the sketch of our global phase portrait:
+
+\includegraphics[width=0.5\textwidth]{sketch/problem_3_a.png}
+
+Note that we can exactly solve for the trajectories at $x=-1$ and $x=1$ since they imply 
+\begin{align*}
+  \dot{x}&=0\\
+  \dot{y}&=-\lambda (y-1)
+\end{align*}
+where $y$ will simply flow to $y=1$.
+
+\paragraph{Part (B)}
+
+To begin, let's find the fixed points by writing 
+\begin{align*}
+  x&=\lambda x\\
+\end{align*}
+where since $|\lambda|<1$, it follows that the only fixed $x$ coord is $x=0$. For $y$, we can write 
+\[ y=\mu y \]
+where since $|\mu|>1$, it follows that the only fixed $y$ coord is $y=0$. Hence the only fixed point is $(0,0)$.
+
+To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=\lambda\\
+  \frac{\partial f_1}{\partial y}=0\\
+  \frac{\partial f_2}{\partial x}=-3x^2\\
+  \frac{\partial f_2}{\partial y}=\mu
+\end{gather*}
+Now we can compute our linearized matrix 
+\[
+Df(0,0)=\begin{bmatrix}
+  \lambda & 0\\
+  0 & \mu
+\end{bmatrix}\\
+\]
+where are eigenvalues and eigenvectors are 
+\[
+\left[ \left( \text{eigenvalue  }\lambda, \  \text{eigenvector  }\left[\begin{matrix}1\\0\end{matrix}\right]\right), \  \left(\text{eigenvalue  } \mu, \ \text{eigenvector  }\left[\begin{matrix}0\\1\end{matrix}\right]\right)\right]
+\]
+
+Given $|\lambda|<1$, we can construct our stable manifold by writing 
+\[ y=h(x)=a_0 +a_1x+a_2x^2+a_3x^3+a_4x^4 \]
+where $a_0=0$ since we are at the origin and $a_1=0$ since the corresponding eigenvector is $\left[\begin{matrix}1\\0\end{matrix}\right]$. Hence we have 
+\[ y=h(x)=a_2x^2+a_3x^3+a_4x^4 \]
+To compute the other coefficients, we can use the following commute diagram that is implied given our map is invariant under our map:
+\[
+\begin{tikzcd}
+x_t \arrow{r}{h} \arrow{d}{f} & y_t \arrow{d}{g} \\
+x_{t+1} \arrow{r}{h} & y_{t+1}
+\end{tikzcd}
+\]
+where $x\mapsto f(x,y)$ and $y\mapsto g(x,y)$. Hence,
+\[ h(f(x,y))=g(x,h(x)) \]
+and plugging in our expressions, we have 
+\begin{gather*}
+  h(\lambda x) = \mu\, h(x) - x^3\\
+  a_2\lambda^2x^2+a_3\lambda^3x^3+a_4\lambda^4=\mu\left(a_2x^2+a_3x^3+a_4x^4\right)-x^3
+\end{gather*}
+where grouping terms together gives us 
+\begin{align*}
+  a_2&=0\\
+  a_3&=\frac{1}{\mu-\lambda^3}\\
+  a_4&=0
+\end{align*}
+because $a\lambda^n=a\mu$ implies $a=0$. Hence our stable manifold approximation is 
+\[ h(x)=\frac{1}{\mu-\lambda^3}x^3 \]
+
+Turning our attention to approximating the unstable manifold $x=h^u(y)$, we can argue that the unstable manifold is $x=0$ since our map when $x=0$ becomes 
+\begin{align*}
+    x&\mapsto 0,\\
+    y&\mapsto \mu y - 0 = \mu y.
+\end{align*}
+and we merely just stay along the y-axis.
+
+Below are the various global phase portrait sketches with example trajectories. Note that there are four conditions, one for each pairing of positive and negative $\mu$ and $\lambda$ values.
+
+\includegraphics[width=0.45\textwidth]{sketch/p3b_gg.png}
+\includegraphics[width=0.45\textwidth]{sketch/p3b_lg.png}
+
+\includegraphics[width=0.45\textwidth]{sketch/p3b_gl.png}
+\includegraphics[width=0.45\textwidth]{sketch/p3b_ll.png}
+
 
 \end{solution}
 
