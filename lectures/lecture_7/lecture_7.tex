@@ -1,0 +1,228 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section{Plan for Class}
+\begin{enumerate}
+    \item Gradient systems
+    \item Structural stability
+    \item Structural stability of gradient systems
+    \item Peixoto's theorem
+    \item Morse-Smale systems 
+    \item Intro to bifurcations
+\end{enumerate}
+
+\section{Gradient systems \S 1.8}
+For this section, we care about some function 
+\begin{gather*}
+    V:\mathbb{R}^2\rightarrow\mathbb{R}\\
+    \dot{x}=-\frac{\partial V}{\partial x}\\
+    \dot{y}=-\frac{\partial V}{\partial y}
+\end{gather*}
+and more generally we could study 
+\begin{gather*}
+    V:\mathbb{R}^n\rightarrow\mathbb{R}\\
+    \dot{\vec{x}}=-\nabla V
+\end{gather*}
+These conditions just mean that trajectories flow downhill, but instead of Hamiltonian systems, trajectories are \textit{orthogonal} to level sets of $V$.
+
+\subsection{Example}
+\[
+V=\frac{x^2+y^2}{2}+\frac{1}{2}\left(\frac{y^3}{3}-x^2y\right)
+\]
+where in the vein of gradient systems we can write 
+\begin{align*}
+    \dot{x}&=-\frac{\partial V}{\partial x}=-x+xy\\
+    \dot{y}&=-\frac{\partial V}{\partial y}=-y-\frac{y^2}{2}+\frac{x^2}{2}
+\end{align*}
+We have equilibrium points are $(0,0),(0,-2),(\pm\sqrt{3},1)$. Our Jacobian is the following:
+\[
+Df\left(x,y\right)=\begin{bmatrix}
+y-1 & x \\
+x & -y-1
+\end{bmatrix}
+\]
+and for each of our fixed points, we have
+\begin{align*}
+    Df\left(0,0\right)&=\begin{bmatrix}
+    -1 & 0\\
+    0 & -1
+    \end{bmatrix}\qquad\lambda=-1,-1\\
+    Df\left(0,-2\right)&=\begin{bmatrix}
+    -3 & 0\\
+    0 & 1
+    \end{bmatrix}\qquad\lambda=-3,1\\
+    Df\left(+\sqrt{3},1\right)&=\begin{bmatrix}
+    0 & \sqrt{3}\\
+    \sqrt{3} & -2
+    \end{bmatrix}\qquad\lambda=-3,1\\
+    Df\left(-\sqrt{3},1\right)&=\begin{bmatrix}
+    0 & -\sqrt{3}\\
+    -\sqrt{3} & -2
+    \end{bmatrix}\qquad\lambda=-3,1\\
+\end{align*}
+Hence, our fixed points are 
+\begin{itemize}
+    \item $(0,0)$ is a sink (symmetric)
+    \item $(0,-2)$ is a saddle
+    \item $(+\sqrt{3},1)$ is a saddle
+    \item $(-\sqrt{3},1)$ is a saddle
+\end{itemize}
+
+\subsection{Flow downhill}
+Gradient systems have trajectories that always flow downhill. This means we can make the following statements:
+\begin{itemize}
+    \item No periodic orbits!
+    \item Fixed points are the only non-wondering points.
+    \item $V$ is a Lyapunov function.
+\end{itemize}
+
+\section{Structural stability \S 1.7}
+
+A vector field (or map) is structurally stable if the phase portrait has the same ``qualitative features'' when it's perturbed a little.
+
+Note that this definition is quite informal, and also that this is perturbations in the system not the initial conditions.
+
+\subsection{Some Examples}
+\subsubsection{Not stable!}
+Let's consider the system 
+\begin{align*}
+    \dot{x}&=y -\epsilon x
+    \dot{y}&=-x-\epsilon y
+\end{align*}
+and we have the Jacobian 
+\[
+Df\left(x,y\right)=\begin{bmatrix}
+-\epsilon & 1 \\
+-1 & -\epsilon
+\end{bmatrix}
+\]
+meaning that small perturbations $\epsilon$ change the system from a center to a spiral. This is not structurally stable!
+
+\subsubsection{Stable!}
+Let's consider the system 
+\begin{align*}
+    \dot{x}&=y -\epsilon x
+    \dot{y}&=x-\epsilon y
+\end{align*}
+and we have the Jacobian 
+\[
+Df\left(x,y\right)=\begin{bmatrix}
+-\epsilon & 1 \\
+-1 & -\epsilon
+\end{bmatrix}
+\]
+and our eigenvalues are $\lambda_0=-1-\epsilon$ and $\lambda_1=1-\epsilon$. This is structurally stable! Small perturbations still lead to saddle.
+
+\subsection{Precise definition}
+
+A map $f$ (or a vector field) is structurally stable if there is an $\epsilon>0$ such that all $C^1$ $\epsilon$-perturbations of $f$ are $C^0$-equivalent to $f$.
+
+Let's define some terms.
+
+$C^1$ $\epsilon$-perturbations essentially mean that points and derivatives stay close to what they were. More formally, $G$ is a $C^1$ $\epsilon$-perturbation of $F$ if there exists compact set $K$ such that $F=G$ outside of $K$ and 
+\begin{gather*}
+    ||F-G||<\epsilon\\
+    ||\frac{\partial}{\partial x_i}\left(F-G\right)||<\epsilon\qquad\text{for all }i=1,\ldots,n
+\end{gather*}
+
+$C^K$ equivalent means that maps $F,G$ are $C^K$ equivalent if there exists a $C^K$ diffeomorphism such that 
+\begin{gather*}
+    h\circ F=G\circ F\\
+    \exists t_2 \text{s.t.}\qquad h\left(\varphi^F_{t_1}(x)\right)=\varphi^G_{t_2}\left(h(x)\right)\qquad \forall x,t_1
+\end{gather*}
+Essentially, $h$ means that orbits of $f$ map on to orbits of $g$ and the derivative of time is preserved.
+
+\subsection{Why not $C^1$ equivalent?}
+
+Why not $C^1$ equivalent instead of $C^0$-equivalent? It's too restrictive! Eigenvalues must occur in the same ratios of original and perturbed systems (see page 42).
+
+Let's think about the following systems. The first is 
+\begin{align*}
+    \dot{x}&=x
+    \dot{y}&=y
+\end{align*}
+and we have the Jacobian 
+\[
+Df\left(x,y\right)=\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
+\]
+and the second is 
+\begin{align*}
+    \dot{x}&=x
+    \dot{y}&=(1+\epsilon)y
+\end{align*}
+and we have the Jacobian 
+\[
+Df\left(x,y\right)=\begin{bmatrix}
+1 & 0 \\
+0 & 1+\epsilon
+\end{bmatrix}
+\]
+Between these two systems, there is no $C^1$ mapping, but there is a $C^0$ mapping! We want to say that these two systems are the same, hence structurally stable, so we use $C^0$.
+
+\subsection{Necessary and (in)sufficient conditions}
+
+A necessary condition for structural stability is that all fixed points be hyperbolic (no eigenvalues on the imaginary axis). Is this sufficient? No!
+
+The counterexample is a heteroclinic orbit from one saddle to another. If you perturb a heteroclinic connection, then orbits can ``leak'' between the saddle points. But is even this always true? Is it always true that heteroclinic connections are fragile?
+
+Heteroclinic connections may still be structurally stable in $\geq3$ dimensions. Imagine that stable $W^u$ and unstable $W^s$ manifolds are 2-dimensional planes in 3-dimensions. Imagine that there intersection is a line. This line is a heteroclinic connection, then perturbing the planes still maintains that heteroclinic connection.
+
+Heteroclinic connections are stable if the stable and unstable manifolds intersect transversally. This cannot happen in $\mathbb{R}^2$.
+
+\section{Structural stability of gradient systems}
+
+\textbf{Theorem 1.8.3} --- Smale, 1970
+
+(n dimensional) Gradient systems for which fixed points are hyperbolic and all intersections of stable and unstable manifolds are transversal, are structurally stable.
+
+\section{Peixoto's theorem}
+
+\textbf{Theorem 1.9.1} --- Peixoto, 1962
+
+For 2 dimensional flows, let $M$ be an oriented compact 2-manifold with no boundary [or $\mathbb{R}^2$ with trapping region]. A $C^1$ vector field on $M$ is structurally stable if and only if 
+\begin{enumerate}
+    \item The number of fixed points and periodic orbits is finite and all are hyperbolic.
+    \item There are no saddle connections.
+    \item The only non-wandering points are fixed points and periodic orbits.
+\end{enumerate}
+The set of all such vector fields is \underline{open and dense} in the space of $C^1$ vector fields.
+
+The condition ``\underline{open and dense}'' essentially means the system is ``generic''.
+
+For examples of why these conditions make sense, consider the hyberbolic toral automorphism. We can perturb an irrational slope to be rational, and all nonwondering points become periodic orbits. The reason why the hyperbolic toral automorphism is structurally unstable because there are infinite number of non-wondering points.
+
+\subsection{Trapping region}
+
+The system 
+\begin{align*}
+    \dot{x}&=\sin x\\
+    \dot{y}&= -y
+\end{align*}
+has an infinite number of fixed points, but is structurally stable. All we need to do is define a trapping region, and then we have a finite number of fixed points and we are fine.
+
+\section{Morse-Smale systems}
+
+This is an attempt to generalize Peixoto's theorem to higher dimensions.
+
+Morse-Smale systems are systems with the following properties:
+\begin{enumerate}
+    \item finite number of fixed points and periodic orbits, and all are hyperbolic
+    \item all intersections of stable and unstable manifolds are transversal
+    \item the set of all non-wandering contains only fixed points and periodic orbits
+\end{enumerate}
+Some conjectures these guys wanted to prove were:
+\begin{enumerate}
+    \item A system is structurally stable $\iff$ it is Morse-Smale
+    \item Morse-Smale systems are dense in diffeomorphisms of $M$ or $C^1$ vector fields on $M$.
+    \item Structurally stable systems are dense in diffeomorphisms of $M$ or $C^1$ vector fields on $M$.
+\end{enumerate}
+ALL ARE FALSE! The only correct statement is ``Morse-Smale systems are structurally stable''. We will discuss counterexamples to these conjectures. One such counterexample is the Smale Horseshoe.
+
+
+
+\end{document}
