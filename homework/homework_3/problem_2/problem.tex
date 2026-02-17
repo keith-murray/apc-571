@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathhint}
+
+\begin{document}
+
+% Set the context for this problem - this information appears in the page header
+% and helps the hint system understand what material you've covered
+\mathhintcontext{
+  book=Guckenheimer and Holmes,
+  chapter=1,
+  section=1.5-1.8,
+  problem=2,
+  lectures={lecture_5.tex, lecture_6.tex}
+}
+
+\begin{problem}
+We consider the ``rabbit vs. sheep'' system described by the following equations:
+\begin{align*}
+  \dot{x}&=x(3-x-2y)\\
+  \dot{y}&=y(2-x-y),
+\end{align*}
+where $x$ represents the population of rabbits, and $y$ represents the population of sheep.
+\begin{itemize}
+  \item[(a)] Find all the equilibria of the system, and for each determine its index.
+  \item[(b)] Show that it is impossible to have a closed orbit for the system (index theory will help but you will need something else to rule out all possible closed orbit).
+\end{itemize}
+
+\end{problem}
+
+\begin{notes}
+From office hours, I got the following hint about part (b): If you start with no rabbits, you will never have any rabbits. It you start with no sheep, you will never have any sheep. Think about invariant sets in the phase portrait. The invariant sets are the x and y axes. You cannot have an closed orbit that crosses these axes or you violate the existence and uniqueness of solutions.
+
+
+\end{notes}
+
+\begin{solution}
+% Write your solution here
+% Present your final, clean solution.
+
+\end{solution}
+
+\end{document}

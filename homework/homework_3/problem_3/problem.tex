@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{mathhint}
+
+\begin{document}
+
+% Set the context for this problem - this information appears in the page header
+% and helps the hint system understand what material you've covered
+\mathhintcontext{
+  book=Guckenheimer and Holmes,
+  chapter=1,
+  section=1.5-1.8,
+  problem=3,
+  lectures={lecture_5.tex, lecture_6.tex}
+}
+
+\begin{problem}
+Consider the following second-order, periodically forced, differential equation:
+\begin{equation}\label{eq:prob_3}
+  \ddot{x}+\delta\dot{x}+f(x)=\gamma\cos\left(\omega t\right).
+\end{equation}
+\begin{itemize}
+  \item[(a)] Letting $f(x)=x$ and fixing $\omega=1,\delta>0,\gamma>0$, show that there exists a $2\pi$-periodic solution to (\ref{eq:prob_3}).
+  \item[(b)] Construct a Poincaré map that takes $(x(0),\dot{x}(0))$ to $(x(T),\dot{x}(T))$, where $T=2\pi/\omega$ is the forcing period, and use this map to investigate the stability of the periodic orbit you found in part (a).
+  \item[(c)] Now let $f(x)=\sin x$, and fix $\delta=\gamma=0$. Show that (\ref{eq:prob_3}) possess a homoclinic orbit $q^0(t)$ to a hyperbolic saddle point $p_0$. [\textit{Hint:} Recognize that the system is Hamiltonian and use the conserved quantity.]
+  \item[(d)] Now let $\delta,\gamma>0$, and consider how this perturbation might affect the fixed point $p_0$ and the homoclinic orbit. Under the periodic forcing, the fixed point $p_0$ is perturbed to a \textit{periodic orbit} (of saddle type). This periodic orbit is a fixed point of the Poincaré map that takes $(x(0),\dot{x}(0))$ to $(x(T),\dot{x}(T))$. Find an approximation to this periodic orbit numerically (e.g., in Python or Matlab), by constructing a numerical approximation to the Poincaré map, and using a numerical root finder to find a fixed point close to $p_0$.
+  \item[(e)] Now investigate (numerically) what happens to the homoclinic orbit $q^0(t)$, for $\delta,\gamma>0$. Do your best to numerically approximate the stable and unstable manifolds of the fixed point you found in the previous part, for some values of $\delta,\gamma,\omega$: for instance, place a bunch of points along the stable and unstable eigenspaces, and iterate them forward or backward using your Poincaré map. Can you find values for which the stable and unstable manifolds have transversal intersections? If so, can you find something resembling ``chaotic'' behavior?
+\end{itemize}
+
+\end{problem}
+
+\begin{notes}
+From office hours, I learned that the Poincaré map is just the time $T$ map.
+
+\end{notes}
+
+\begin{solution}
+% Write your solution here
+% Present your final, clean solution.
+
+\end{solution}
+
+\end{document}
