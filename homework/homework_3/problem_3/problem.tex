@@ -32,6 +32,222 @@ Consider the following second-order, periodically forced, differential equation:
 \begin{notes}
 From office hours, I learned that the Poincaré map is just the time $T$ map.
 
+\section{Part (a)}
+
+To show that a $2\pi$-periodic solution to (\ref{eq:prob_3}) exists, let's use the method of undetermined coefficients where we guess that $x(t)$ is 
+\[ x(t)=A\cos\left( t\right) + B\sin\left( t\right) \]
+and then we can compute the following values 
+\begin{align*}
+  \dot{x}&=-A\sin\left( t\right)+B\cos\left( t\right)\\
+  \ddot{x}&=-A\cos\left( t\right) - B\sin\left( t\right)
+\end{align*}
+Now we can through our values into the following equation 
+\[\ddot{x}+\delta\dot{x}+x=\gamma\cos\left( t\right)\]
+to get 
+\begin{align*}
+  \gamma\cos\left( t\right)&=-A\cos\left( t\right) - B\sin\left( t\right)+\delta\left(-A\sin\left( t\right)+B\cos\left( t\right)\right)+A\cos\left( t\right) + B\sin\left( t\right)\\
+  &=-A\delta\sin(t)+B\delta\cos(t)
+\end{align*}
+where $A=0$ and $B=\frac{\gamma}{\delta}$. Hence our $2\pi$-periodic solution to (\ref{eq:prob_3}) is 
+\[x(t)=\frac{\gamma}{\delta}\sin(t) \]
+
+\mathhint{Nudge}{2026-02-17 17:37}{Your work on part (a) looks correct — nice job finding the particular solution. You're on the right track to continue with the remaining parts!}
+
+\section{Part (b)}
+
+First, let's reparameterize our system such that it is an autonomous system of ODEs:
+\begin{align*}
+  \dot{x}&=y\\
+  \dot{y}&=-\delta y -f(x)+\gamma\cos\psi\\
+  \dot{\psi}&=\omega
+\end{align*}
+Now let's look at the section 
+\[
+\Sigma=\left\{\left(x,y,\psi\right) : \psi=0\, \mod 2\pi  \right\}
+\]
+where $T=2\pi/\omega$. This is convenient because our Poincaré map becomes 
+\begin{align*}
+  \dot{x}&=y\\
+  \dot{y}&=-\delta y -f(x)+\gamma\\
+\end{align*}
+where we could linearize around some closed orbit $\zeta$ to get 
+\[ \dot{\xi}= D_xf(\zeta)\cdot \xi \]
+Here, $D_xf(\zeta)$ is the Jacobian
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quantities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=0\\
+  \frac{\partial f_1}{\partial y}=1\\
+  \frac{\partial f_2}{\partial x}=-f'(x)\\
+  \frac{\partial f_2}{\partial y}=-\delta
+\end{gather*}
+Putting it all together, the Jacobian is
+\[ J_f(x,y) = \begin{bmatrix}
+0 & 1 \\
+-f'(x) & -\delta
+\end{bmatrix} \]
+and our Poincare map is 
+\[ X(T)=e^{TJ_f}. \]
+
+\mathhint{Nudge}{2026-02-17 18:05}{You're making good progress setting up the linearization, but be careful — the Jacobian $J_f$ evaluated along your periodic orbit is *time-dependent* (since $x(t)$ varies), so $e^{TJ_f}$ isn't quite right. Think about what the correct expression for the fundamental matrix solution looks like when the coefficient matrix depends on $t$.}
+Putting it all together, we can write the Jacobian as
+\[ A(t)=J_f(x(t),y) = \begin{bmatrix}
+0 & 1 \\
+-f'(x(t)) & -\delta
+\end{bmatrix} \]
+and our Poincare map is 
+\[ \dot{\xi}= A(t) \xi. \]
+
+\mathhint{Nudge}{2026-02-17 18:10}{You've correctly identified that $A(t)$ is time-dependent, which is the key insight. Now, for the specific case $f(x) = x$, what does $f'(x)$ simplify to, and what does that tell you about whether $A(t)$ is actually time-dependent or constant?}
+Now looking at the orbit in part (a), we have $-f'(x)=-1$. Thus our Jacobian at the stable orbit is 
+\[ J_f(x(0),y(0)) = \begin{bmatrix}
+0 & 1 \\
+-1 & -\delta
+\end{bmatrix} \]
+where $x(0),y(0)$ is 
+\[ x(0)=\frac{\gamma}{\delta}\sin 0=0 \]
+and 
+\[ y(0)=\dot{x}(0)=\frac{\gamma}{\delta}\cos 0 =\frac{\gamma}{\delta}\]
+Evaluating our eigenvalues and eigenvectors via SymPy, we have 
+\[
+\left[ \left( \lambda_0 = - \frac{\delta}{2} - \frac{\sqrt{\delta^2-4}}{2}, \  v_0= \left[\begin{matrix}\lambda_1\\1\end{matrix}\right]\right), \  \left(\lambda_1= - \frac{\delta}{2} + \frac{\sqrt{\delta^2-4}}{2}, \  v_1= \left[\begin{matrix}\lambda_0\\1\end{matrix}\right]\right)\right]
+\]
+where our eigenvalues $\lambda_0,\lambda_1$ always have a negative real part since $\delta>0$, $\delta<2$ implies that $\sqrt{\delta^2-4}$ is imaginary, and for $\delta>2$ we have $\delta>\sqrt{\delta^2-4}$, implying $\lambda_1$ is negative.
+
+From this, we can conclude that the periodic orbit we found in part (a) is stable.
+
+\mathhint{Nudge}{2026-02-17 19:33}{You're on the right track recognizing that the eigenvalues of $A$ have negative real part, but remember — the stability of the periodic orbit is determined by the eigenvalues of the **Poincaré map** (i.e., $e^{\lambda_i T}$), not the eigenvalues of $A$ directly. Make sure you connect the two explicitly to complete the argument.}
+Ah good point.
+
+Note that our time-periodic linear system is 
+\[ \dot{\xi}= A \xi \]
+where $A$ was our time-independent Jacobian evaluated at the closed orbit. To get the Poincaré map, we integrate this system to get 
+\[\xi(T)=\xi(0)e^{TA} \]
+where our eigenvalues $\lambda_0,\lambda_1$ of $A$ become eigenvalues $e^{\lambda_0},e^{\lambda_1}$ of the Poincaré map. Hence, because $\lambda_0,\lambda_1$ both had negative real parts, $e^{\lambda_0},e^{\lambda_1}$ are both less than one, implying that the map is stable around our closed orbit.
+
+Note that even if $\lambda$ is complex with a negative real part, we can write 
+\[ e^\lambda=e^{\mathrm{Re} \lambda+i\,\mathrm{Im} \lambda}=e^{\mathrm{Re} \lambda}e^{i\,\mathrm{Im} \lambda}=e^{\mathrm{Re} \lambda}\left(\cos(\mathrm{Im} \lambda\right)+i\,\sin\left(\cos(\mathrm{Im} \lambda)\right)\]
+which will have a length less than 1. Hence, even if $\lambda$ is complex with a negative real part, the Poincaré map is still stable.
+
+\mathhint{Nudge}{2026-02-17 20:11}{You're almost there — just be careful with the exponents. The eigenvalues of the Poincaré map should be $e^{\lambda_i T}$, not $e^{\lambda_i}$. Make sure the factor of $T = 2\pi$ appears in your final argument.}
+Oh sure.
+
+Note that our time-periodic linear system is 
+\[ \dot{\xi}= A \xi \]
+where $A$ was our time-independent Jacobian evaluated at the closed orbit. To get the Poincaré map, we integrate this system to get 
+\[\xi(T)=\xi(0)e^{TA} \]
+where our eigenvalues $\lambda_0,\lambda_1$ of $A$ become eigenvalues $e^{\lambda_0T},e^{\lambda_1T}$ of the Poincaré map. Hence, because $\lambda_0,\lambda_1$ both had negative real parts, $e^{\lambda_0T},e^{\lambda_1T}$ are both less than one, implying that the map is stable around our closed orbit.
+
+Note that even if $\lambda$ is complex with a negative real part, we can write 
+\[ e^(\lambda T)=e^{T\mathrm{Re} \lambda+i\,T\mathrm{Im} \lambda}=e^{T\mathrm{Re} \lambda}e^{i\,T\mathrm{Im} \lambda}=e^{T\mathrm{Re} \lambda}\left(\cos\left(T\mathrm{Im} \lambda\right)+i\,\sin\left(T\mathrm{Im} \lambda\right)\right)\]
+which will have a length less than 1. Hence, even if $\lambda$ is complex with a negative real part, the Poincaré map is still stable.
+
+\mathhint{Nudge}{2026-02-17 20:17}{Your argument for part (b) now looks complete and correct — nice work! Time to move on to part (c).}
+
+\section{Part (c)}
+
+Now letting $f(x)=\sin x$ and fixing $\delta=\gamma=0$, our system is 
+\[
+\ddot{x}+\sin x =0
+\]
+and via reparameterizing, we have 
+\begin{align*}
+  \dot{x}&=y\\
+  \dot{y}&=-\sin x
+\end{align*}
+
+First, let's find the fixed points to show that a hyperbolic saddle point exists. We can write 
+\begin{align*}
+  0&=\dot{x}=y\\
+  0&=\dot{y}=-\sin x
+\end{align*}
+where it becomes clear that our fixed points are $(\pm n\pi,0)$ for $n\in\mathbb{Z}$. To linearize, we can compute the Jacobian 
+\[ J_f(x,y) = \begin{bmatrix}
+\frac{\partial f_1}{\partial x} & \frac{\partial f_1}{\partial y} \\
+\frac{\partial f_2}{\partial x} & \frac{\partial f_2}{\partial y} 
+\end{bmatrix} \]
+with the quatities being 
+\begin{gather*}
+  \frac{\partial f_1}{\partial x}=0\\
+  \frac{\partial f_1}{\partial y}=1\\
+  \frac{\partial f_2}{\partial x}=-\cos x\\
+  \frac{\partial f_2}{\partial y}=0
+\end{gather*}
+Now we can compute our linearized matrices 
+\begin{gather*}
+  Df(0,0)=\begin{bmatrix}
+    0 & 1\\
+    -1 & 0
+  \end{bmatrix}\\
+  Df(+\pi,0)=\begin{bmatrix}
+    0 & 1\\
+    1 & 0
+  \end{bmatrix}
+\end{gather*}
+
+Notice that I only calculated the Jacobian matrices for $0,+\pi$ since more multiples of $\pi$ will be one of these two matrices. 
+
+Calculating the eigenvalues and eigenvectors, for equilibria $(0,0)$ and corresponding $2\pi$ multiples, we have 
+\[\left[ \left( \lambda=- i, \  v= \left[\begin{matrix}i\\1\end{matrix}\right]\right), \  \left( \lambda=i, \  v=\left[\begin{matrix}- i\\1\end{matrix}\right]\right)\right]
+\]
+implying that linearization tells us nothing since we have 0 real part to our eigenvalues.
+
+Calculating the eigenvalues and eigenvectors, for equilibria $(+\pi,0)$ and corresponding $2\pi$ multiples, we have 
+\[\left[ \left( \lambda=-1, \  v=\left[\begin{matrix}-1\\1\end{matrix}\right]\right), \  \left( \lambda=1, \  v= \left[\begin{matrix}1\\1\end{matrix}\right]\right)\right]\] 
+where we have an unstable fixed point due to the positive eigenvalue. Specifically, it is a saddle.
+
+Given the hint, we can recognize that the system is Hamiltonian, and go looking for such Hamiltonian. We start by solving for $\partial H/\partial y$
+\begin{gather*}
+  \frac{\partial H}{\partial y}=y\\
+  \partial H = y\partial y\\
+  \int \partial H = \int y\partial y\\
+  H(x,y) = \frac{y^2}{2}+f(x)
+\end{gather*}
+and by solving for $\partial H/\partial x$, we have 
+\begin{gather*}
+  -\frac{\partial H}{\partial x}=-\sin x\\
+  \partial H = \sin x \,\partial x\\
+  \int \partial H = \int \sin x \,\partial x\\
+  H(x,y) = -\cos x +g(y)
+\end{gather*}
+Putting it all together, we have 
+\[ H(x,y) = \frac{y^2}{2} - \cos x \]
+
+Plugging in our saddle point $(\pi,0)$ to our Hamiltonian, we have 
+\[
+H(\pi,0)=\frac{0^2}{2}-\cos\pi=1
+\]
+Now to show that there is a homoclinic orbit $q^0(t)$ to the hyperbolic saddle point $p_0=(\pi,0)$, we can use the Hamiltonian to get an expression for y in terms of x, and then we can show that this expression goes to $p_0$. Hence, we can write 
+\begin{gather*}
+  \frac{y^2}{2} - \cos x=1\\
+  y^2=2\left(\cos x + 1\right)\\
+  y=\pm\sqrt{2\left(\cos x + 1\right)}
+\end{gather*}
+
+\mathhint{Nudge}{2026-02-17 20:47}{You're on the right track with the level set $H = 1$. To finish, think about what happens to $y = \pm\sqrt{2(\cos x + 1)}$ as $x \to \pm\pi$ — does this curve connect $p_0$ back to itself?}
+
+For $y=\pm\sqrt{2\left(\cos x + 1\right)}$, as $x$ goes from $+\pi$ to $-\pi$, we have $(\pi,0)$ to $(-\pi,0)$. But aren't $(\pi,0)$ and $(-\pi,0)$ both different saddle points? Doesn't this mean that we have a heteroclinic orbit?
+
+\mathhint{Nudge}{2026-02-17 21:40}{You're asking exactly the right question! Think about the phase portrait on the **cylinder** — since $\sin x$ is $2\pi$-periodic, $x = -\pi$ and $x = +\pi$ represent the *same* physical state.}
+Ah you're right.
+
+Given that the system is $2\pi$-periodic in $x$, our saddle points at $(\pi,0)$ and $(-\pi,0)$ are really the same saddle point. This makes sense given that this system is a damped driven oscillator. Hence, if we start at $(\pi,0)$, and travel along either $+\sqrt{2(\cos x + 1)}$ or $-\sqrt{2(\cos x + 1)}$, we will make it back to $(-\pi,0)$, the same saddle point. Hence, we have a homoclinic orbit.
+
+\mathhint{Nudge}{2026-02-17 21:51}{Your argument for part (c) is solid — nice work connecting the level set back to the same point on the cylinder! You're ready to tackle the numerical parts (d) and (e).}
+
+\section{Part (d)}
+
+I guess I'm confused by what it means to construct a numerical approximation to the Poincaré map. Don't we already have the Poincaré map from part (b)?
+
+\mathhint{Nudge}{2026-02-17 22:19}{You're right that you understand the *concept* of the Poincaré map from part (b), but now with $f(x) = \sin x$, you can't solve the system analytically — so you'll need to **numerically integrate** the ODE from $t=0$ to $t=T$ to evaluate the map for any given initial condition.}
+Okay! So we can numerically approximate what trajectories will do over one $T$, and then use the numerical root finder to find an initial condition that is nearly (hopefully exactly) the same after $T$.
+
+\mathhint{Nudge}{2026-02-17 22:22}{That's exactly the right idea — you've got the conceptual framework down perfectly. Go ahead and implement it!}
+
+
 \end{notes}
 
 \begin{solution}
