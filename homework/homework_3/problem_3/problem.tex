@@ -458,7 +458,7 @@ To get the Poincaré map, we solve $\dot{\xi}= D_xf(\zeta)\cdot \xi$ to get
 where our Floquet exponents $\lambda_0,\lambda_1$ of $A$ become eigenvalues $e^{\lambda_0T},e^{\lambda_1T}$ of the Poincaré map. Hence, because $\lambda_0,\lambda_1$ both had negative real parts, $e^{\lambda_0T},e^{\lambda_1T}$ are both less than one, implying that the map is stable around our closed orbit.
 
 Note that even if $\lambda$ is complex with a negative real part, we can write 
-\[ e^(\lambda T)=e^{T\mathrm{Re} \lambda+i\,T\mathrm{Im} \lambda}=e^{T\mathrm{Re} \lambda}e^{i\,T\mathrm{Im} \lambda}=e^{T\mathrm{Re} \lambda}\left(\cos\left(T\mathrm{Im} \lambda\right)+i\,\sin\left(T\mathrm{Im} \lambda\right)\right)\]
+\[ e^{\lambda T}=e^{T\mathrm{Re} \lambda+i\,T\mathrm{Im} \lambda}=e^{T\mathrm{Re} \lambda}e^{i\,T\mathrm{Im} \lambda}=e^{T\mathrm{Re} \lambda}\left(\cos\left(T\mathrm{Im} \lambda\right)+i\,\sin\left(T\mathrm{Im} \lambda\right)\right)\]
 which will have a length less than 1. Hence, even if $\lambda$ is complex with a negative real part, the Poincaré map is still stable.
 
 \section{Part (c)}
@@ -542,6 +542,8 @@ Now to show that there is a homoclinic orbit $q^0(t)$ to the hyperbolic saddle p
 \end{gather*}
 
 Given that the system is $2\pi$-periodic in $x$, our saddle points at $(\pi,0)$ and $(-\pi,0)$ are really the same saddle point. This makes sense given that this system is a driven pendulum. Hence, if we start at $(\pi,0)$, and travel along either $+\sqrt{2(\cos x + 1)}$ or $-\sqrt{2(\cos x + 1)}$, we will make it back to $(-\pi,0)$, the same saddle point. Hence, we have a homoclinic orbit.
+
+Note that our curves $y=\pm\sqrt{2\left(\cos x + 1\right)}$ don't intersect with our only other fixed point at $(0,0)$. This is because our Hamiltonian evaluated at $(0,0)$ is $H(0,0)=-1$; therefore it lies on a different level set entirely.
 
 \section{Part (d)}
 
@@ -640,15 +642,15 @@ sol_stable = solve_ivp(
 )
 \end{lstlisting}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption{Transversal intersection}
 \centering
 \includegraphics[width=0.75\textwidth]{problem_3_e_manifolds.png}
 \end{figure}
 
-Simulating a few trajectories slightly perturbed from $p_0$, we get the following figure demonstrating chaotic behavior. Note that trajectories intersect because we are not plotting $\dot{x}$.
+Simulating a few trajectories slightly perturbed from $p_0$, we get Figure 4 demonstrating chaotic behavior. Note that trajectories intersect because we are not plotting $\dot{x}$.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \caption{Trajectories demonstrating chaos}
 \centering
 \includegraphics[width=0.75\textwidth]{spacetime_cylinder.png}
