@@ -36,11 +36,11 @@
       "chapter": 3,
       "title": "Local Bifurcations",
       "sections": [
-        { "section": "2.1", "title": "Bifurcation Problems" },
-        { "section": "2.2", "title": "Center Manifolds" },
-        { "section": "2.3", "title": "Normal Forms" },
-        { "section": "2.4", "title": "Codimension One Bifurcations of Equilibria" },
-        { "section": "2.5", "title": "Codimension One Bifurcations of Maps and Periodic Orbits" }
+        { "section": "3.1", "title": "Bifurcation Problems" },
+        { "section": "3.2", "title": "Center Manifolds" },
+        { "section": "3.3", "title": "Normal Forms" },
+        { "section": "3.4", "title": "Codimension One Bifurcations of Equilibria" },
+        { "section": "3.5", "title": "Codimension One Bifurcations of Maps and Periodic Orbits" }
       ]
     }
   ],
