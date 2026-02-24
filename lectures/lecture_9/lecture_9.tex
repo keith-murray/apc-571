@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath, amssymb}
 \usepackage{tikz}
+\usepackage{mdframed}
 \usetikzlibrary{arrows.meta, decorations.markings}
 
 \begin{document}
@@ -270,13 +271,17 @@ Cool.
 
 Let's note that we can approximate any matrix $S$ as 
 \begin{gather*}
-    S=I+ x +\cdots + X^n\\
-    XS = x +\cdots + X^n + X^{n+1}\\
-    \left(I-x\right)S = I - X^{n+1}\\
+    S=I+ X +\cdots + X^n\\
+    XS = X +\cdots + X^n + X^{n+1}\\
+    \left(I-X\right)S = I - X^{n+1}\\
     \implies S = \left(I-X\right)^{-1}\left(I-X^{n+1}\right)\\
     S = \left(I-X\right)^{-1}
 \end{gather*}
 where as $n\to\infty$, it follows that $X^n\to 0$ if eigenvalue are less than 1.
+\clearpage
+\begin{mdframed}
+\textbf{Addendum}: The approximation $(I + Dh_2(y))^{-1} \approx I - Dh_2(y) + O(2)$ uses the matrix geometric series $(I - X)^{-1} = I + X + X^2 + \cdots$, which converges when the spectral radius $\rho(X) < 1$. This is valid here because $Dh_2(y)$ has entries that are linear in $y$ (since $h_2$ is degree-2), so all entries vanish as $y \to 0$. By the Gershgorin circle theorem, the eigenvalues are trapped in discs centered at the diagonal entries with radii given by the off-diagonal row sums — as $y \to 0$, all these discs collapse to the origin, guaranteeing $\rho(Dh_2(y)) < 1$ in a sufficiently small neighborhood of the origin. Hence the approximation holds locally, consistent with normal forms being a local theory.
+\end{mdframed}
 
 \subsubsection{Getting rid of degree-2 terms}
 
