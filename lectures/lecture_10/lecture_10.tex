@@ -1,0 +1,351 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usetikzlibrary{arrows.meta, decorations.markings}
+
+\begin{document}
+
+\section{Lecture 10: Plan for Class}
+Last time:
+\begin{enumerate}
+    \item Normal forms \S 3.3
+\end{enumerate}
+
+Today:
+\begin{enumerate}
+    \item More normal forms \S 3.3
+    \item Back to bifurcations \S 3.4
+\end{enumerate}
+
+\section{Last time: Normal forms}
+
+Let's say that we have the system
+\[
+\dot{x}= Ax + f_2(x) + f_3(x) + \cdots
+\]
+and we want to find a nonlinear change of coordinates
+\[
+x=y+h_2(y)
+\]
+such that we can push quadratic terms to higher order to look like
+\[
+\dot{y}=Ay-\left[Dh_2(y)\cdot Ay-Ah_2(y)-f_2(y)\right] + O(y^3)
+\]
+where $L_A\,h_2(y)=Dh_2(y)\cdot Ay-Ah_2(y)$. Note that $f_2$ is a homogeneous polynomial of degree 2 and $L_A$ is a linear operator over homogeneous polynomials of degree 2.
+
+Now, which terms in $f_2$ can we eliminate? Answer, those in the range of $L_A$ where leftover terms determine the normal form. The procedure is to find 
+\[
+R_2 = \operatorname{Range}\left(L_A\right)
+\]
+where, again, $L_A : H_2\rightarrow H_2$. Hence, we chose a complement $G_2$ such that 
+\[
+H_2 = R_2\oplus G_2
+\]
+where the basis for $G_2$ determine the leftover terms.
+
+\subsection{Looking at cubic terms}
+
+We could extend this approach to even push cubic terms to higher order, after pushing quadratic terms to higher order. Again, we are looking at 
+\[
+\dot{x}= Ax + f_2(x) + f_3(x) + \cdots
+\]
+where $f_2(x)$ contains whatever was leftover from before, and our change of coordinates
+\[
+x=y + h_3(y)
+\]
+This gives us a new system 
+\[
+\dot{y}=Ay + f_2(y) - \left[Dh_3(y)\cdot Ay -Ah_3(y) - f_3(y) \right] + O(y^4)
+\]
+where $L_A\left(h_3\right) = Dh_3(y)\cdot Ay -Ah_3(y)$. We can simply use the same procedure as before and find the range of $L_A$, and then find the complement $G_3$ such that 
+\[
+H_3 = R_3\oplus G_3
+\]
+
+\section{Notation from page 142}
+
+There is some new notation in the book that can be hard to parse. On page 142, it is written: we denote the components $Y^{1},Y^{2}$ of the vector field $Y$ by first order differential operators $\frac{\partial}{\partial x},\frac{\partial}{\partial y},$ so that
+\[
+\begin{pmatrix}
+    2xy\\x^2
+\end{pmatrix} \qquad \text{denoted} \qquad 2xy\frac{\partial}{\partial x} + x^2\frac{\partial}{\partial y}
+\]
+This is just the directional derivative in the direction of $Y$.
+
+\section{Normal Form Example}
+
+Let's say that we have the matrix\footnote{This is just the rotation matrix.} 
+\[
+A=\begin{bmatrix}0 & -1\\1 & 0\end{bmatrix}
+\]
+where our eigenvalues are $\pm$. Looking at $H_2$, this is the vector space 
+\[
+H_2 = \operatorname{span}\left\{\begin{pmatrix}
+x^2\\ 0
+\end{pmatrix},\begin{pmatrix}
+xy\\ 0
+\end{pmatrix},\begin{pmatrix}
+y^2\\ 0
+\end{pmatrix},\begin{pmatrix}
+0\\ x^2
+\end{pmatrix},\begin{pmatrix}
+0\\ xy
+\end{pmatrix},\begin{pmatrix}
+0\\ y^2
+\end{pmatrix},\right\}
+\]
+Now looking at $L_A$, we have 
+\[
+\left(L_A\, h\right)(z) = Dh(z) \cdot Az - A h(z)
+\]
+What we want to do now is to write out $L_A$ for each basis vector in $H_2$ to compute $L_A$. Note that $Az = \begin{bmatrix}
+    -y \\ x
+\end{bmatrix}$, and we can write 
+\begin{align*}
+\begin{pmatrix} x^2 \\ 0 \end{pmatrix}&: \quad
+\begin{pmatrix} 2x & 0 \\ 0 & 0 \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0 \end{pmatrix}
+\begin{pmatrix} x^2 \\ 0 \end{pmatrix}
+=
+\begin{pmatrix} -2xy \\ -x^2 \end{pmatrix}\\
+\begin{pmatrix} xy \\ 0 \end{pmatrix}&: \quad
+\begin{pmatrix} y & x \\ 0 & 0 \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0 \end{pmatrix}
+\begin{pmatrix} xy \\ 0 \end{pmatrix}
+= \begin{pmatrix} -y^2 + x^2 \\ -xy \end{pmatrix}\\
+\begin{pmatrix} y^2 \\ 0 \end{pmatrix}&: \quad
+\begin{pmatrix} 0 & 2y \\ 0 & 0 \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0 \end{pmatrix}
+\begin{pmatrix} y^2 \\ 0 \end{pmatrix}
+= \begin{pmatrix} 2xy \\ -y^2 \end{pmatrix}\\
+\begin{pmatrix} 0 \\ x^2 \end{pmatrix}&: \quad
+\begin{pmatrix} 0 & 0 \\ 2x & 0 \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0 \end{pmatrix}
+\begin{pmatrix} 0 \\ x^2 \end{pmatrix}
+= \begin{pmatrix} x^2 \\ -2xy \end{pmatrix}\\
+\begin{pmatrix} 0 \\ xy \end{pmatrix}&: \quad
+\begin{pmatrix} 0 & 0 \\ y & x \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0\end{pmatrix}
+\begin{pmatrix} 0 \\ xy \end{pmatrix}
+=
+\begin{pmatrix} xy \\ x^2-y^2 \end{pmatrix}\\
+\begin{pmatrix} 0 \\ y^2 \end{pmatrix}&: \quad
+\begin{pmatrix} 0 & 0 \\ 0 & 2y \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0 \end{pmatrix}
+\begin{pmatrix} 0 \\ y^2 \end{pmatrix}
+= \begin{pmatrix} y^2 \\ 2xy \end{pmatrix}
+\end{align*}
+This gives us a matrix representation of $L_A$ that is 
+\[
+\begin{pmatrix}
+    0 & 1 & 0 & 1 & 0 & 0 \\
+    -2 & 0 & 2 & 0 & 1 & 0 \\
+    0 & -1 & 0 & 0 & 0 & 1 \\
+    -1 & 0 & 0 & 0 & 1 & 0 \\
+    0 & -1 & 0 & -2 & 0 & 2 \\
+    0 & 0 & -1 & 0 & -1 & 0
+\end{pmatrix}
+\]
+which has a determinant of $\det = 9\neq 0$. Hence, $L_A$ is invertible and is rank $6$. Hence! We can eliminate all degree 2 terms. But! This means that we have to look at degree 3 terms ... 
+
+\subsection{Looking at cubic terms}
+
+Looking at $H_3$, we can write the space as 
+\[
+H_3 = \operatorname{span}\left\{\begin{pmatrix}
+x^3\\ 0
+\end{pmatrix},\begin{pmatrix}
+x^2y\\ 0
+\end{pmatrix},\begin{pmatrix}
+x^1y^2\\ 0
+\end{pmatrix},\begin{pmatrix}
+y^3\\ 0
+\end{pmatrix},\begin{pmatrix}
+0 \\ x^3
+\end{pmatrix},\begin{pmatrix}
+0\\ x^2y
+\end{pmatrix},\begin{pmatrix}
+0\\ x^1y^2
+\end{pmatrix},\begin{pmatrix}
+0\\ y^3
+\end{pmatrix}\right\}
+\]
+where our dimension\footnote{Aside: What is the dimension of the linear space of scalar polynomials $n$ in higher dimension $d$? Answer: we can use the stars and bars trick. Look it up yourself.} of the space is 8. To compute the new $L_A$, we can write 
+we can write 
+\begin{align*}
+\begin{pmatrix} x^3 \\ 0 \end{pmatrix}&: \quad
+\begin{pmatrix} 3x^2 & 0 \\ 0 & 0 \end{pmatrix}
+\begin{pmatrix} -y \\ x \end{pmatrix}
+-
+\begin{pmatrix} 0 & -1\\1 & 0 \end{pmatrix}
+\begin{pmatrix} x^2 \\ 0 \end{pmatrix}
+=
+\begin{pmatrix} -3x^2y \\ -x^3 \end{pmatrix}\\
+\vdots & \\
+\begin{pmatrix} 0 \\ y^3 \end{pmatrix}&
+\end{align*}
+yeah we are not going to write this all out. Just use a computer.
+
+The rank of the resulting $L_A$ is $6$. Hence, it is not invertible and we will get resonance terms. Then we can find these resonance terms by finding the null space of $L_A$ transpose to find what terms are not in our range. Rowley has a Jupyter Notebook going through this; it's quite clean!
+
+We get that the normal form of the Hopf bifurcation as 
+\begin{align*}
+    \dot{x}&= -y + \left(ax + by\right)\left(x^2 + y^2\right) + O\left(x^4,y^4\right)\\
+    \dot{y}&=x+ \left(ax - by\right)\left(x^2 + y^2\right) + O\left(x^4,y^4\right)
+\end{align*}
+In polar coordinates, this looks really nice. If we let
+\begin{align*}
+    x&=r\cos\theta\\
+    y&=r\sin\theta
+\end{align*}
+then we have 
+\begin{align*}
+    \dot{r}&=ar^3\\
+    \dot{\theta}&=1+br^2
+\end{align*}
+
+\subsection{Quick note}
+
+This system becomes more interesting when we allow $A$ to be a parameter
+\[
+A=\begin{bmatrix}0 & -\omega\\ \omega & 0\end{bmatrix}
+\]
+This could be on the homework?
+
+\subsection{Changing coordinates}
+
+We've been looking at analytic changes of coordinates like 
+\[
+x = y + h_2(y) + h_3(y) + \cdots
+\]
+but some good terms we couldn't eliminate, like:
+\[
+\begin{bmatrix}
+    1 & 0 \\ 0 & 2
+\end{bmatrix}\begin{pmatrix}
+    x \\ y
+\end{pmatrix}+\begin{bmatrix}
+    x^2-2xy+y^2\\x^2-3xy + 4y^2
+\end{bmatrix}
+\]
+kinda don't remember what that was from.
+
+What the Hartman-Grobman theorem says is that there's a homeomorphism $h$ such that $x=h(y)$ in which $f$ is linear! But! A homeomorphism need not be differentiable. We could have a $C^0$ function $h$.
+
+As an example, consider 
+\[
+\dot{x}=x^2
+\]
+Is there a coordinate change in which this is linear? Let 
+\[
+y=e^{-\frac{1}{x}}
+\]
+where $x\neq 0$. We have 
+\[
+\dot{y}=\left(\frac{1}{x^2}e^{-\frac{1}{x}}\right)\dot{x}=\frac{1}{x^2}e^{-\frac{1}{x}}\cdot x^2=e^{-\frac{1}{x}}=y
+\]
+hence we have 
+\[
+\dot{y}=y
+\]
+WHAT!?! We did a change of coordinates and got a linear function? This is because our function $y$ is not analytic. If we look at analytic changes of coordinates, like we have been doing with normal forms, then our solutions are more reasonable.
+
+This is all to say, the Hartman-Grobman theorem allows us to do some weird stuff with allowing $h$ to just be a homeomorphism. In our cases in bifurcations, we are going to stick with diffeomorphisms. 
+
+\section{Back to Bifurcations \S 3.4}
+
+Let's return our attention to co-dimension 1 bifurcations. Recall that 
+\[
+\dot{x}=\mu - x^2
+\]
+gives us a saddle-node bifurcation. Recall that 
+\[
+\dot{x}=\mu x - x^2
+\]
+gives us a transcritical bifurcation. Again, recall that 
+\[
+\dot{x}= \mu x - x^3
+\]
+gives us a supercritical pitchfork bifurcation.
+
+What if we want to classify bifurcations for more general systems? Well, we can use some bifurcation theorems!
+
+Remember that local bifurcations occur when an eigenvalue crosses the imaginary axis as a parameter varies. In the case of the saddle-node, transcritical, and pitchfork bifurcations, we have an eigenvalue go from negative to positive on the real axis, crossing the imaginary axis in the process. In the case of a Hopf bifurcation, we have a complex conjugate pair of eigenvalues that both cross the imaginary axis.
+
+\subsection{Bifurcation theorems}
+
+Our procedure for classifying bifurcations for more general systems will be to 
+\begin{enumerate}
+    \item Find the equilibrium points
+    \item find a parameter value where eigenvalues cross the imaginary axis
+    \item Find the center manifold 
+    \item Reduce dynamics to the center manifold 
+    \item Find normal form to simplify nonlinear terms on the center manifold
+\end{enumerate}
+This seems pretty laborious. Is there a shortcut?
+
+Yes! We have bifurcation theorems. To start, we have three types of hypotheses.
+
+Let's say that we are dealing with systems 
+\[
+\dot{x}=f\left(x,\mu\right)
+\]
+and that $\bar{x}(\mu)$ is a branch of fixed points where 
+\[
+f'\left(\bar{x}(\mu), \mu\right)=0
+\]
+The three types of hypotheses are 
+\begin{enumerate}
+    \item ``$D_x f(\bar{x})=0$'' $\implies \mu$ is a bifurcation point that is non-hyperbolic
+    \item ``$D^2_x f(\bar{x})$, $D^3_xf(x)\neq 0$'' implies non-degeneracy of higher-order terms 
+    \item ``$D_{\mu}f(\bar{x})\neq 0$'' implies that eigenvalues cross with non-zero ``speed''
+\end{enumerate}
+
+\subsection{1 dimension theorems}
+
+Again, we have 
+\[
+\dot{x}=f\left(x,\mu\right)
+\]
+where $x,\mu\in\mathbb{R}$. Suppose $x=p$ is a fixed point for some $\mu$. 
+
+\textit{Theorem:} If
+\begin{enumerate}
+    \item $\frac{\partial f}{\partial x}(p)=0$ (eigenvalue at 0)
+    \item $\frac{\partial^2 f}{\partial x^2}(p)\neq 0$ (non-degeneracy of good terms)
+    \item $\frac{\partial f}{\partial \mu}(p)\neq 0$ (crosses with non-zero speed)
+\end{enumerate}
+Then $x=p$ is a saddle-node bifurcation at this value of $\mu$.
+
+\textit{Theorem:} If
+\begin{enumerate}
+    \item $\frac{\partial f}{\partial x}(p)=0$
+    \item $\frac{\partial^2 f}{\partial x^2}(p)\neq 0$
+    \item $\frac{\partial f}{\partial x\, \partial \mu}(p)\neq 0$
+\end{enumerate}
+Then $x=p$ is a transcritical bifurcation.
+
+\textit{Theorem:} If
+\begin{enumerate}
+    \item $\frac{\partial f}{\partial x}(p)=0$
+    \item $\frac{\partial^3 f}{\partial x^3}(p)\neq 0$
+    \item $\frac{\partial f}{\partial x\, \partial \mu}(p)\neq 0$
+\end{enumerate}
+Then we have a pitchfork bifurcation. Note that if $\frac{\partial^3 f}{\partial x^3}(p)>0$, we have a subcritical pitchfork bifurcation. And if $\frac{\partial^3 f}{\partial x^3}(p)<0$, we have a supercritical pitchfork bifurcation.
+
+
+
+\end{document}
