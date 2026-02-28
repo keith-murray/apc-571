@@ -42,6 +42,20 @@
         { "section": "3.4", "title": "Codimension One Bifurcations of Equilibria" },
         { "section": "3.5", "title": "Codimension One Bifurcations of Maps and Periodic Orbits" }
       ]
+    },
+    {
+      "chapter": 4,
+      "title": "Averaging and Perturbation from a Geometric Viewpoint",
+      "sections": [
+        { "section": "4.1", "title": "Averaging and Poincare Maps" },
+        { "section": "4.2", "title": "Examples of Averaging" },
+        { "section": "4.3", "title": "Averaging and Local Bifurcations" },
+        { "section": "4.4", "title": "Averaging, Hamiltonian Systems, and Global Behavior: Cautionary Notes" },
+        { "section": "4.5", "title": "Melnikov's Method: Perturbations of Planar Homoclinic Orbits" },
+        { "section": "4.6", "title": "Melnikov's Method: Perturbations of Hamiltonian Systems and Subharmonic Orbits" },
+        { "section": "4.7", "title": "Stability of Subharmonic Orbits" },
+        { "section": "4.8", "title": "Two Degree of Freedom Hamiltonians and Area Preserving Maps of the Plane" }
+      ]
     }
   ],
   "lectureNotes": {
