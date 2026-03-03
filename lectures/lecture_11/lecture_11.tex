@@ -1,0 +1,453 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usetikzlibrary{arrows.meta, decorations.markings}
+
+\begin{document}
+
+\section{Lecture 11: Plan for Class}
+Last time:
+\begin{enumerate}
+    \item Co-dimension 1 bifurcations of flows
+    \begin{enumerate}
+        \item $\dot{x}=\mu-x^2$ saddle-node
+        \item $\dot{x}=\mu x-x^2$ transcritical
+        \item $\dot{x}=\mu x\pm x^3$ pitchfork (sub, super)-critical
+    \end{enumerate}
+    \item Theorem
+    \begin{enumerate}
+        \item eigenvalue on th imaginary axis $\left(\frac{\partial f}{\partial x}(x_0)=0\right)$
+        \item nonlinear terms must not be degenerate $\left( \frac{\partial' f}{\partial x^2}(x_0)\neq 0 \right)$
+        \item eigenvalues cross with nonzero speed $\left(\frac{\partial f}{\partial \mu}(x_0)\neq 0\right)$
+    \end{enumerate}
+\end{enumerate}
+
+Today:
+\begin{enumerate}
+    \item Checkout \href{https://vanderbei.princeton.edu/nBody_animations/index.html}{this!}
+    \item Using bifurcation theorems
+    \item Hopf bifurcations
+    \item Co-dimension 1 bifurcations of maps (maybe)
+\end{enumerate}
+
+\section{Reviewing bifurcation theorems}
+
+Just to remind ourselves, the conditions are 
+\begin{enumerate}
+    \item eigenvalue on th imaginary axis $\left(\frac{\partial f}{\partial x}(x_0)=0\right)$
+    \item nonlinear terms must not be degenerate $\left( \frac{\partial' f}{\partial x^2}(x_0)\neq 0 \right)$
+    \item eigenvalues cross with nonzero speed $\left(\frac{\partial f}{\partial \mu}(x_0)\neq 0\right)$
+\end{enumerate}
+
+\subsection{Why condition (2)?}
+
+Why do we need condition (2)? Let's consider the system
+\[
+\dot{x}=\mu x
+\]
+at $\mu=0$. We see that the fixed points are at $x_0=0$, unless $\mu=0$ when we get that all values of $x$ are fixed points. So the phenomena exists briefly, then disappears; hence, we don't want to consider this a bifurcation.
+
+We can consider a less trivial example of 
+\begin{align*}
+    \dot{x}&= y\\
+    \dot{y}&= -x + \mu y
+\end{align*}
+Notice that at $\mu=0$ we have 
+\begin{align*}
+    \dot{x}&= y\\
+    \dot{y}&= -x
+\end{align*}
+which is just a rotation. But this rotation only exists briefly, then disappears; hence, we don't want to consider this a bifurcation.
+
+\subsection{Why condition (3)?}
+
+Let's consider the system 
+\[
+\dot{x}=\mu^2 + x^2
+\]
+where the fixed point at $(0,0)$ only exists for $\mu=0$. This is not a bifurcation, and we can show that this phenomena happens because $\left(\frac{\partial f}{\partial \mu}(x_0) = 0\right)$.
+
+Perturbing our system gives us 
+\[
+\dot{x}=v + \mu^2 + x^2
+\]
+where when $v>0$, we get no bifurcations or equilibrium points. When $v<0$, we get at ``bubble'' of fixed points at $x=\pm\sqrt{-\mu^2 -v}$. I forgot what this perturbation shows us.
+
+\section{Higher dimensions!}
+
+\subsection{Higher dimensional saddle-node bifurcation}
+
+\underline{Theorem 3.4.1} For 
+\[
+\dot{x}=f(x,\mu) \qquad x\in\mathbb{R}^n \qquad \mu\in\mathbb{R}
+\]
+suppose $p$ is a fixed point at $\mu_0$ such that $f(p,\mu_0)=0$. If 
+\begin{enumerate}
+    \item $D_x f(p,\mu_0)$ has a simple zero eigenvalue with right eigenvector $v$ (and left eigenvector $w$) and no other eigenvalues with zero real part. 
+    \item $w\cdot D^2_x f(p,\mu_0)(v,v)\neq 0\implies \sum^n_{i=1}w_i\sum_{j,k=1}^{n}\frac{\partial^2 f_i}{\partial x_j \partial x_k}(p,\mu_0)v_j v_k\neq 0$
+    \item $w\cdot\frac{\partial f}{\partial \mu}(p,\mu_0)\neq0\implies \sum_{i=1}^n w_i\frac{\partial f_i}{\partial \mu}(p,\mu_0)\neq 0$
+\end{enumerate}
+Then there is a saddle-node bifurcation at $\mu_0$ and there exists a curve of equilibrium points passing through $(p,\mu_0)$, tangent to $\mathbb{R}^n\times \left\{\mu_0\right\}$.
+
+\subsection{Example}
+Let our system be 
+\begin{align*}
+    \dot{x}&= y\\
+    \dot{y} &= \mu - x^2 - y
+\end{align*}
+where we will denote our system as $f(x,y)$. At $\mu=0$ there is a fixed point at $(0,0)$. Our Jacobian is 
+\[
+D_x f(x,y)\Big|_{\mu=0}=\begin{bmatrix}
+    0 & 1 \\ -2x & -1
+\end{bmatrix}
+\]
+and applying it to our fixed point at $(0,0)$, we have 
+\[
+D_x f(0,0)\Big|_{\mu=0}=\begin{bmatrix}
+    0 & 1 \\ 0 & -1
+\end{bmatrix}
+\]
+where the eigenvalues are at $0,-1$. The eigenvectors are 
+\begin{itemize}
+    \item $\lambda=0$ has a right eigenvector of $v=\begin{pmatrix}
+        1\\0
+    \end{pmatrix}$ and a left eigenvector of $w=\begin{pmatrix}
+        1 & 1
+    \end{pmatrix}$
+    \item $\lambda=-1$ has a right eigenvector of $v=\begin{pmatrix}
+        1\\-1
+    \end{pmatrix}$ and a left eigenvector of $w=\begin{pmatrix}
+        0 & 1
+    \end{pmatrix}$
+\end{itemize}
+
+\subsubsection{Method 1 for finding bifurcations}
+
+To find the bifurcations, we can do 
+\begin{enumerate}
+    \item Find center manifold
+    \item look at the 1-dimension dynamics in the center manifold
+\end{enumerate}
+To begin, let's diagonalize by writing 
+\[
+T = \begin{bmatrix}
+    1 & 1 \\ 0 & -1
+\end{bmatrix}\qquad T^{-1} = \begin{bmatrix}
+    1 & 1 \\ 0 & -1
+\end{bmatrix}
+\]
+where we have 
+\[
+\begin{pmatrix}
+    x \\ y
+\end{pmatrix} = T \begin{pmatrix}
+    u \\ v
+\end{pmatrix}
+\]
+Hence it follows that 
+\[
+\begin{pmatrix}
+    \dot{u} \\ \dot{v}
+\end{pmatrix} = T^{-1}\begin{pmatrix}
+    0 \\ u
+\end{pmatrix} + T^{-1}AT \begin{pmatrix}
+    u \\ v
+\end{pmatrix} + T^{-1}f\left( T\begin{pmatrix}
+    u \\ v
+\end{pmatrix} \right)
+\]
+where 
+\begin{itemize}
+    \item $\dot{u}=\mu -(u+v )^2$
+    \item $\dot{v} = -\mu - v +(u+v )^2$
+    \item $\dot{\mu}=0$
+\end{itemize}
+Where we can go about finding the center manifold in this diagonalized space!
+
+Now, at $\mu=0$, we have 
+\begin{align*}
+    \dot{u}&= -(u+v )^2\\
+    \dot{v} &=  v +(u+v )^2
+\end{align*} 
+where it follows that 
+\[
+Dg(u,v)=\begin{bmatrix}
+    -2(u+v) & -2(u+v)\\2(u+v) & 1 + 2(u+v)
+\end{bmatrix},\qquad Dg(0,0)=\begin{bmatrix}
+    0 & 0 \\ 0 & 1
+\end{bmatrix}
+\]
+justifying that the center manifold can be approximated as 
+\[
+v = h(u,\mu) = au^2 + b\mu
+\]
+But why do we have this $b\mu$ term? This is because our system is not actually diagonal when considering $\mu$! We have 
+\[
+\begin{bmatrix}
+    0 & 0 & 1\\
+    0 & -1 & -1 \\
+    0 & 0 & 0
+\end{bmatrix}
+\]
+where the last row and last column are the $\mu$ coefficients. 
+\begin{mdframed}
+\textbf{Addendum}: When performing center manifold reduction, we must be careful about 
+the role of the parameter $\mu$. By treating $\mu$ as a dynamic variable 
+with $\dot{\mu} = 0$, our full state vector becomes $(u, v, \mu)$, and 
+the linearization of the extended system is
+\[
+\begin{pmatrix}\dot{u} \\ \dot{v} \\ \dot{\mu}\end{pmatrix} = 
+\begin{bmatrix} 0 & 0 & 1\\ 0 & -1 & -1 \\ 0 & 0 & 0 \end{bmatrix}
+\begin{pmatrix}u \\ v \\ \mu\end{pmatrix}
+\]
+where the linear terms are read off from the diagonalized system:
+\begin{itemize}
+    \item $\dot{u} = \mu - (u+v)^2$ contributes linear part $\mu$, giving row $(0,0,1)$
+    \item $\dot{v} = -v - \mu + (u+v)^2$ contributes linear part $-v - \mu$, giving row $(0,-1,-1)$
+    \item $\dot{\mu} = 0$ gives row $(0,0,0)$
+\end{itemize}
+This extended matrix has eigenvalues $0, -1, 0$, so the center subspace 
+is \textbf{two-dimensional}, spanned by the $u$ and $\mu$ directions. 
+Consequently, the center manifold is a surface over $(u,\mu)$, and we 
+must approximate it as $v = h(u, \mu)$.
+
+The key point is the off-diagonal $-1$ entry in position $(2,3)$, which 
+reflects the fact that $\mu$ couples linearly into the $\dot{v}$ equation. 
+This forces us to include a linear $\mu$ correction in our approximation, giving
+\[
+v = h(u,\mu) = au^2 + b\mu + O(3)
+\]
+Had the system been fully diagonal in $(u, v, \mu)$, this coupling would 
+be absent and the $b\mu$ term could be dropped.
+\end{mdframed}
+Now here comes the center manifold approximation algebra. We can write
+\[
+\dot{v}= 2au\dot{u} + b \dot{\mu}= - \mu - (au^2 + b\mu) + \left( u+ au^2 + b\mu \right)^2
+\]
+where remember that $\dot{\mu}=0$. The expression above implies 
+\[
+2au\left(\mu - \left( u+ au^2 + b\mu \right)^2 \right) = - \mu - (au^2 + b\mu) + \left( u+ au^2 + b\mu \right)^2
+\]
+where the coefficients can be determined by 
+\begin{enumerate}
+    \item $u^2\longrightarrow 0=-a+1\implies a=1$
+    \item $\mu\longrightarrow 0 = -1 - b \implies b=-1$
+\end{enumerate}
+Hence, our center manifold is 
+\[
+v = u^2 - \mu + O(3)
+\]
+and the dynamics in the center manifold are 
+\begin{align*}
+    \dot{u} &= \mu - (u+v)^2 = \mu - (u + u^2 - \mu)^2\\
+    &= \mu - u^2 + O(3)
+\end{align*}
+which is just a saddle-node bifurcation!
+
+\subsubsection{Method 2}
+
+For method 2, let's try and satisfy all of the conditions of \underline{Theorem 3.4.1} to conclude that the system has a saddle-node bifurcation.
+
+\begin{enumerate}
+    \item Yes! The system has a simple zero eigenvalue with right eigenvector $v$ (and left eigenvector $w$) and no other eigenvalues with zero real part because our eigenvalues are $0,-1$ with the appropriate left and right eigenvectors.
+    \item Let's check to see that the condition \[\sum^n_{i=1}w_i\sum_{j,k=1}^{n}\frac{\partial^2 f_i}{\partial x_j \partial x_k}(p,\mu_0)v_j v_k\neq 0\] holds. This is a bit of a messy calculation, but it's better than the alternative.
+\end{enumerate}
+We start by writing computing $D_x^2 f_1(0,0)$ and writing
+\[
+D_x^2 f_1(0,0) =
+\begin{pmatrix}
+    \dfrac{\partial^2 f_1}{\partial x^2} & \dfrac{\partial^2 f_1}{\partial x \partial y} \\[10pt]
+    \dfrac{\partial^2 f_1}{\partial y \partial x} & \dfrac{\partial^2 f_1}{\partial y^2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+    0 & 0 \\
+    0 & 0
+\end{pmatrix}
+\]
+where $\dot{x}=f_(x,y)=y$. This implies that 
+\[
+D_x^2 f_1(p, \mu)(v, v) = \sum_{j,k} \left(\frac{\partial^2 f_1}{\partial x_j \, \partial x_k}\right)_0 v_j \, v_k = 0
+\]
+Moving on to computing $D_x^2 f_2(0,0)$, we can write
+\[
+D_x^2 f_2(0,0) =
+\begin{pmatrix}
+    -2 & 0 \\
+    0  & 0
+\end{pmatrix}
+\]
+where $\dot{y} =f_2(x,y)= \mu - x^2 - y$. This implies that 
+\[
+D_x^2 f_2(p, \mu)(v, v) = v^T
+\begin{bmatrix}
+-2 & 0 \\
+0  & 0
+\end{bmatrix}
+v
+= (1 \quad 0)
+\begin{bmatrix}
+-2 & 0 \\
+0  & 0
+\end{bmatrix}
+\begin{pmatrix} 1 \\ 0 \end{pmatrix}
+= -2
+\]
+Now we can put it all together and write
+\[
+D^2_x f(p,\mu_0)(v,v) = \begin{pmatrix}
+    D_x^2 f_1(p, \mu)(v, v) \\ D^2_x f(p,\mu_0)(v,v)
+\end{pmatrix} = \begin{pmatrix}
+    0 \\ -2
+\end{pmatrix}
+\]
+which implies that
+\[
+w\cdot D^2_x f(p,\mu_0)(v,v)=w \cdot\begin{pmatrix} 0 \\ -2 \end{pmatrix}= (1 \quad 1)\begin{pmatrix} 0 \\ -2 \end{pmatrix}= -2 \neq 0
+\]
+
+\begin{enumerate}
+    \item[2.] Now we can confirm that \[\sum^n_{i=1}w_i\sum_{j,k=1}^{n}\frac{\partial^2 f_i}{\partial x_j \partial x_k}(p,\mu_0)v_j v_k\neq 0\]
+    \item[3.] Let's check to see that the condition \[w\cdot\frac{\partial f}{\partial \mu}(p,\mu_0)\neq0\] holds! This calculation is much nicer.
+\end{enumerate}
+It should be fairly clear to see that
+\[
+\frac{\partial f}{\partial \mu} = \begin{pmatrix}
+    0\\1
+\end{pmatrix}\]
+which implies that
+\[w\cdot \frac{\partial f}{\partial \mu}= \begin{pmatrix}
+    1 & 1
+\end{pmatrix}\begin{pmatrix}
+    0\\1
+\end{pmatrix}=1\neq 0
+\]
+\begin{enumerate}
+    \item[3.] Now we can confirm that \[w\cdot\frac{\partial f}{\partial \mu}(p,\mu_0)\neq0\]
+\end{enumerate}
+Therefore, we have a saddle node bifurcation!
+
+\subsubsection{Note}
+If we modify the equations to 
+\begin{align*}
+    \dot{x}&= y\\
+    \dot{y}&= \mu x -x^2 - y
+\end{align*}
+then we will get a transcritical bifurcation.
+
+\section{Hopf bifurcation}
+
+Suppose we have the system
+\begin{align*}
+    \dot{x}&= \mu x - y + ax\left(x^2 + y^2\right)^2 - by\left(x^2 + y^2\right)^2 \\
+    dot{y}&= x + \mu y + ay\left(x^2 + y^2\right)^2 - bx\left(x^2 + y^2\right)^2 \\
+\end{align*}
+where we have an equilibrium point at $(x,y)=(0,0)$. Performing a linearization, we have 
+\[
+Df(0,0)=\begin{bmatrix}
+    \mu & -1 \\ 1 & \mu
+\end{bmatrix}
+\]
+where the eigenvalues are $\mu \pm i$. 
+
+At $\mu=0$, we have a Hopf bifurcation. Looking at the linearization, we have 
+\[
+Df(0,0)=\begin{bmatrix}
+    0 & -1 \\ 1 & 0
+\end{bmatrix}
+\]
+and our system becomes (as we saw from the normal form)
+\begin{align*}
+    \dot{x}&= - y + ax\left(x^2 + y^2\right)^2 - by\left(x^2 + y^2\right)^2 \\
+    dot{y}&= x  + ay\left(x^2 + y^2\right)^2 - bx\left(x^2 + y^2\right)^2 \\
+\end{align*}
+
+\subsection{Polar coordinate time}
+
+As a reminder, polar coordinate transformations look like
+\begin{align*}
+    x &= r\cos\theta \implies \dot{x}=\dot{r}\cos\theta - r\sin\theta\,\dot{\theta} \text{ denoted as (A)} \\
+    y &= r\sin\theta \implies \dot{y}=\dot{r}\sin\theta + r\cos\theta\,\dot{\theta} \text{ denoted as (B)}
+\end{align*}
+Embarking on our adventure to eliminate terms, we can start by noting that
+\begin{align*}
+    (A)\cos\theta + (B)\sin\theta &= \left(\dot{r}\cos\theta - r\sin\theta\,\dot{\theta}\right)\cos\theta + \left(\dot{r}\sin\theta + r\cos\theta\,\dot{\theta}\right)\sin\theta\\
+    & = \dot{r}\cos^2\theta - \cancel{r\sin\theta\,\cos\theta\,\dot{\theta}} + \dot{r}\sin^2\theta + \cancel{r\sin\theta\,\cos\theta\,\dot{\theta}}\\
+    &= \dot{r}\cos^2\theta+ \dot{r}\sin^2\theta\\
+    &=\dot{r}\left( \cos^2\theta+ \sin^2\theta \right)\\
+    &=\dot{r}
+\end{align*}
+Hence we are justified in writing
+\begin{align*}
+\dot{r} &= \dot{x}\cos\theta + \dot{y}\sin\theta \\
+        &= \left(-y + axr^2 - \cancel{byr^2}\right)\cos\theta + \left(x + ayr^2 + \cancel{bxr^2}\right)\sin\theta \\
+        &= -r\sin\theta\cos\theta + ax^2r + r\cancel{\cos\theta\sin\theta} + a y^2 r \\
+        &= ar(x^2 + y^2) \\
+        &= ar^3
+\end{align*}
+Hence we have
+\[
+\boxed{\dot{r} = ar^3}
+\]
+where it follows that
+\[
+a < 0: \text{ stable} \qquad a > 0: \text{ unstable} \qquad a = 0: r = \text{const.}
+\]
+Now we could compute $\dot{\theta}$, but that's not too relevant. Let's just move on.
+
+\subsection{A theorem!}
+
+\underline{Theorem} If $Df(x_0, \mu_0)$ has a simple pair of complex eigenvalues crossing the imaginary axis, then there exists a smooth curve of equilibria $x(\mu)$ with $x(\mu_0)=x_0$ and a 2d surface of periodic orbits tangent to the center eigenspace. If 
+\begin{itemize}
+    \item $a<0$ then we have a supercritical Hopf bifurcation with a stable limit cycle,
+    \item $a>0$ then we have a subcritical Hopf bifurcation with an unstable limit cycle.
+\end{itemize}
+There's a cool image here of the Hopf bifurcation that I should include.
+
+\subsection{A formula for coefficients in the normal form }
+
+As seen in page 152, the formula for $a$ that appears in our normal form is 
+\begin{align*}
+    a &= \frac{1}{16}\left[ f_{xxx} + f_{xyy} + g_{xxy} + g_{yyy} \right]\\
+    &+ \frac{1}{16\omega}\left[ f_{xy}\left(f_{xx}+f_{yy}\right) - g_{xy}\left( g_{xx} + g_{yy} \right) -f_{xx}g_{xx} + f_{yy}g_{yy} \right]
+\end{align*}
+where 
+\begin{align*}
+    \dot{x}&= f(x,u,\mu)\\
+    \dot{y}&= g(x,y,\mu)
+\end{align*}
+and
+\[
+Df(x_0,\mu)=\begin{bmatrix}
+    \mu & -\omega\\ \omega & \mu
+\end{bmatrix}
+\]
+
+\subsubsection{An example}
+Let's say that we have the system
+\begin{align*}
+    \dot{x}&= -\omega y + \alpha y^2 - \beta x^2 y = f\\
+    \dot{y}&= \omega x - \gamma y^2 + \delta xy-y^3=g
+\end{align*}
+Before we go about approximating $a$, let's first note the following terms 
+\begin{gather*}
+    f_{xx} =0\\
+    f_{xy}=0\\
+    f_{yy}=2\alpha \\
+    f_{xxx}=f_{xyy} = 0\\
+    g_xx=0\\
+    g_{xy}=\delta\\
+    g_{yy}=-2\gamma\\
+    g_{xxy}=0\\
+    g_{yyy}=-6
+\end{gather*}
+Maybe there is a mistake, but who cares. This allows us to write 
+\[
+a=\frac{1}{8}\left(\frac{\gamma}{\omega}\left(\delta - 2\alpha\right)-3\right)
+\]
+Pretty cool, right?
+
+\end{document}
