@@ -252,7 +252,7 @@ is NOT homogeneous.
 
 Let
 \[
-x=y+h_2(x)
+x=y+h_2(y)
 \]
 where $h_2$ is a homogeneous polynomial of degree 2.
 
@@ -263,9 +263,9 @@ Can we push all terms in $f_2$ to a higher degree? Let's write
 \end{gather*}
 We can now write 
 \begin{align*}
-    \dot{y}&=\left(I + Dh_2(y)\right)^{-1}\left[Ay + Ah_2(y) + f_2(y) + Df_2(y)\cdot h_2(y)\right]\\
+    \dot{y}&=\left(I + Dh_2(y)\right)^{-1}\left[Ay + Ah_2(y) + f_2(y) + O(3)\right]\\
     &=\left(I-Dh_2(y)+O(2)\right)\left[Ay + Ah_2(y) + f_2(y) + O(3)\right]\\
-    &=Ay + f_2(y) - \left[ Dh_2(y)\, Ay + Ah_2(y) \right] + O(3)
+    &=Ay + f_2(y) - \left[ Dh_2(y)\, Ay - Ah_2(y) \right] + O(3)
 \end{align*}
 Cool.
 
@@ -289,7 +289,7 @@ In order to get ride of all degree-2 terms, we can choose $h_2$ such that
 \[
 Dh_2(y)\, Ay-Ah_2(y)=f_2(y)
 \]
-where it follows (I actually don't know how tho) that 
+where we can reason about the expression above via writing it as a linear operator
 \[
 L_A h_2(y)=Dh_2(y)\, Ay - A h_2(y)
 \]
