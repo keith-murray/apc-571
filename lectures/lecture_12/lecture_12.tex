@@ -1,0 +1,270 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usetikzlibrary{arrows.meta, decorations.markings}
+
+\begin{document}
+
+\section{Lecture 12: Plan for Class}
+Last time:
+\begin{enumerate}
+    \item Hopf bifurcations
+\end{enumerate}
+
+Today:
+\begin{enumerate}
+    \item Bifurcations of fixed points of maps
+\end{enumerate}
+
+\section{Hopf bifurcations}
+
+Here is our example of a system that exhibits a Hopf bifurcation
+\begin{align*}
+    \dot{x}&= \mu x -\omega y - x \left(x^2 + y^2\right)\\
+    \dot{y} &= \omega x + \mu y - y\left(x^2 + y^2\right)
+\end{align*}
+where the eigenvalues are $\mu\pm i\omega$. Notice that these eigenvalues will cross the imaginary axis as $\mu$ increases. This is the essence of a Hopf bifurcation! Using a change of coordinates to polar coordinates via 
+\begin{align*}
+    x &= r\cos\theta\\
+    y & = r\sin\theta
+\end{align*}
+to get 
+\begin{align*}
+    \dot{r}&= r \left(\mu - r^2\right)\\
+    \dot{\theta} &= \omega 
+\end{align*}
+Now, it should be clear that for $\mu\leq 0 $ we get a stable spiral at the origin, and for $\mu > 0$ we get an unstable spiral at the origin and a stable periodic orbit at $r=\sqrt{\mu}$. This is a limit cycle. The is termed a supercritical Hopf bifurcation.
+
+To get a subcritical Hopf bifurcation, we can look at the system
+\begin{align*}
+    \dot{x}&= \mu x -\omega y + x \left(x^2 + y^2\right)\\
+    \dot{y} &= \omega x + \mu y + y\left(x^2 + y^2\right)
+\end{align*}
+then the change of polar coordinates gets us 
+\begin{align*}
+    \dot{r}&= r \left(\mu + r^2\right)\\
+    \dot{\theta} &= \omega 
+\end{align*}
+where for $\mu<0$ we have an unstable limit cycle, and for $\mu\geq 0$ we have an unstable spiral at the origin.
+
+\subsection{More generally}
+
+More generally, eigenvalues on the 2nd order center manifold when $\mu=0$ will look like 
+\begin{align*}
+    \dot{r}&= \left(d\mu + a r^2\right)r \quad = f(r)\\
+    \dot{\theta} &= \left(\omega + c \mu + br^2\right)
+\end{align*}
+where for 
+\begin{itemize}
+    \item $a<0$ we have a stable limit cycle (supercritical)
+    \item $a>0$ we have an unstable periodic orbit (subcritical)
+\end{itemize}
+To calculate why the value of $a$ determines the stability, we can notice that the equilibrium occurs at $d\mu = -ar_0^2$ and write 
+\begin{align*}
+    f'(r_0)&= d\mu + 3ar_0^2\\
+    &= -ar_0^2 + 3ar_0^2\\
+    &= 2ar_0^2
+\end{align*}
+where it is clear that the sign of $a$ determines the stability of this equilibrium point.
+
+\subsection{Example from last time}
+
+Let's consider the system 
+\begin{align*}
+    \dot{x}&= -\omega y + \alpha y^2 + \beta x^2 y \\
+    \dot{y}&= \omega x - \gamma y^2 + \delta xy - y^3
+\end{align*}
+where our normal form formula for the value of $a$ gives us 
+\[
+a=\frac{1}{8}\left(\frac{\gamma}{\omega}\left(\delta - 2\alpha\right)-3\right)
+\]
+From this expression we can make the following observations
+\begin{itemize}
+    \item If $\alpha=\gamma=\beta=0$, then there are no quadratic terms in the system we have a stable equilibrium because $a=-\frac{3}{8}$
+    \item For large frequency $\omega$ and some quadratic terms, it follows that $a\to -\frac{3}{8}$ and $\omega\to \infty$
+    \item For frequency, the system can destabilize. This is apparent by writing $\gamma\left(\delta - 2\alpha\right)>3\omega$ which is an unstable equilibrium
+\end{itemize}
+This approach is quite useful because linearization tells us nothing and a Lyapunov function would be too complicated to make sense of. Rowley did an example of the Lyapunov function with 
+\[
+V(x,y) = \frac{1}{2}\left(x^2 + y^2\right)
+\]
+I leave this as an exercise to the reader.
+
+\section{Bifurcations of fixed points of maps \S 3.5}
+
+For flows $\dot{x}=f(x)$, we got bifurcations when our equilibrium points crossed the imaginary axis. For maps $x\mapsto f(x)$, we will get bifurcations when the \underline{magnitude} of the equilibrium points cross the unit circle.
+
+Much of the same phenomena will transfer over to maps, but we will get a new phenomenon that occurs when the magnitude of an equilibrium point cross $-1$. This is called a flip bifurcation or a period doubling bifurcation.
+
+\subsection{Bifurcation theorems}
+
+Consider the system 
+\[
+x_{n+1} = f\left(x_n, \mu\right)
+\]
+where a branch of fixed points $\bar{x}(\mu)$ occurs when 
+\[
+\bar{x}(\mu) = f\left(\bar{x}(\mu), \mu\right)
+\]
+Now let's use a Taylor series about the fixed point $x_0=\bar{x}(\mu_0)$ by writing 
+\begin{align*}
+    f(x_0 + x, \mu_0 + \mu) = f(x_0,\mu_0) &+ \frac{\partial f}{\partial x}(x_0,\mu_0)x + \frac{\partial f}{\partial \mu}(x_0,\mu_0)\mu\\
+    &+ \frac{\partial^2 f}{\partial x^2}(x_0,\mu_0)\frac{x^2}{2} + \frac{\partial^2 f}{\partial x \partial \mu}(x_0,\mu_0)x\mu \\
+    &+ \frac{\partial^3 f}{\partial x^3}(x_0,\mu_0)\frac{x^3}{3!} + \cdots
+\end{align*}
+We we have some conditions that we can play around with to get various bifurcations
+\begin{itemize}
+    \item For all bifurcations: $\frac{\partial f}{\partial x}(x_0,\mu_0)= +1$ (or $-1$, or complex $|\cdot|=1$)
+    \item Non-degeneracy: $\frac{\partial^2 f}{\partial x^2}(x_0,\mu_0)\neq 0$
+    \item Eigenvalues cross with nonzero speed: $\frac{\partial f}{\partial \mu}\neq0$ but can be complex 
+\end{itemize}
+Now we can classify the following bifurcations 
+\begin{itemize}
+    \item Saddle node: $\frac{\partial^2 f}{\partial x^2},\frac{\partial f}{\partial \mu }\neq 0$
+    \item Transcritical: $\frac{\partial^2 f}{\partial x^2}\neq 0$ and $\frac{\partial^2 f}{\partial x \partial \mu}\neq 0$, but we could have $\frac{\partial f}{\partial \mu }=0$
+    \item Pitchfork: $\frac{\partial^3 f}{\partial x^3}\neq 0$ and $\frac{\partial^2 f}{\partial x \partial \mu}\neq 0$, but we could have $\frac{\partial f}{\partial \mu }=0$ and $\frac{\partial^2 f}{\partial x^2}= 0$
+\end{itemize}
+
+\subsubsection{Saddle node example}
+
+We can get a saddle node bifurcation for the following system 
+\[
+x\mapsto \mu + x \pm x^2
+\]
+where the equilibrium points occur at
+\begin{align*}
+    x&= \mu + x \pm x^2\\
+    \mu &= \mp x^2
+\end{align*}
+and the bifurcation occurs when $\mu=0$. 
+
+\subsubsection{Transcritical example}
+
+We can get a transcritical bifurcation in a map at 
+\[
+x\mapsto \left(1+\mu\right)x\pm x^2
+\]
+where we see that we have the following conditions for the equilibrium point $(x_0,\mu_0)=(0,0)$
+\begin{itemize}
+    \item $f_x=1$
+    \item $f_{xx}\neq 0$
+    \item $f_\mu=0$
+    \item $f_{x\mu}\neq 0$
+\end{itemize}
+The plots are quite informative, but I won't include them.
+
+\subsubsection{Pitchfork example}
+
+We can get a pitchfork bifurcation in a map at 
+\[
+x\mapsto \left(1+\mu\right)x\pm x^3
+\]
+where we see that we have the following conditions for the equilibrium point $(x_0,\mu_0)=(0,0)$
+\begin{itemize}
+    \item $f_x=1$
+    \item $f_{xx}=0$
+    \item $f_{xxx}\neq 0$
+    \item $f_\mu=0$
+    \item $f_{x\mu}\neq 0$
+\end{itemize}
+The plots are quite informative, but I won't include them.
+
+Note that for the positive cubic term $+x^3$, we can compute the equilibrium points as 
+\begin{gather*}
+    x=\left(1+\mu\right)x + x^3\\
+    x= x + \mu x + x^3\\
+    0=\mu x + x^3\\
+    0=x\left(\mu+x^2\right)
+\end{gather*}
+where our equilibrium points are $x=0$ and $\mu = - x^2$, where we have a subcritical pitchfork bifurcation.
+
+\section{Flip point bifurcation}
+
+\subsection{Branch of Equilibria}
+
+Consider a branch of equilibria 
+\[
+\bar{x}(\mu) = f\left( \bar{x}(\mu), \mu \right)
+\] 
+By differentiating with respect to $\mu$, we have
+\begin{gather*}
+    \frac{\partial}{\partial \mu}\left[\bar{x}(\mu)\right] = \frac{\partial}{\partial \mu}\left[f\left( \bar{x}(\mu), \mu \right)\right]\\
+    \frac{\partial \bar{x}}{\partial \mu} = \frac{\partial f}{\partial x}(\bar{x}(\mu), \mu)\frac{\partial \bar{x}}{\partial \mu} + \frac{\partial f}{\partial \mu}(\bar{x}, \mu)
+\end{gather*}
+via the chain rule and the product rule. Rearranging some terms, we not have 
+\begin{gather*}
+    \frac{\partial \bar{x}}{\partial \mu} - \frac{\partial f}{\partial x}(\bar{x}(\mu), \mu)\frac{\partial \bar{x}}{\partial \mu} = \frac{\partial f}{\partial \mu}(\bar{x}, \mu)\\
+    \left(1 - \frac{\partial f}{\partial x}(\cdot)\right)\frac{\partial \bar{x}}{\partial \mu} = \frac{\partial f}{\partial \mu}(\bar{x}, \mu)
+\end{gather*}
+Suppose we want to solve for $\frac{\partial \bar{x}}{\partial \mu}$. We can write 
+\[
+\frac{\partial \bar{x}}{\partial \mu} = \frac{\frac{\partial f}{\partial \mu}(\bar{x}(\mu), \mu)}{1 - \frac{\partial f}{\partial x}(\bar{x}(\mu), \mu)}
+\]
+where it follows that we can solve for $\frac{\partial \bar{x}}{\partial \mu}$ as long as 
+\[
+\frac{\partial f}{\partial x}(x_0, \mu_0) \neq 1
+\]
+Luckily, at a flip bifurcation, we have 
+\[
+\frac{\partial f}{\partial x} = -1 \quad \longrightarrow \quad \text{no problem!}
+\]
+Hence, by the implicit function theorem, it follows that there exists a smooth curve of equilibrium points $\bar{x}(\mu)$.
+\begin{mdframed}
+    \textbf{Addendum}: The flip bifurcation is "no problem" for the continuation of fixed points — the branch of fixed points doesn't break. What does happen is that the fixed point loses stability and a period-2 orbit is born, but that's a separate calculation.
+\end{mdframed}
+
+\subsection{Flip / period doubling bifurcation theorem 3.5.1}
+
+For this theorem, we have three conditions 
+\begin{enumerate}
+    \item[F0)] $\frac{\partial f}{\partial x}(x_0, \mu_0)=-1$ 
+    \item[F1)] Eigenvalue crossing as $\mu$ varies \[ \frac{\partial f}{\partial \mu}\frac{\partial^2 f}{\partial x^2} + 2 \frac{\partial^2 f}{\partial x \partial \mu}=\frac{\partial f}{\partial \mu}\frac{\partial^2 f}{\partial x^2} + \left(1- \frac{\partial f}{\partial x}\right)\frac{\partial^2 f}{\partial x \partial \mu}\neq 0 \]
+    \item[F2)] Non-degenerate higher order terms \[ a=\frac{1}{2}\left(\frac{\partial^2 f}{\partial x^2}\right)^2 + \frac{1}{3}\left(\frac{\partial^3 f}{\partial x^3}\right)\neq 0 \]
+\end{enumerate}
+Why do we need (F1)? Suppose we have a fixed point
+\[
+\bar{x}(\mu) = f(\bar{x}(\mu),\mu)
+\]
+and an eigenvalue 
+\[
+\lambda = \frac{\partial f}{\partial x}(\bar{x}(\mu),\mu)
+\]
+We want to have $\frac{\partial \lambda}{\partial \mu}\neq 0$, meaning that we cross with non-zero speed. Hence we can write 
+\begin{gather*}
+    \frac{\partial \lambda}{\partial \mu} = \frac{\partial^2 f}{\partial x^2}\left(\bar{x}(\mu),\mu\right)\frac{\partial \bar{x}}{\mu} + \frac{\partial^2 f}{\partial x \partial \mu}\left(\bar{x}(\mu),\mu\right)\neq 0
+\end{gather*}
+where we previously derived $\frac{\partial \bar{x}}{\mu}$ as 
+\[
+\frac{\partial \bar{x}}{\partial \mu} = \frac{\frac{\partial f}{\partial \mu}(\bar{x}(\mu), \mu)}{1 - \frac{\partial f}{\partial x}(\bar{x}(\mu), \mu)}
+\]
+Plugging in this expression, we have 
+\[
+\frac{\partial \lambda}{\partial \mu} = \frac{\partial^2 f}{\partial x^2}\left(\bar{x}(\mu),\mu\right)\frac{\frac{\partial f}{\partial \mu}(\bar{x}(\mu), \mu)}{1 - \frac{\partial f}{\partial x}(\bar{x}(\mu), \mu)}+ \frac{\partial^2 f}{\partial x \partial \mu}\left(\bar{x}(\mu),\mu\right)\neq 0
+\]
+which, by multiplying through by $\left(1-\frac{\partial f}{\partial x}\right)$, is functionally equivalent to 
+\[
+\frac{\partial f}{\partial \mu}\frac{\partial^2 f}{\partial x^2} + \left(1- \frac{\partial f}{\partial x}\right)\frac{\partial^2 f}{\partial x \partial \mu}=\frac{\partial f}{\partial \mu}\frac{\partial^2 f}{\partial x^2} + 2 \frac{\partial^2 f}{\partial x \partial \mu}\neq 0 
+\]
+where $\frac{\partial f}{\partial x}=-1\implies \left(1-\frac{\partial f}{\partial x}\right)=2$ as previously noted.
+
+\subsection{Visualizations of period doubling}
+
+For this section, it is necessary to include Rowley's plots.
+
+One things worth mentioning is that period doubling bifurcations can't happen in 2D flows because a trajectory inside a limit cycle would have to intersect the limit cycle to leave. This is topologically not possible.
+
+\subsection{Logistic map}
+
+Let's consider the logistic map 
+\[
+x\mapsto \mu x \left(1 - x\right)
+\]
+for values of $\mu>0$. For the rest of the section, Rowley broke out the Jupyter Notebook to numerically look at this system. Let's try to include those plots.
+
+\href{https://doi.org/10.1080/00029890.1975.11994008}{Period three implies chaos}
+
+
+\end{document}
