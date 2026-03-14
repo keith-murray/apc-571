@@ -110,7 +110,31 @@ If $A(t)$ is time dependent, is it that
 \[\xi(t)=e^{\int_{0}^{t}A(t)dt}\xi(0)???\]
 NO!
 
-Question: suppose $A(t)$ has eigenvalues in open LHP for all $t$. Is $\xi=0$ a stable fixed point? NO! For a counte-example, look at Markus and Yamada (1960). We'll write it later.
+Question: suppose $A(t)$ has eigenvalues in open LHP for all $t$. Is $\xi=0$ a stable fixed point? NO! For a counte-example, look at Markus and Yamabe (1960). We'll write it later.
+
+\subsection{Markus--Yamabe Counterexample}
+
+We now construct the counterexample promised above. Consider the time-periodic linear system $\dot{\xi} = A(t)\xi$ where
+\[
+A(t) = \begin{bmatrix} -1 + \frac{3}{2}\cos^2 t & 1 - \frac{3}{2}\sin t \cos t \\ -1 - \frac{3}{2}\sin t \cos t & -1 + \frac{3}{2}\sin^2 t \end{bmatrix}.
+\]
+The characteristic equation of $A(t)$ is
+\[
+\lambda^2 + \frac{4}{2}\lambda + \frac{1}{2} = 0,
+\]
+which gives eigenvalues
+\[
+\lambda = \frac{-1 \pm \sqrt{7}\,i}{4} \quad \text{for all } t.
+\]
+Since $\mathrm{Re}(\lambda) = -\tfrac{1}{4} < 0$ for all $t$, the matrix $A(t)$ is Hurwitz at every instant --- all eigenvalues lie in the open left half-plane for all time.
+
+One might expect $\xi = 0$ to therefore be a stable fixed point. However, the system admits the explicit solution
+\[
+\xi(t) = e^{t/2}\begin{bmatrix} -\cos t \\ \sin t \end{bmatrix},
+\]
+which \textbf{blows up} as $t \to \infty$ due to the $e^{t/2}$ factor.
+
+This example illustrates that for a \emph{time-varying} linear system $\dot{\xi} = A(t)\xi$, having $A(t)$ Hurwitz for all $t$ is \textbf{not sufficient} to guarantee stability of the origin. The instantaneous eigenvalues of $A(t)$ do not determine stability; what matters are the Floquet multipliers of the full system over one period. Intuitively, although each frozen snapshot of $A(t)$ decays, the time-varying rotation of the eigenvectors continuously pumps energy into the system, overwhelming the instantaneous decay.
 
 \section{Floquet theory}
 How do you understand stability of $\dot{\xi}=A(t)\xi$? We have a theorem!
