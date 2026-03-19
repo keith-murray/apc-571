@@ -1,0 +1,182 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usetikzlibrary{arrows.meta, decorations.markings}
+
+\begin{document}
+
+\section{Lecture 14: Plan for Class}
+Last time:
+\begin{enumerate}
+    \item Averaging \S 4.1-2
+    \item Duffing equation
+\end{enumerate}
+
+Today:
+\begin{enumerate}
+    \item Project information
+\end{enumerate}
+
+\section{Averaging}
+Suppose that we have a system 
+\[
+\dot{x} = \epsilon f(x,t,\epsilon)
+\]
+where $x\in\mathbb{R}^n$ and $f$ is $T$-periodic. The \textit{averaged system} is denoted 
+\[
+\dot{y}=\epsilon \bar{f}(y)
+\]
+where $\bar{f}$ is 
+\[
+\bar{f}(x)=\int^T_0 f(x,t,0)dt
+\]
+and $x$ is fixed. Note that the phase portrait of $\dot{y}=\epsilon \bar{f}(y)$ looks a lot like the phase portrait of the Poincare map of $\dot{x} = \epsilon f(x,t,\epsilon)$.
+
+\subsection{Duffing equation}
+
+The duffing equation can be written as 
+\[
+\ddot{x} + \omega_0^2 x + \epsilon \delta \dot{x} + \epsilon \alpha x^3 = \epsilon \gamma \cos \omega t
+\]
+where $\epsilon$ is small and $\omega$ is close to $\omega_0$. We can rescale $t$ to get 
+\[
+\ddot{x} + x + \delta \dot{x} + \alpha x^3 = \gamma \cos \omega t
+\]
+where $\delta,\alpha,\gamma$ are small and $\omega$ is close to 1. We can further analyze this system via using rotating coordinates via 
+\[
+\begin{bmatrix}
+    u \\ v
+\end{bmatrix} = A \begin{bmatrix}
+    x \\ \dot{x}
+\end{bmatrix}
+\]
+where $A$ is 
+\[
+A = \begin{bmatrix}
+    \cos \omega t & -\frac{1}{\omega}\sin \omega t \\
+    -\sin \omega t & -\frac{1}{\omega} \cos \omega t
+\end{bmatrix}
+\]
+We can further reduce this with polar coordinates
+\begin{align*}
+    u &= r\cos \varphi \\
+    v &= r\sin\varphi
+\end{align*}
+to get 
+\begin{align*}
+    \dot{r} &= \frac{1}{2\omega}\left[-\omega \delta r - \gamma \sin\varphi\right]\\
+    r\dot{\varphi} &= \frac{1}{2\omega}\left[\left(1-\omega^2\right)r + \frac{3\alpha}{4}r^3-\gamma \cos\varphi \right]
+\end{align*}
+
+\section{Summary of the other averaging results}
+\begin{enumerate}
+    \item[\S 4.3] bifurcations
+    \begin{itemize}
+        \item local bifurcations of averaged system also tell you about local bifurcations of original system
+    \end{itemize}
+    \item[\S 4.4] global behavior - WATCH OUT
+    \begin{itemize}
+        \item hyperbolic features preserved: hyperbolic periodic orbits of the averaged equations imply hyperbolic invariant torus of original equations
+        \item non-hyperbolic features not preserved: example is the Duffing equation with $\delta=0$ where the system is Hamiltonian (this comes from some fragile features in the system)
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Homoclinic tangles}
+
+We can get homoclinic tangles in Poincare maps, but not in flows! Therefore, the averaging method can't capture homoclinic tangles.
+
+\section{Melnikov's method \S 4.5}
+
+Melnikov's method is used for time-periodic perturbations of planar ($\mathbb{R}^2$) Hamiltonian systems, but can be extended for many other systems. But let's say we have s system 
+\[
+\dot{x} = f(x) + \epsilon g(x,t)
+\]
+where $f$ is Hamiltonian
+\begin{align*}
+    f_1 &= \frac{\partial H}{\partial x_2}\\
+    f_2 &= -\frac{\partial H}{\partial x_1}
+\end{align*}
+and $g$ is of the form 
+\[
+g(x,t+T) = g(x,t)
+\]
+for all $x,t$. 
+
+\subsection{Duffing equation}
+
+Our motivating example is the duffing equation with a minus sign 
+\[
+\ddot{x} - x + x^3 = \epsilon\left(-\delta \dot{x} + \gamma \cos \omega t \right)
+\]
+An unperturbed system is Hamiltonian, and we could use the energy function 
+\[
+V(x) = \frac{x^4}{4}-\frac{x^2}{2}
+\]
+where the Hamiltonian becomes 
+\[
+H(x,y) = \frac{y^2}{2} + V(x)
+\]
+where 
+\[
+\dot{x} = \frac{\partial H}{\partial y}=y
+\]
+and 
+\[
+\ddot{x} = \dot{y} = -\frac{\partial H}{\partial x}=-V'(x) = -x^3 + x
+\]
+
+\subsubsection{Phase portraits}
+
+Rowley is now drawing some phase portraits that describe how the Hamiltonian changes when $\epsilon\neq 0$. 
+
+What if $\delta>0$ and $\gamma >0$? Consider the Poincare map. Can stable and unstable manifolds intersect?
+
+\subsection{Melnikov's method}
+
+Construct the Melnikov function 
+\[
+M\left(t_0\right) = \int_{-\infty}^{\infty} \left(f\times g\right)\left(q(t),t+t_0\right)dt
+\]
+where $q(t)$ is the homoclinic orbit of the unperturbed system. If $M(t_0)$ has simple zeros $t_0\in \left[0,T\right]$, then there exists transversal intersections of stable and unstable manifolds. If $M(t_0)$ does not have simple zeros, then there are no transversal intersections.
+
+\subsection{Melnikov function for duffing equation}
+
+For the duffing equation, we have 
+\[
+f\begin{pmatrix}
+    x \\ y
+\end{pmatrix}=\begin{pmatrix}
+    y \\ x-x^3
+\end{pmatrix} \qquad \text{and} \qquad g\left(\begin{pmatrix}
+    x \\ y
+\end{pmatrix},t\right)=\begin{pmatrix}
+    0 \\ -\delta y + \gamma \cos \omega t
+\end{pmatrix}
+\]
+and our $q(t)$ for the homoclinic orbit is 
+\[
+q(t) = \begin{bmatrix}
+    \sqrt{2} sech t \\ -\sqrt{2} sech t \cdot \tanh t
+\end{bmatrix}= \begin{bmatrix}
+    x(t) \\ y(t)
+\end{bmatrix}
+\]
+Lots of calculus later, and we have 
+\[
+M(t_0) = \sqrt{2} \gamma \pi \omega sech\left(\frac{\pi \omega}{2}\right)\sin \omega t_0 - \frac{4 \delta }{3}
+\]
+and we get zeros (and a homoclinic tangle) if 
+\[
+\frac{\gamma}{\delta} > \frac{4}{3} \frac{\pi \cosh \left(\frac{\pi\omega}{2}\right)}{\sqrt{2} \omega}
+\]
+
+\subsection{Numerical example}
+
+Now Rowley is showing us a numerical example.
+
+
+
+\end{document}
