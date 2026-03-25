@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usetikzlibrary{arrows.meta, decorations.markings}
+
+\begin{document}
+
+\section{Lecture 13: Plan for Class}
+
+I missed this day, so these notes will be sparse. The main topic of this lecture was the averaging method. Below are some notes that I had Claude generate from a friend's lecture notes.
+
+\section{Amplitude-Phase Transformation (Variation of Constants)}
+
+\subsection{Motivation}
+
+Many interesting physical systems are \textit{nearly linear} --- they look like a simple harmonic
+oscillator with a small perturbation:
+\[
+    \ddot{x} + \omega^2 x = \varepsilon f(x, \dot{x}, t),
+\]
+where $\varepsilon \ll 1$ is a small parameter. Examples include:
+\begin{itemize}
+    \item A pendulum with small damping or driving,
+    \item The Mathieu equation (parametric resonance),
+    \item Weakly nonlinear springs (Duffing oscillator).
+\end{itemize}
+
+When $\varepsilon = 0$, the solution is a pure oscillation:
+\[
+    x(t) = r_0 \cos(\omega t + \varphi_0),
+\]
+with \textbf{constant} amplitude $r_0$ and phase $\varphi_0$. The key question is: \textit{what
+happens to $r$ and $\varphi$ when $\varepsilon \neq 0$?} Instead of being constants, they will
+slowly drift in time. The amplitude-phase method makes this precise.
+
+\subsection{The Ansatz}
+
+We guess that the solution still looks like a cosine, but now with \textbf{slowly varying amplitude
+$r(t)$ and phase $\varphi(t)$}:
+\[
+    x(t) = r(t)\cos(\omega t + \varphi(t)).
+\]
+This is ``variation of constants'' --- the same idea as in linear ODEs, where formerly-constant
+parameters are allowed to vary.
+
+Since we have one function $x(t)$ but two unknowns $r(t)$ and $\varphi(t)$, we have freedom to
+impose an extra condition. We choose it to keep the algebra clean by declaring:
+\begin{equation}\label{eq:constraint_def}
+    \dot{x}(t) = -r(t)\,\omega\sin(\omega t + \varphi(t)). \tag{$*$}
+\end{equation}
+This says: $\dot{x}$ looks exactly as it would if $r$ and $\varphi$ were constant.
+
+\subsection{The Constraint Equation}
+
+Differentiating $x(t) = r(t)\cos(\omega t + \varphi(t))$ directly via the product and chain rules:
+\[
+    \dot{x} = \dot{r}\cos(\omega t + \varphi) - r(\omega + \dot{\varphi})\sin(\omega t + \varphi).
+\]
+But \eqref{eq:constraint_def} demands $\dot{x} = -r\omega\sin(\omega t + \varphi)$. Matching these
+two expressions forces:
+\[
+    \boxed{\dot{r}\cos(\omega t + \varphi) - r\dot{\varphi}\sin(\omega t + \varphi) = 0.}
+    \tag{Constraint}
+\]
+This is the first of two equations needed to determine $\dot{r}$ and $\dot{\varphi}$.
+
+\subsection{The Second Equation from the ODE}
+
+Differentiating \eqref{eq:constraint_def} gives $\ddot{x}$:
+\[
+    \ddot{x} = -\dot{r}\,\omega\sin(\omega t + \varphi)
+               - r\omega(\omega + \dot{\varphi})\cos(\omega t + \varphi).
+\]
+Substituting into $\ddot{x} + \omega^2 x = \varepsilon f$, the $\omega^2 r\cos(\cdots)$ terms
+cancel, leaving:
+\[
+    \boxed{-\dot{r}\,\omega\sin(\omega t + \varphi) - r\dot{\varphi}\,\omega\cos(\omega t +
+    \varphi) = \varepsilon f.} \tag{ODE eq.}
+\]
+
+\subsection{Solving for $\dot{r}$ and $\dot{\varphi}$}
+
+We now have a $2\times 2$ linear system in $\dot{r}$ and $\dot{\varphi}$. Solving by multiplying
+the constraint by $\omega\sin(\omega t+\varphi)$ and the ODE equation by $\cos(\omega t+\varphi)$,
+then adding (and similarly for the other equation), yields the \textbf{exact} averaging form:
+\[
+    \dot{r} = -\frac{\varepsilon}{\omega}\sin(\omega t + \varphi)\,f(x, \dot{x}, t),
+\]
+\[
+    \dot{\varphi} = -\frac{\varepsilon}{\omega r}\cos(\omega t + \varphi)\,f(x, \dot{x}, t).
+\]
+These are exact --- no approximation yet. We have simply rewritten the original scalar ODE as a
+system for $(r, \varphi)$.
+
+\subsection{Example: The Van der Pol Oscillator}
+
+Consider
+\[
+    \ddot{x} + x = \varepsilon(1 - x^2)\dot{x},
+\]
+so $\omega = 1$ and $f(x,\dot{x},t) = (1 - x^2)\dot{x}$. Substituting the ansatz
+$x = r\cos\theta$, $\dot{x} = -r\sin\theta$ (where $\theta = t + \varphi$):
+\[
+    f = \bigl(1 - r^2\cos^2\theta\bigr)(-r\sin\theta).
+\]
+The exact equations become:
+\[
+    \dot{r} = \varepsilon r\sin^2\theta\,(1 - r^2\cos^2\theta),
+\]
+\[
+    \dot{\varphi} = \varepsilon\sin\theta\cos\theta\,(1 - r^2\cos^2\theta).
+\]
+Since $\varepsilon$ is small, $r$ and $\varphi$ change slowly. Over one period, the fast
+oscillations average out. Applying the \textbf{method of averaging} --- replacing the right-hand
+sides by their averages over one period $T = 2\pi$ while holding $r$ and $\varphi$ fixed:
+\[
+    \langle \dot{r} \rangle = \frac{\varepsilon r}{2}\!\left(1 - \frac{r^2}{4}\right),
+    \qquad
+    \langle \dot{\varphi} \rangle = 0.
+\]
+The $\varphi$ equation says the \textbf{frequency does not shift} to leading order. The $r$
+equation has a nontrivial structure:
+\begin{itemize}
+    \item $r < 2$: $\dot{r} > 0$, amplitude \textbf{grows},
+    \item $r > 2$: $\dot{r} < 0$, amplitude \textbf{shrinks},
+    \item $r = 2$: $\dot{r} = 0$, amplitude is \textbf{constant}.
+\end{itemize}
+This predicts a \textbf{stable limit cycle at $r = 2$}, exactly what the Van der Pol oscillator is
+known for --- obtained without solving the full nonlinear system.
+
+\subsection{Summary}
+
+\[
+    \underbrace{\ddot{x}+\omega^2 x = \varepsilon f}_{\text{nearly linear ODE}}
+    \;\xrightarrow{\text{ansatz}}\;
+    \underbrace{\dot{r},\,\dot{\varphi}\text{ system}}_{\text{exact}}
+    \;\xrightarrow{\text{average}}\;
+    \underbrace{\langle\dot{r}\rangle,\,\langle\dot{\varphi}\rangle}_{\text{slow-flow equations}}
+\]
+
+The averaged equations for $r$ and $\varphi$ are often much simpler than the original ODE, yet
+capture essential long-time behavior: growth or decay of oscillations, limit cycles, and frequency
+shifts.
+
+\end{document}
+
+
+
+
+
+\end{document}
