@@ -1,0 +1,354 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\begin{document}
+
+\section{Lecture 19: Plan for Class}
+This week:
+\begin{enumerate}
+    \item ergodic theory
+    \item References: 
+    \begin{enumerate}
+        \item Cornfeld, Famin, Sinai, Sossinski, \textit{Ergodic Theory}
+        \item Sinai, \textit{Topics in Ergodic Theory}
+    \end{enumerate}
+\end{enumerate}
+
+Today:
+\begin{enumerate}
+    \item Measure theory
+    \item Liouville's theorem 
+    \item Poincare recurrence theorem 
+    \item von Neumann's ergodic theorem
+\end{enumerate}
+
+\section{Measure theory}
+
+How do we measures things in a space that might not be smooth?
+
+To setup measure theory, we have the following components 
+\begin{enumerate}
+    \item $M$ phase space (set)
+    \item $\mathcal{M}$ $\sigma$-algebra of subsets of $M$ (`measurable set')
+\end{enumerate}
+A $\sigma$-algebra is a bit mysterious, but it is have the properties:
+\begin{itemize}
+    \item $M\in \mathcal{M}$
+    \item $\mathcal{M}$ closed under complements ($C\in \mathcal{M}\implies M-C\in\mathcal{M}$)
+    \item $\mathcal{M}$ closed under countable unions ($C_i\in\mathcal{M}\implies \cup^\infty_{i=1}C_i\in\mathcal{M}$)
+\end{itemize}
+with some examples being Borel sets and Legesgue measurable sets.
+\begin{enumerate}
+    \item[(3)] $\mu$ measure - assigns a real number to each element of $\mathcal{M}$ (the ``size of the subset'')
+\end{enumerate}
+An example would be 
+\[
+C_i \text{  disjoint  }\implies \mu\left(\cup^\infty_{i=1}C_i\right)=\sum_{i=1}^{\infty}C_i
+\]
+which is referred to as ``$\sigma$-additivity''.
+
+We usually assume $\mu\left(M\right)=1$ which makes it a ``probability measure''.
+
+Now we can say $(M,\mathcal{M},\mu)$ forms a measure space.
+
+\subsection{Maps in measure theory}
+
+Let's say that we have a map $T: M\to M$ where $x\in M$ and $Tx\in M$. $T$ is measure preserving if 
+\[
+\mu\left(T^{-1}c=\mu\left(c\right)\right)
+\] 
+where the $\cdot^{-1}$ denotes the pre-image, not the inverse.
+
+\subsubsection{Example}
+Let $M\in[0,1)$. We can identify $M$ with the unit circle via 
+\[
+x\in M, \qquad e^{2\pi i x}\in S^1
+\]
+Now consider the measure preserving map 
+\[
+Tx = 2x \pmod 1
+\]
+If we had the interval $c=[0.4,.0.6]$, then the pre-image is 
+\[
+T^{-1}c = [0.2,0.3]\cup [0.7,0.8]
+\]
+Moreover, the pre-image of any interval $[a,b]$ is two intervals
+\[
+\left[\frac{a}{2},\frac{b}{2}\right]\cup \left[\frac{a+1}{2},\frac{b+1}{2}\right]
+\]
+where the total length is $b-a$. Hence it is measure preserving!
+
+\subsection{Terminology}
+
+A measure-preserving map is called an endomorphism. If $T$ is invertible, then $T^{-1}$ is also measure preserving and $T$ is called and automorphism.
+\[
+\mu(c)=\mu\left(T^{-1}c\right)=\mu (Tc)
+\]
+
+\subsection{Lebesgue integral}
+
+If T is measure preserving, we have the following key property:
+\[\int_M f(x) \, d\mu(x) = \int_M f(Tx) \, d\mu(x)\]
+
+Proof: We use the indicator function as a test case.
+Recall the indicator function $1_C$ is defined as:
+\[
+\mathbf{1}_C(x) = \begin{cases} 1 & \text{if } x \in C \\ 0 & \text{if } x \notin C \end{cases}
+\]
+
+Take $f = 1_C$ (the indicator function of a measurable set C).
+Then the left-hand side becomes simply the measure of C:
+\[\int_M f \, d\mu = \mu(C)\]
+
+For the right-hand side, since $f(Tx) = 1_C(Tx) = 1 iff Tx \in C$,
+i.e. iff $x \in T^{-1}C$, the integral reduces to:
+\[\int_M f(Tx) \, d\mu(x) = \int_{T^{-1}C} 1 \, d\mu(x) = \mu(T^{-1}C) = \mu(C)\]
+The last equality holds because T is measure preserving: $\mu(T^{-1}C) = \mu(C).$
+
+\section{Liouville's theorem}
+
+Suppose we have a system of ODEs 
+\[
+\dot{x}=X(x),\qquad x\in\mathbb{R}^n
+\]
+We can write the derivative of the measure as 
+\[
+d\mu = \rho\left(x_1,x_2,\ldots,x_n\right)\,dx
+\]
+Question! Under what conditions is the flow of the ODE measure preserving?
+
+Answer! When the divergence of $\rho X$ equals 0
+\[
+\operatorname{div}\left(\rho X\right)=0
+\]
+
+\subsection{Proof}
+
+If $\mu$ is invariant, then 
+\[
+\int f(x(t))\rho(x) \, dx
+\]
+does not depend on $t$ for any $f$. Note that $x(t)$ is a solution that starts at $x(0)=x_1$ and solves $\dot{x}=X(x)$. By differentiating the integral with respect to $t$, we have 
+\begin{align*}
+    \frac{d}{dt}\Bigg|_{t=0}\int f(x(t))\rho(x) \, dx &= \int \nabla f(x) \dot{\vec{x}} \rho(x) \, dx\\
+    &= \int \nabla f(x) \cdot \vec{X}(x) \rho (x) \, dx \\
+    &= \int \left[\nabla\cdot \left(f\rho \vec{X}\right) - f\nabla\cdot \left(\rho X\right)\right]\\
+    &= 0 \text{ via divergence theorem} - \int f\nabla \left(\rho X\right)\, dx = 0 \quad \forall f
+\end{align*}
+So $\nabla \cdot (\rho X)=0$ everywhere.
+
+Note that 
+\[
+\nabla\cdot\left(f\vec{v}\right) = \nabla f\cdot \vec{v}+f\cdot\left(\nabla\cdot\vec{v}\right)
+\]
+
+\subsection{Example: Hamiltonian Systems}
+
+% The phase space coordinates consist of positions and momenta:
+We have positions $q_1, \ldots, q_n$ and momenta $p_1, \ldots, p_n$, 
+and the energy (Hamiltonian) $H(q_1, \ldots, q_n, p_1, \ldots, p_n)$.
+
+Evolution of the system is governed by Hamilton's equations:
+\[
+\begin{cases}
+\dot{q}_i = \dfrac{\partial H}{\partial p_i} \\[6pt]
+\dot{p}_i = -\dfrac{\partial H}{\partial q_i}
+\end{cases}
+\]
+
+To verify that Hamiltonian flow is measure preserving, we take $\rho = 1$
+(uniform density) and check that the divergence of the vector field $X$ vanishes. This is Liouville's theorem.
+\[
+\nabla \cdot (\rho X) = \sum_{i=1}^{n} \left[
+\frac{\partial}{\partial q_i} \frac{\partial H}{\partial p_i}
++ \frac{\partial}{\partial p_i} \left( -\frac{\partial H}{\partial q_i} \right)
+\right] = 0 \quad \checkmark
+\]
+
+The two terms cancel by equality of mixed partials (Clairaut's theorem), since $\frac{\partial^2 H}{\partial q_i \partial p_i} = \frac{\partial^2 H}{\partial p_i \partial q_i}$. This confirms that Hamiltonian flow preserves the Liouville measure (phase space volume), which is the content of Liouville's theorem.
+
+\section{Poincaré Recurrence Theorem}
+
+Suppose the $T$ is an automorphism and $\mu(M)=1$. Consider $C\in M$ with $\mu(C)>0$. Then for almost every $x\in C$, $T^n x\in C$ for infinitely many $n$.
+
+In other words, ``almost every'' set of points in $C$ that don't come back has $\mu-measure$ zero. This is ``Zermelo's paradox''.
+
+\subsection{Proof}
+
+Show that 
+\[
+\mu\left\{x\in C : T^n x \in C \text{ for some }n\right\}=\mu(c)
+\]
+Let 
+\[
+B=\left\{x\in C : T^n x \notin C \text{ for any } n\right\}
+\]
+these are the points that leave $C$ and never return. We will show that $\mu(B)=0$.
+
+Consider sets 
+\[
+B, TB, T^2 B, T^3B,\ldots 
+\]
+these are disjoint. To show this, note that $B\in C$ implies 
+\[
+\mu\left\{T^n B\cap T^m B\right\} = \mu \left\{ T^{n-m}B\cap B \right\}
+\]
+since $T$ is measure preserving. It follows that 
+\[
+\mu\left\{B\in C, \, T^k B \notin C \text{ for any } k>0\right\}=0
+\]
+Let $a=\mu(B)$. Then 
+\[
+\mu\left(T^k B\right)=\mu (B)=a\quad \forall k
+\]
+It follows that 
+\begin{align*}
+    \mu\left(B \cup TB \cup T^2 B \cup \cdots\right) &= a+ a + a +\cdots \leq 1\\
+    &\implies a=0\\
+    &\implies \mu(B) = 0\\
+    &\implies \mu \left(\text{set of points that return}\right)=\mu(C).
+\end{align*}
+
+\section{Ergodic theorems}
+
+\subsection{Setup}
+
+We denote $f$ as functions on $M$. We are going to be looking at time averages 
+\[
+\frac{1}{n}\left(f(x) + f(Tx) + f(T^2x)+ \cdots + f(T^{n-1}x)\right)
+\]
+where the limit exists as $n\to\infty$.
+
+The first statement is 
+\begin{itemize}
+    \item ``mean ergodic theorem''
+    \item ``$L^2$ ergodic theorem''
+    \item von Neumann's ergodic theorem (Princeton's theorem)
+\end{itemize}
+Let's note that Hilbert spaces are a linear space of functions with an inner product. For our measure spaces, we have 
+\[
+H=L^2\left(M,\mu\right) = \left\{ f: \int_M \left|f(x)\right|^2\, d\mu(x) < \infty \right\}
+\]
+The inner product is denoted as 
+\[
+\langle f,g \rangle = \int_M f(x) \cdot g(x) \, d\mu(x)
+\]
+where the norm is 
+\[
+\left|\left| f \right|\right| = \sqrt{\langle f, f \rangle}
+\]
+Define an operator $U: H\to H$ such that 
+\[
+\left( U f \right) (x) = f(Tx)
+\]
+where $T$ is measure preserving and $U$ is the ``operator adjoint to $T$''.
+
+The operator $U$ is an isometry 
+\[
+\left|\left| U f \right|\right| = \left|\left| f \right|\right|\quad \forall f.
+\]
+We can prove this via 
+\[
+\left|\left| U f \right|\right|^2 = \langle Uf, Uf  \rangle = \int_M f(Tx)^2\, d\mu(x) = \int_M f(x)^2 \, d\mu(x)
+\]
+given that $T$ is measure preserving. This implies that $U$ preserves the inner product 
+\[
+\langle Uf, Ug \rangle = \langle f,g \rangle = \left|\left|f\right|\right|^2.
+\]
+If $T$ is an automorphism (invertible), then $U$ is unitary.
+
+Consider the subspace of $H$ of functions that are invariant. It follows that 
+\[
+H^{\text{inv}} = \left\{ f: Uf=f \right\}
+\]
+where $f(Tx)=f(x)$ almost everywhere. The subspace $H^{\text{inv}}$ is a closed subspace. Let $P$ be the orthogonal projection onto $H^{\text{inv}}$.
+
+\subsection{Now to the theorem}
+
+We can simply state it as 
+\[
+\frac{1}{n}\left(f+Uf+U^2f+\cdots+U^{n-1}f\right)\to Pf
+\]
+as $n\to \infty$. In other words 
+\[
+\lim_{n\to\infty}\left|\left| \frac{1}{n} \sum_{k=0}^{n-1}U^k f - Pf \right|\right|=0
+\]
+which is convergence in $L^2$.
+
+\subsection{Proof}
+
+\begin{enumerate}
+    \item[(1)] Suppose $f\in H^{\text{inv}}$, where it is obvious that $Uf=f$ and $Pf=f$
+    \item[(2)] Suppose $f=Ug-g$ for some $g\in H$. Then \begin{align*}
+        \frac{1}{n}\left(f+Uf+U^2f+\cdots+U^{n-1}f\right) &= \frac{1}{n}\left(\cancel{Ug}-g + \cancel{U^2g}-\cancel{Ug}+\cdots+U^ng-\cancel{U^{n-1}g}\right)\\
+        &=\frac{1}{n} \left(U^n g - g\right)\to 0 \text{ as } n\to\infty\\
+        &\leq \frac{2}{n}\left|\left| g \right|\right|
+    \end{align*} via the triangle inequality \[ \left|\left|U^ng-g\right|\right| \leq \left|\left|U^n g\right|\right| + \left|\left|g\right|\right| = 2 \left|\left| g \right|\right|\] Also if $f=Ug-g$, then $f\bot H^{\text{inv}}$. For any $h\in H^{\text{inv}}\implies Uh=h$, where it follows that \begin{align*}
+        \langle f,h \rangle = \langle Ug-g,h \rangle &= \langle Ug, h \rangle - \langle g, h \rangle\\
+        &= \langle Ug, Uh \rangle - \langle g, h \rangle\\
+        &= \langle g, h \rangle - \langle g, h \rangle\\
+        &=0
+    \end{align*} so $f\bot h$ for any $h\in H^{\text{inv}}$. Therefore $Pf=0$.
+    \item[(3)] If $f=\lim_{n\to\infty}\left(U g_n - g_n\right)$, then \[G=\overline{\left\{Ug -g,\, g\in H\right\}}\] (where the overline is closure) and \[ G= H^{\text{inv}^\bot}.\] Hence it follows that \[H=H^{\text{inv}}\oplus G\]
+\end{enumerate}
+Wait how does this prove the ergodic theorem?
+
+\begin{mdframed}
+\subsection*{Why the Proof Works: A Density Argument}
+
+The proof is structured as a \textbf{density argument}, and the notes leave a gap at the end. 
+Here is the full logic.
+
+\subsubsection*{What Cases (1), (2), (3) Establish}
+
+The proof identifies a decomposition of the entire Hilbert space:
+\[
+H = H^{\text{inv}} \oplus G, \quad G = \overline{\{Ug - g : g \in H\}}
+\]
+The three cases show the theorem holds on each piece:
+\begin{itemize}
+    \item \textbf{Case (1):} For $f \in H^{\text{inv}}$, the time average is just $f = Pf$. \checkmark
+    \item \textbf{Case (2):} For $f = Ug - g$ exactly, the time average $\to 0 = Pf$ (since $Pf = 0$ as shown). \checkmark
+    \item \textbf{Case (3):} The closure $G = (H^{\text{inv}})^\perp$, so together $H^{\text{inv}}$ and $G$ span all of $H$.
+\end{itemize}
+
+\subsubsection*{The Missing Step: Why Closure Matters}
+
+Case (2) only handles exact coboundaries $f = Ug - g$, but $G$ is their \textbf{closure} --- limits 
+of such functions. We need one more argument to handle $f \in G$ generally.
+
+If $f = \lim_{j}(Ug_j - g_j)$, then for each $j$, case (2) gives:
+\[
+\left\| \frac{1}{n} \sum_{k=0}^{n-1} U^k(Ug_j - g_j) \right\| \leq \frac{2\|g_j\|}{n}
+\]
+We then do an $\varepsilon/2$ argument: approximate $f$ closely by some $Ug_j - g_j$, handle 
+the error using the fact that $U$ is an isometry, and conclude the time average of $f$ 
+goes to $0 = Pf$ as well.
+
+\subsubsection*{Putting it All Together}
+
+Any $f \in H$ decomposes uniquely as:
+\[
+f = \underbrace{Pf}_{\in\, H^{\text{inv}}} + \underbrace{(f - Pf)}_{\in\, G}
+\]
+By linearity of the time average:
+\[
+\frac{1}{n}\sum_{k=0}^{n-1}U^k f = \frac{1}{n}\sum_{k=0}^{n-1}U^k(Pf) + \frac{1}{n}\sum_{k=0}^{n-1}U^k(f-Pf)
+\]
+\begin{itemize}
+    \item The first term $\to Pf$ by case (1).
+    \item The second term $\to 0$ by cases (2) and (3), since $f - Pf \in G$.
+\end{itemize}
+So the whole expression converges to $Pf$. $\blacksquare$
+
+The key insight is that the theorem is \textbf{easy on each factor} of the decomposition, 
+and the hard work is really in proving $G = (H^{\text{inv}})^\perp$, which is what case (3) provides.
+\end{mdframed}
+
+\end{document}

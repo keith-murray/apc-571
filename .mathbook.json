@@ -56,6 +56,21 @@
         { "section": "4.7", "title": "Stability of Subharmonic Orbits" },
         { "section": "4.8", "title": "Two Degree of Freedom Hamiltonians and Area Preserving Maps of the Plane" }
       ]
+    },
+    {
+      "chapter": 5,
+      "title": "Hyperbolic Sets, Symbolic Dynamics, and Strange Attractors",
+      "sections": [
+        { "section": "5.0", "title": "Introduction" },
+        { "section": "5.1", "title": "The Smale Horseshoe: An Example of a Hyperbolic Limit Set" },
+        { "section": "5.2", "title": "Invariant Sets and Hyperbolicity" },
+        { "section": "5.3", "title": "Markov Partitions and Symbolic Dynamics" },
+        { "section": "5.4", "title": "Strange Attractors and the Stability Dogma" },
+        { "section": "5.5", "title": "Structurally Stable Attractors" },
+        { "section": "5.6", "title": "One-Dimensional Evidence for Strange Attractors" },
+        { "section": "5.7", "title": "The Geometric Lorenz Attractor" },
+        { "section": "5.8", "title": "Statistical Properties: Dimension, Entropy, and Liapunov Exponents" }
+      ]
     }
   ],
   "lectureNotes": {
