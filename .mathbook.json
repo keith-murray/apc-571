@@ -71,6 +71,32 @@
         { "section": "5.7", "title": "The Geometric Lorenz Attractor" },
         { "section": "5.8", "title": "Statistical Properties: Dimension, Entropy, and Liapunov Exponents" }
       ]
+    },
+    {
+      "chapter": 6,
+      "title": "Global Bifurcations",
+      "sections": [
+        { "section": "6.1", "title": "Saddle Connections" },
+        { "section": "6.2", "title": "Rotation Numbers" },
+        { "section": "6.3", "title": "Bifurcations of One-Dimensional Maps" },
+        { "section": "6.4", "title": "The Lorenz Bifurcations" },
+        { "section": "6.5", "title": "Homoclinic Orbits in Three-Dimensional Flows: Silnikov's Example" },
+        { "section": "6.6", "title": "Homoclinic Bifurcations of Periodic Orbits" },
+        { "section": "6.7", "title": "Wild Hyperbolic Sets" },
+        { "section": "6.8", "title": "Renormalization and Universality" }
+      ]
+    },
+    {
+      "chapter": 7,
+      "title": "Local Codimension Two Bifurcations of Flows",
+      "sections": [
+        { "section": "7.1", "title": "Degeneracy in Higher-Order Terms" },
+        { "section": "7.2", "title": "A Note on k-Jets and Determinacy" },
+        { "section": "7.3", "title": "The Double Zero Eigenvalue" },
+        { "section": "7.4", "title": "A Pure Imaginary Pair and a Simple Zero Eigenvalue" },
+        { "section": "7.5", "title": "Two Pure Imaginary Paris of Eigenvalues without Resonance" },
+        { "section": "7.6", "title": "Applications to Large Systems" }
+      ]
     }
   ],
   "lectureNotes": {
