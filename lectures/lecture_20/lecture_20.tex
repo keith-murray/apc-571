@@ -1,0 +1,304 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{bbm}
+\usepackage{cancel}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{mdframed}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\begin{document}
+
+\section{Lecture 20: Plan for Class}
+Last class
+\begin{enumerate}
+    \item Ergodic theory
+\end{enumerate}
+
+\section{Recap of where we were with Ergodic theory}
+
+We have some measure-preserving system $\mu(A)=\mu(T^{-1}A)$ where $T:\, M\to M$ where $M$ is a measure space. Remember that a Hilbert space $H=L^2(M)$ where the norm is a square-integrable functions $\langle f,g\rangle = \int f(x)g(x)\, d\mu(x)$.
+
+Now we can define an operator $U:H\to H$ where 
+\[
+Uf(x)=f(Tx)
+\]
+and we showed that $U$ is an isometry
+\[
+\left|\left| Uf \right|\right| = \left|\left| f \right|\right|
+\]
+We now define the space of invariant functions on $H$ such that 
+\[
+H^{\text{inv}} = \left\{ f\in H:\, Uf=f \right\}
+\]
+Then we defined an orthogonal projection onto $H^{\text{inv}}$ as $P$.
+
+von Neumann's ergodic theorem was essentially a description of $P$ as 
+\[
+\lim_{n\to\infty}\,\frac{1}{n}\left(f+ Uf + U^2 f +\ldots + U^{n-1}f\right) = Pf
+\]
+
+\section{Finishing the proof of von Neumann's theory}
+
+To start, let 
+\[
+G=\left\{ Ug - g :\, g\in H \right\}
+\]
+We first showed that $H^{\text{inv}}= G^\bot$. Then it follows that 
+\[
+H = H^{\text{inv}}\oplus G
+\]
+If follows that 
+\begin{itemize}
+    \item If $h\in H^{\text{inv}}$, then $\frac{1}{n}\left(h+ Uh + U^2 h +\ldots + U^{n-1}h\right) = h = Ph$
+    \item If $g\in G$, then $\frac{1}{n}\left(g+ Ug + U^2 g +\ldots + U^{n-1}g\right) \to 0$ as $n\to \infty$
+\end{itemize}
+Now we can state that for $f=h+g$, then
+\[
+\text{LHS}\to Pf = h \text{ as } n\to\infty
+\]
+
+\subsection{Proving the orthogonal complement}
+
+What we didn't show was how $H^{\text{inv}}= G^\bot$.
+
+\textbf{First direction:} Let $g=Uf-f$. If $h\in H^{\text{inv}}$, then $h\bot g$ for all $g\in G$.
+\begin{align*}
+    \langle h, Uf-f\rangle &= \langle h, Uf \rangle - \langle h, f\rangle \\
+    &= \langle Uh, Uf \rangle - \langle h, f\rangle \quad h\text{ invariant} \\
+    &= \langle h, f \rangle - \langle h, f\rangle \quad U\text{ isometry} \\
+    &= 0 \implies h\in G^\bot
+\end{align*}
+
+\textbf{Second direction:} Take $h\in G^\bot$. We need to show $Uh=h$. For all $f\in H$, it follows that 
+\begin{align*}
+    &\langle h, Uf-f\rangle=0\\
+    \implies& \langle h, Uf\rangle = \langle h, f \rangle \quad \forall f\in H\\
+    \implies& \langle U^\ast h, f\rangle = \langle h, f \rangle \quad \forall f\in H\\
+    \implies& \langle U^\ast h - h, f \rangle =0\\
+    \implies& U^\ast h = h \implies Uh=h
+\end{align*}
+We need a small lemma to show that $U^\ast h = h \implies Uh=h$.
+
+\subsubsection{Lemma}
+
+Suppose $U$ is an isometry. Then 
+\[
+Uf =f \iff U^\ast = f
+\]
+For the first direction, we assume $Uf = f$ and then we write 
+\[
+U^\ast Uf = U^\ast f \implies f = U^\ast f
+\]
+where $U^\ast U=I$. For the second direction, we assume $U^\ast = f$ and then if we can prove that 
+\[
+\left|\left| Uf-f \right|\right|^2 = 0
+\]
+where it follows that 
+\[
+Uf=f
+\]
+Hence, we write 
+\begin{align*}
+    \langle Uf-f, Uf-f \rangle &= \langle Uf, Uf \rangle - \langle f, Uf \rangle -\langle Uf, f \rangle + \langle f, f \rangle\\
+    &= \langle f, f \rangle - \langle U^\ast f, f \rangle - \langle f, U^\ast f \rangle + \langle f, f \rangle\\
+    &= \langle f, f \rangle - \langle f, f \rangle - \langle f, f \rangle + \langle f, f \rangle=0
+\end{align*}
+
+\section{Birkhoff's ergodic theorem}
+
+Birkhoff's (``pointwise'') ergodic theorem states that for 
+\[
+\lim_{n\to\infty} \frac{1}{n}\left(f(x)+f(Tx)+\cdots + f(T^{n-1}x)\right)\triangleq \bar{f}(x)
+\]
+Also, 
+\[
+\bar{f}(Tx) = \bar{f}(x)
+\]
+Then, $\bar{f}\in L'(M)$ and 
+\[
+\int \bar{f}\, d\mu = \int f\, d\mu
+\]
+which is the spatial average of $f$.
+
+\section{Invariant sets and functions}
+
+A function $f$ is invariant if $f(Tx)=f(x)$ for all $x\in M$ where $f$ is an endomorphism and $T$ is an automorphism
+\[
+f(Tx) = f(x) = f(T^{-1}x)
+\]
+This just means that $f$ is a constant along a trajectory.
+
+Set $A$ is invariant if $\mathbbm{1}_A$ is an invariant function
+\[
+\mathbbm{1}_A(x)=\begin{cases}
+    1 \text{ if } x\in A\\
+    0 \text{ else}
+\end{cases}
+\]
+An example of this would be the unit circle 
+\[
+Tx = x+\alpha \pmod 1
+\]
+If $\alpha$ is irrational, then the only invariant sets at $\emptyset$ or $M$.
+
+\section{What does it mean to be ergodic}
+
+\underline{Definition}: $T$ is ergodic if the only invariant sets have full measure, or zero measure
+\[
+\mu(A) = 1 \quad \text{or} \quad \mu(A)=0
+\]
+\underline{Theore}: If $T$ is ergodic, then any invariant function is constant on a set of full measure.
+
+Proof: Suppose $T$ is ergodic. Then $Pf$ equals to the projection onto constant functions
+\[
+Pf = \frac{\langle f, 1\rangle}{\langle 1, 1\rangle}\cdot 1 = \int f(x)\cdot 1 \, d\mu(x) = \int f\, d\mu
+\]
+where $\int f\, d\mu$ is the spatial average.
+
+\subsection{A note}
+
+At this point, Rowley made the explicit statement that 
+\[
+\lim_{n\to\infty}\,\frac{1}{n}\left(f+ Uf + U^2 f +\ldots + U^{n-1}f\right)
+\]
+is the time average and 
+\[ Pf\]
+is the spatial average. Ergodic theorems are about relating time averages to spatial averages.
+
+\subsection{Equivalent notions of ergodicity}
+\begin{itemize}
+    \item Each invariant function ($f(x)=f(Tx)$ almost everywhere) is constant almost everywhere
+    \item In the Birkhoff theorem, the limiting $\bar{f}(x)$ is constant. In other words \[ \frac{1}{n}\left(f(x) + f(Tx) +\cdots + f(T^{n-1}x)=\bar{f}=\int fd\mu\right) \] where the left hand side is the time average and the right hand side is the spatial average.
+\end{itemize}
+
+\section{Back to our example of rotations}
+
+Suppose $\alpha$ is irrational in 
+\[
+Tx = x+\alpha \pmod 1
+\]
+Let $f$ be an invariant function. Write 
+\[
+f=\sum_{k=-\infty}^{\infty} f_k e^{2\pi i k x}
+\]
+and then 
+\begin{align*}
+    Uf(x) &= \sum_{k=-\infty}^{\infty}f_k e^{2\pi i k (x+\alpha)}\quad \text{where invariant functions $Uf=f$}\\
+    &= \sum_{k=-\infty}^{\infty}f_k e^{2\pi i k x}\implies \sum_k f_k \left(e^{2\pi i k x}-e^{2\pi i k (x+\alpha)}\right)=0\\
+    &\implies \sum_k f_k e^{2\pi i k x}\left( 1-e^{2\pi i k \alpha} \right)=0
+\end{align*}
+Hence 
+\[
+\sum_k f_k \int_{0}^{2\pi}e^{2\pi i (k-m)x}\, dx\, \left(1-e^{2\pi i k \alpha}\right)\implies f_m \left(1-e^{2\pi i m \alpha}\right) = 0
+\]
+Say that $f_m \left(1-e^{2\pi i m \alpha}\right) = 0$ because $1-e^{2\pi i m \alpha}=0$. This implies
+\[
+e^{2\pi i m \alpha} = e^{2\pi i n}
+\]
+where it follows that $\alpha=\frac{n}{m}$, violating our assumption. Hence, we have
+\[
+f_m=0 \quad \forall\, m\neq 0 
+\]
+where we note that $f_0$ can be nonzero. Therefore, we have 
+\[
+f(x)=f_0
+\]
+where $f_0$ is a constant function.
+
+\section{How can we state if our ergodic systems are chaotic?}
+
+We need to look at the properties of the eigenvalues and eigenfunctions of $U$.
+
+Let's start by writing 
+\[
+Uf(x) = f(Tx)
+\]
+where $T$ is measure preserving, which implies $\left|\left| Uf \right|\right| = \left|\left| f \right|\right|$.
+
+The eigenvalues of $U$ must be on the unit circle. For a proof, suppose $Uf=\lambda f$ for $f\neq 0$ and $\lambda\in\mathbb{C}$. Then we have 
+\begin{gather*}
+    \langle Uf, Uf\rangle = \langle \lambda f, \lambda f \rangle\\
+    \langle f, f\rangle = \lambda\bar{\lambda} \langle f, f\rangle \\
+    \implies \lambda\bar{\lambda} = 1 \text{ and }\left|\lambda\right|^2 =1
+\end{gather*}
+
+For $f$ constant functions, we have 
+\[
+Uf = f\implies f 
+\]
+is an eigenfunction of $U$ with eigenvalue $1$.
+
+If $T$ is ergodic, then constant functions are the only eigenfunctions with eigenvalue of 1. This follows from the definition of ergodicity.
+
+If $Uf=e^{i\theta}f$ and $\theta\neq 0$, then $\int f\, d\mu=0$. For a proof, $f$ is orthogonal to the constant function. For an alternative proof, we can write 
+\[
+\int_M Uf\, d\mu = \int f(Tx) \, d\mu(x) = \int_M e^{i\theta}f(x) \, d\mu
+\]
+where because of measure preserving, it follows that 
+\[
+\int f(x) \, d\mu(x) = \int_M e^{i\theta}f(x) \, d\mu \implies (1-e^{i\theta})\int f(x) d\mu(x) = 0
+\]
+since $(1-e^{i\theta})=0$.
+
+\section{Mixing properties}
+
+Because a system is Ergodic, we can write
+\[
+\lim_{n\to\infty} \frac{1}{n}\sum_{k=0}^{n-1}f(T^k x)=\int_M f\, d\mu
+\]
+If we multiply by $g\in L^2$ and integrate, we have 
+\[
+\lim_{n\to\infty} \frac{1}{n}\sum_{k=0}^{n-1} \int_M f(T^k x) g(x) \,d\mu(x) = \int_M f\,d\mu \cdot \int g\, d\mu
+\]
+
+The definition of weak mixing for all $f,g$ is 
+\[
+\lim_{n\to \infty}\frac{1}{n}\sum_{k=0}^{n-1}\left| \int_{M} f\left(T^k x\right)g(x)\,d\mu - \int_M f\,d\mu\,\cdot\, \int g\,d\mu \right|=0
+\]
+
+The definition of mixing is for all $f,g$ we have
+\[
+\lim_{n\to \infty}\int_M f\left(T^n x\right) g(x)\, d\mu(x) = \int f\,d\mu \,\cdot\, \int g\, d\mu 
+\]
+where we now have the following relationship
+\[
+\text{Mixing}\implies \text{weak mixing} \implies ergodic
+\]
+
+\subsection{Why mixing}
+
+Let $f=\mathbbm{1}_A$ and $g=\mathbbm{1}_B$. Then mixing implies 
+\[
+\lim_{n\to \infty }\mu\left(T^{-n}A\cap B\right)=\mu(A)\cdot\mu(B)
+\]
+
+What's interesting is that for the map
+\[
+Tx = x+\alpha \pmod 1
+\]
+when $\alpha$ is rational, the system is not ergodic, but when $\alpha$ is irrational, the system is ergodic but is not mixing.
+
+\subsection{Doubling map}
+
+The doubling map 
+\[
+Tx = 2x \pmod 1
+\]
+is mixing, hence, is ergodic.
+
+\subsubsection{A theorem}
+
+If $Uf=e^{i\theta}f$ where $\theta\neq 0$ and $f\neq 0$, then $T$ cannot be weak mixing.
+
+For a proof, we can write 
+\begin{align*}
+    \left|\langle U^k f, g\rangle - \int f\,d\mu\,\cdot\, \int g\,d\mu\right| &= \left|\langle U^k f, g\rangle\right| = \left|\langle e^{ik\theta} f, g\rangle\right|\\
+    &= |\langle f, g \rangle| \neq 0 \quad (\text{take }g=f)
+\end{align*}
+where $\int f\,d\mu\,\cdot\, \int g\,d\mu=0$. Hence mixing is a spectral property of $U$.
+
+
+
+\end{document}
