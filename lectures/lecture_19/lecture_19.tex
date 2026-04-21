@@ -61,7 +61,7 @@ Now we can say $(M,\mathcal{M},\mu)$ forms a measure space.
 
 Let's say that we have a map $T: M\to M$ where $x\in M$ and $Tx\in M$. $T$ is measure preserving if 
 \[
-\mu\left(T^{-1}c=\mu\left(c\right)\right)
+\mu\left(T^{-1}c\right)=\mu\left(c\right)
 \] 
 where the $\cdot^{-1}$ denotes the pre-image, not the inverse.
 
@@ -86,7 +86,7 @@ where the total length is $b-a$. Hence it is measure preserving!
 
 \subsection{Terminology}
 
-A measure-preserving map is called an endomorphism. If $T$ is invertible, then $T^{-1}$ is also measure preserving and $T$ is called and automorphism.
+A measure-preserving map is called an endomorphism. If $T$ is invertible, then $T^{-1}$ is also measure preserving and $T$ is called an automorphism.
 \[
 \mu(c)=\mu\left(T^{-1}c\right)=\mu (Tc)
 \]
@@ -106,7 +106,7 @@ Take $f = 1_C$ (the indicator function of a measurable set C).
 Then the left-hand side becomes simply the measure of C:
 \[\int_M f \, d\mu = \mu(C)\]
 
-For the right-hand side, since $f(Tx) = 1_C(Tx) = 1 iff Tx \in C$,
+For the right-hand side, since $f(Tx) = 1_C(Tx) = 1 \text{ iff } Tx \in C$,
 i.e. iff $x \in T^{-1}C$, the integral reduces to:
 \[\int_M f(Tx) \, d\mu(x) = \int_{T^{-1}C} 1 \, d\mu(x) = \mu(T^{-1}C) = \mu(C)\]
 The last equality holds because T is measure preserving: $\mu(T^{-1}C) = \mu(C).$

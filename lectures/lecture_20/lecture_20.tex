@@ -85,7 +85,7 @@ We need a small lemma to show that $U^\ast h = h \implies Uh=h$.
 
 Suppose $U$ is an isometry. Then 
 \[
-Uf =f \iff U^\ast = f
+Uf =f \iff U^\ast f = f
 \]
 For the first direction, we assume $Uf = f$ and then we write 
 \[
@@ -149,7 +149,7 @@ If $\alpha$ is irrational, then the only invariant sets at $\emptyset$ or $M$.
 \[
 \mu(A) = 1 \quad \text{or} \quad \mu(A)=0
 \]
-\underline{Theore}: If $T$ is ergodic, then any invariant function is constant on a set of full measure.
+\underline{Theorem}: If $T$ is ergodic, then any invariant function is constant on a set of full measure.
 
 Proof: Suppose $T$ is ergodic. Then $Pf$ equals to the projection onto constant functions
 \[
@@ -215,7 +215,9 @@ Let's start by writing
 \[
 Uf(x) = f(Tx)
 \]
-where $T$ is measure preserving, which implies $\left|\left| Uf \right|\right| = \left|\left| f \right|\right|$.
+where $T$ is measure preserving, which implies $\left|\left| Uf \right|\right| = \left|\left| f \right|\right|$. Now we are going to make 4 claims that will allow us to talk about the properties of ergodic functions in terms of their eigenfunctions.
+
+\subsection{Claim 1}
 
 The eigenvalues of $U$ must be on the unit circle. For a proof, suppose $Uf=\lambda f$ for $f\neq 0$ and $\lambda\in\mathbb{C}$. Then we have 
 \begin{gather*}
@@ -223,24 +225,59 @@ The eigenvalues of $U$ must be on the unit circle. For a proof, suppose $Uf=\lam
     \langle f, f\rangle = \lambda\bar{\lambda} \langle f, f\rangle \\
     \implies \lambda\bar{\lambda} = 1 \text{ and }\left|\lambda\right|^2 =1
 \end{gather*}
+This holds for an isometry over a complex field.
 
-For $f$ constant functions, we have 
-\[
-Uf = f\implies f 
-\]
-is an eigenfunction of $U$ with eigenvalue $1$.
+\subsection{Claim 2}
 
-If $T$ is ergodic, then constant functions are the only eigenfunctions with eigenvalue of 1. This follows from the definition of ergodicity.
+For constant functions such as $f\equiv c$, we have 
+\[
+Uf(x)=f(Tx) = c = f(x)
+\]
+Therefore
+\[
+Uf = f
+\]
+which implies $f$ is an eigenfunction of $U$ with eigenvalue $1$.
 
-If $Uf=e^{i\theta}f$ and $\theta\neq 0$, then $\int f\, d\mu=0$. For a proof, $f$ is orthogonal to the constant function. For an alternative proof, we can write 
+\subsection{Claim 3}
+
+If $T$ is ergodic, then constant functions are the only eigenfunctions with eigenvalue of 1. This follows from the definition of ergodicity. \textbf{Ergodicity is literally the statement that the eigenvalue 1 is simple.} 
+
+From this claim, we will begin to think about different ergodic systems $T$ in terms of the spectral properties of $U_T$.
+
+\subsection{Claim 4}
+
+If $Uf=e^{i\theta}f$ and $\theta\neq 0$, then 
 \[
-\int_M Uf\, d\mu = \int f(Tx) \, d\mu(x) = \int_M e^{i\theta}f(x) \, d\mu
+\int f\, d\mu=0.
 \]
-where because of measure preserving, it follows that 
+
+For a proof, note that eigenvectors (and hence, eigenfunctions) of an isometry for distinct eigenvalues are orthogonal. From \text{claim 2}, we know that $1$ is an eigenfunction of $U_T$; therefore, $f\bot 1$. Hence we can write 
 \[
-\int f(x) \, d\mu(x) = \int_M e^{i\theta}f(x) \, d\mu \implies (1-e^{i\theta})\int f(x) d\mu(x) = 0
+0=\langle f, 1 \rangle = \int f\cdot \bar{1}\, d\mu = \int f\, d\mu
 \]
-since $(1-e^{i\theta})=0$.
+
+For an alternative proof, we can write 
+\[
+\int f \, d\mu = \int f \circ T\, d\mu = \int Uf \, d\mu = \int e^{i\theta}f\, d\mu = e^{i\theta}\int f \, d\mu
+\]
+which boils down to 
+\[
+\int f \, d\mu = e^{i\theta}\int f \, d\mu
+\]
+which implies 
+\[
+\left( 1- e^{i\theta} \right)\int f \, d\mu = 0
+\]
+Because $\theta\neq 0$, it follows that $\left( 1- e^{i\theta} \right)\neq 0$, implying 
+\[
+\int f \, d\mu = 0
+\]
+This gives us license to only look at functions in $H_0$ defined as
+\[
+H_0 = \left\{f : \int f \, d\mu = 0 \right\}
+\]
+i.e. the non-constant functions, when studying different ergodic systems.
 
 \section{Mixing properties}
 
